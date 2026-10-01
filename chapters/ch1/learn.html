@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 1 Learning · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/deck.css">
+<style>
+.s-blue{stroke:var(--blue)} .f-blue-soft{fill:var(--blue-soft)} .s-amber{stroke:var(--amber)}
+.viz text{font-size:15px}
+.viz .sm{font-size:12.5px}
+.viz .b{font-weight:700}
+.receipt{display:flex;flex-direction:column;gap:2px;width:100%;font-family:var(--f-mono);font-size:15px}
+.receipt > div{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;border-bottom:1px dashed var(--line)}
+.receipt .tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:18px;color:var(--accent)}
+.ot-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;background:var(--bg);border-radius:10px;font-size:15px}
+.pill{font:600 12px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:7px 10px;border-radius:999px;min-width:92px;text-align:center;display:inline-block}
+.pill.d{background:var(--accent);color:var(--on-accent)} .pill.i{background:var(--surface-2);color:var(--ink-2)}
+.pc-wrap{position:relative;padding:36px 0}
+.pc-bar{display:flex;height:56px;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.pc-bar > div{display:flex;align-items:center;justify-content:center;font:600 12.5px var(--f-mono);color:var(--on-accent);overflow:hidden;white-space:nowrap;min-width:0}
+.seg-dm{background:var(--blue)} .seg-dl{background:var(--accent);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.2) 0 6px,transparent 6px 12px)} .seg-oh{background:var(--amber)}
+.brk{position:absolute;height:26px;border:2px solid var(--accent);font:600 12px var(--f-mono);display:flex;align-items:center;justify-content:center;color:var(--accent);white-space:nowrap}
+.brk.top{top:6px;border-bottom:0;border-radius:8px 8px 0 0}
+.brk.bot{bottom:6px;border-top:0;border-radius:0 0 8px 8px;border-color:var(--amber);color:var(--amber)}
+.pp-stage{display:grid;grid-template-columns:1fr minmax(0,1.4fr) 1fr;gap:12px;align-items:stretch}
+.pp-bin{border:2px dashed var(--line);border-radius:16px;padding:14px;text-align:center;display:flex;flex-direction:column;gap:6px;justify-content:center;font-size:14px;color:var(--ink-2)}
+.pp-bin b{color:var(--ink);font-size:16px}
+.pp-bin .n{font:700 26px var(--f-mono);color:var(--accent)}
+.pp-card{background:var(--surface);border:1.5px solid var(--ink);border-radius:14px;padding:22px 16px;text-align:center;font-weight:700;font-size:19px;display:grid;place-items:center;min-height:110px}
+@media (max-width:640px){.pp-stage{grid-template-columns:1fr 1fr}.pp-card{grid-column:1 / -1;grid-row:1}}
+.st{display:flex;flex-direction:column;gap:5px;font-family:var(--f-mono)}
+.st-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:9px 12px;border-radius:8px;background:var(--bg);font-size:14.5px}
+.st-row.sub{background:var(--accent-soft);font-weight:700}
+.st-row.total{background:var(--accent);color:var(--on-accent);font-weight:700}
+.st-row .amt{text-align:right;min-width:86px}
+.tag{font:600 10.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:6px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.tag.var{background:var(--blue-soft);color:var(--blue)} .tag.fix{background:var(--amber-soft);color:var(--amber)} .tag.none{visibility:hidden}
+.dc{display:flex;flex-direction:column;gap:5px;font-size:15px}
+.dc-row{position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) 1fr 1fr 1fr;gap:10px;align-items:center;padding:7px 12px;border-radius:8px;background:var(--bg)}
+.dc-row.h{background:none;font:600 11px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.dc-row .mono{text-align:right}
+.dc-row .diff{color:var(--accent);font-weight:700}
+@media (max-width:520px){.dc{font-size:13px}.dc-row{gap:6px;padding:7px 8px}}
+.dc-row .strike{position:absolute;left:8px;right:8px;top:50%;height:2px;background:var(--red);transform:scaleX(0);transform-origin:0 50%}
+.dc-row.net{background:var(--accent-soft);font-weight:700}
+.meter{display:grid;grid-template-columns:minmax(110px,170px) minmax(0,1fr) 90px;gap:12px;align-items:center;font-size:14.5px}
+.meter .bar-h{height:18px;border-radius:6px}
+.meter .bar-h > i{border-radius:6px;width:100%;transform-origin:0 50%}
+.meter .mono{text-align:right}
+.meter.amber .bar-h > i{background:var(--amber)} .meter.blue .bar-h > i{background:var(--blue)}
+@media (max-width:520px){.meter{grid-template-columns:1fr 80px}.meter .bar-h{grid-column:1 / -1;grid-row:2}}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.charts{grid-template-columns:1fr}}
+.chart-box{background:var(--bg);border-radius:12px;padding:8px}
+.chart-box svg{max-height:200px}
+.chart-box .k{font:600 10.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);padding:4px 6px}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <a class="crumb" href="index.html">← Chapter 1</a>
+  <button class="brand" id="menu-btn" aria-expanded="false" aria-controls="menu">Contents <span class="caret">▾</span></button>
+  <div class="track" id="track"><div class="fill" id="fill"></div></div>
+  <span class="sec-label" id="sec-label">Intro</span>
+  <nav class="menu" id="menu" hidden aria-label="Jump to section"></nav>
+  <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme">☾</button>
+</header>
+
+<main class="stage" id="stage">
+
+<!-- TITLE -->
+<section class="slide" data-section="intro" data-title="Welcome" data-key="title">
+ <div class="slide-inner">
+  <div class="split">
+   <div style="display:flex;flex-direction:column;gap:22px">
+    <p class="eyebrow">ACG 203 · Chapter 1</p>
+    <h1>What does a kayak <em>cost?</em></h1>
+    <p class="lede">Follow Northstar Kayak Co. through one month: where each dollar goes, how costs act when production changes, and which costs matter when you decide.</p>
+    <div class="chips"><span class="chip">1.1 Cost objects</span><span class="chip">1.2 Manufacturing</span><span class="chip">1.3 Product vs period</span><span class="chip">1.4 Behavior</span><span class="chip">1.5 Decisions</span><span class="chip">1.6 Formats</span></div>
+    <div><button class="btn primary" id="start-btn">Start the walkthrough →</button></div>
+   </div>
+   <div class="cert">
+    <div class="cert-in">
+     <span class="k">Cost sheet · one kayak</span>
+     <svg class="viz" viewBox="-80 -30 160 60" style="max-width:220px" aria-hidden="true">
+      <path d="M-70 0 C-38 -22 38 -22 70 0 C38 20 -38 20 -70 0Z" class="f-accent" data-at="0"/>
+      <ellipse cx="6" cy="-2" rx="16" ry="6" class="f-surface" data-at="0"/>
+     </svg>
+     <div class="receipt">
+      <div data-at="0"><span>Direct materials</span><span>$60</span></div>
+      <div data-at="0"><span>Direct labor</span><span>$40</span></div>
+      <div data-at="0"><span>Manufacturing overhead</span><span>$50</span></div>
+      <div class="tot" data-at="0"><span>Product cost</span><span data-count="150">$150</span></div>
+     </div>
+     <div class="cert-row"><span>Northstar Kayak Co.</span><span>1,000 made this month</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- TWO AUDIENCES -->
+<section class="slide" data-section="intro" data-title="Two kinds of accounting" data-key="audience">
+ <div class="slide-inner">
+  <h2>Same numbers, <em>different readers</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 240" style="max-width:760px" aria-label="Company records flow to outsiders (financial accounting) and to insiders (managerial accounting)">
+   <text x="85" y="18" text-anchor="middle" class="f-ink2 sm b" data-at="1">FINANCIAL · OUTSIDERS</text>
+   <text x="515" y="18" text-anchor="middle" class="f-accent sm b" data-at="2">MANAGERIAL · INSIDERS</text>
+   <path d="M235 125 C195 125 190 50 150 50" class="f-none s-ink2 draw" stroke-width="2.5" data-at="1"/>
+   <path d="M235 125 L150 130" class="f-none s-ink2 draw" stroke-width="2.5" data-at="1"/>
+   <path d="M235 125 C195 125 190 210 150 210" class="f-none s-ink2 draw" stroke-width="2.5" data-at="1"/>
+   <path d="M365 125 C405 125 410 80 450 80" class="f-none s-accent draw" stroke-width="3" data-at="2"/>
+   <path d="M365 125 C405 125 410 170 450 170" class="f-none s-accent draw" stroke-width="3" data-at="2"/>
+   <rect x="235" y="85" width="130" height="80" rx="12" class="f-accent-soft s-accent" stroke-width="1.5"/>
+   <text x="300" y="121" text-anchor="middle" class="f-ink b">Company</text>
+   <text x="300" y="143" text-anchor="middle" class="f-ink2 sm">records</text>
+   <g data-at="1"><rect x="20" y="30" width="130" height="40" rx="10" class="f-surface2"/><text x="85" y="56" text-anchor="middle" class="f-ink">Investors</text></g>
+   <g data-at="1"><rect x="20" y="110" width="130" height="40" rx="10" class="f-surface2"/><text x="85" y="136" text-anchor="middle" class="f-ink">Lenders</text></g>
+   <g data-at="1"><rect x="20" y="190" width="130" height="40" rx="10" class="f-surface2"/><text x="85" y="216" text-anchor="middle" class="f-ink">Regulators</text></g>
+   <g data-at="2"><rect x="450" y="60" width="130" height="40" rx="10" class="f-accent"/><text x="515" y="86" text-anchor="middle" class="f-bg b">Managers</text></g>
+   <g data-at="2"><rect x="450" y="150" width="130" height="40" rx="10" class="f-accent"/><text x="515" y="176" text-anchor="middle" class="f-bg b">Employees</text></g>
+  </svg></div>
+  <div class="cols" style="--n:3">
+   <div class="card" data-step="1"><span class="k">Financial</span><b>Looks back · follows GAAP · whole company · required</b></div>
+   <div class="card" data-step="2"><span class="k">Managerial</span><b>Looks ahead · relevance over precision · segments · optional</b></div>
+   <div class="card" data-step="3"><span class="k">Managers use it to</span><b>Plan → Control → Decide</b><p>Set the budget, check the results, choose between options.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 1.1 -->
+<section class="slide" data-section="1.1" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">1.1</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Cost objects</h2><div class="chips"><span class="chip">Cost object</span><span class="chip">Direct</span><span class="chip">Indirect</span><span class="chip">Common cost</span></div></div></div>
+ </div>
+</section>
+
+<!-- TRACE OR SHARE -->
+<section class="slide" data-section="1.1" data-title="Traced or shared?" data-key="trace">
+ <div class="slide-inner">
+  <h2>Can you <em>trace</em> it to the kayak?</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 260" style="max-width:760px" aria-label="Resin and mold crew are traced to one Touring kayak; factory rent is shared by three models">
+   <path d="M120 50 L405 125" class="f-none s-accent draw" stroke-width="3" data-at="1"/>
+   <path d="M120 130 L405 130" class="f-none s-accent draw" stroke-width="3" data-at="2"/>
+   <g data-at="3"><path d="M120 210 L405 55" class="f-none s-amber" stroke-width="2" stroke-dasharray="6 6"/><path d="M120 210 L405 135" class="f-none s-amber" stroke-width="2" stroke-dasharray="6 6"/><path d="M120 210 L405 210" class="f-none s-amber" stroke-width="2" stroke-dasharray="6 6"/></g>
+   <g transform="translate(480 50)" opacity=".55"><path d="M-62 0 C-34 -16 34 -16 62 0 C34 15 -34 15 -62 0Z" class="f-surface2 s-ink2"/><text y="34" text-anchor="middle" class="f-ink2 sm">Sport</text></g>
+   <g transform="translate(480 132)"><path d="M-70 0 C-38 -20 38 -20 70 0 C38 18 -38 18 -70 0Z" class="f-accent"/><text y="38" text-anchor="middle" class="f-accent sm b">Touring = cost object</text></g>
+   <g transform="translate(480 214)" opacity=".55"><path d="M-50 0 C-28 -13 28 -13 50 0 C28 12 -28 12 -50 0Z" class="f-surface2 s-ink2"/><text y="32" text-anchor="middle" class="f-ink2 sm">Kids</text></g>
+   <rect x="20" y="28" width="100" height="44" rx="10" class="f-blue-soft"/><text x="70" y="55" text-anchor="middle" class="f-ink b">Resin</text>
+   <rect x="20" y="108" width="100" height="44" rx="10" class="f-blue-soft"/><text x="70" y="135" text-anchor="middle" class="f-ink b">Mold crew</text>
+   <rect x="20" y="188" width="100" height="44" rx="10" class="f-amber-soft"/><text x="70" y="215" text-anchor="middle" class="f-ink b">Factory rent</text>
+   <circle cx="120" cy="50" r="7" class="f-accent" data-at="1" data-move="1" data-dx="280" data-dy="74"/>
+   <circle cx="120" cy="130" r="7" class="f-accent" data-at="2" data-move="2" data-dx="280" data-dy="0"/>
+   <circle cx="120" cy="210" r="6" class="f-amber" data-at="3" data-move="3" data-dx="280" data-dy="-155"/>
+   <circle cx="120" cy="210" r="6" class="f-amber" data-at="3" data-move="3" data-dx="280" data-dy="-76"/>
+   <circle cx="120" cy="210" r="6" class="f-amber" data-at="3" data-move="3" data-dx="280" data-dy="0"/>
+   <text x="250" y="76" text-anchor="middle" class="f-accent sm b" data-at="1">traced → direct</text>
+   <text x="250" y="122" text-anchor="middle" class="f-accent sm b" data-at="2">traced → direct</text>
+   <text x="235" y="250" text-anchor="middle" class="f-amber sm b" data-at="3">shared by all models → indirect</text>
+  </svg></div>
+  <div class="cols" style="--n:3">
+   <div class="card" data-step="1"><span class="k">Direct</span><b>Resin poured into this kayak's mold</b></div>
+   <div class="card" data-step="2"><span class="k">Direct</span><b>Wages of the crew molding this kayak</b></div>
+   <div class="card" data-step="3"><span class="k">Indirect (common)</span><b>Rent on the building every model uses</b><p>Drop the Touring model and the rent stays the same.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- DIRECT TO WHAT -->
+<section class="slide" data-section="1.1" data-title="Direct to what?" data-sim="objtoggle">
+ <div class="slide-inner">
+  <h2>Direct <em>to what?</em></h2>
+  <div class="split wide-left">
+   <div class="sim">
+    <span class="sim-tag">Try it · change the cost object</span>
+    <div class="seg" role="group" aria-label="Cost object" id="ot-btns">
+     <button type="button" data-o="0" aria-pressed="true">One kayak</button>
+     <button type="button" data-o="1" aria-pressed="false">Touring line</button>
+     <button type="button" data-o="2" aria-pressed="false">Whole factory</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px" id="ot-list"></div>
+    <div class="feedback" id="ot-fb" aria-live="polite">Pick a different cost object and watch the labels flip.</div>
+   </div>
+   <ul class="pts">
+    <li>A <b>cost object</b> is anything you want to cost: a unit, a product line, a department</li>
+    <li data-step="1">The <b>bigger</b> the cost object, the more costs become direct</li>
+    <li data-step="2">The plant manager's salary: <b>indirect</b> to one kayak, <b>direct</b> to the factory</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 1.2 -->
+<section class="slide" data-section="1.2" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">1.2</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Manufacturing costs</h2><div class="chips"><span class="chip">Direct materials</span><span class="chip">Direct labor</span><span class="chip">Overhead</span><span class="chip">Prime &amp; conversion</span></div></div></div>
+ </div>
+</section>
+
+<!-- FACTORY -->
+<section class="slide" data-section="1.2" data-title="Three ingredients" data-key="factory">
+ <div class="slide-inner">
+  <h2>Three ingredients make a <em>kayak</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 640 260" style="max-width:780px" aria-label="Resin, workers and overhead go into the factory; kayaks come out at $150 each">
+   <text x="320" y="18" text-anchor="middle" class="f-amber sm b" data-at="3">MANUFACTURING OVERHEAD $50,000</text>
+   <g data-at="3">
+    <rect x="160" y="44" width="62" height="26" rx="8" class="f-amber-soft"/><text x="191" y="62" text-anchor="middle" class="f-amber sm b">Rent</text>
+    <rect x="248" y="32" width="70" height="26" rx="8" class="f-amber-soft"/><text x="283" y="50" text-anchor="middle" class="f-amber sm b">Power</text>
+    <rect x="396" y="40" width="104" height="26" rx="8" class="f-amber-soft"/><text x="448" y="58" text-anchor="middle" class="f-amber sm b">Supervisor</text>
+    <rect x="410" y="96" width="62" height="26" rx="8" class="f-amber-soft"/><text x="441" y="114" text-anchor="middle" class="f-amber sm b">Glue</text>
+   </g>
+   <rect x="358" y="62" width="16" height="40" class="f-ink2"/>
+   <path d="M230 220 L230 110 L270 85 L270 110 L310 85 L310 110 L350 85 L350 110 L390 85 L390 220 Z" class="f-surface2 s-ink2" stroke-width="1.5"/>
+   <text x="310" y="212" text-anchor="middle" class="f-ink2 sm">Factory</text>
+   <rect x="30" y="120" width="110" height="60" rx="12" class="f-blue-soft s-blue" stroke-width="1.5"/>
+   <text x="85" y="156" text-anchor="middle" class="f-ink b">Resin</text>
+   <text x="85" y="205" text-anchor="middle" class="f-blue sm b" data-at="1">DIRECT MATERIALS</text>
+   <text x="85" y="224" text-anchor="middle" class="f-blue sm b" data-at="1">$60,000</text>
+   <circle cx="146" cy="138" r="6" class="f-blue" data-at="1" data-move="1" data-dx="110" data-dy="10"/>
+   <circle cx="146" cy="152" r="6" class="f-blue" data-at="1" data-move="1" data-dx="130" data-dy="20"/>
+   <circle cx="146" cy="166" r="6" class="f-blue" data-at="1" data-move="1" data-dx="96" data-dy="24"/>
+   <g data-at="2"><circle cx="290" cy="150" r="8" class="f-accent"/><rect x="281" y="160" width="18" height="24" rx="7" class="f-accent"/></g>
+   <g data-at="2"><circle cx="336" cy="150" r="8" class="f-accent"/><rect x="327" y="160" width="18" height="24" rx="7" class="f-accent"/></g>
+   <text x="310" y="246" text-anchor="middle" class="f-accent sm b" data-at="2">DIRECT LABOR $40,000</text>
+   <path d="M392 190 L470 190" class="f-none s-accent draw" stroke-width="3" data-at="4"/>
+   <g data-at="4" transform="translate(552 190)"><path d="M-70 0 C-38 -20 38 -20 70 0 C38 18 -38 18 -70 0Z" class="f-accent"/><ellipse cx="6" cy="-2" rx="15" ry="5.5" class="f-surface"/></g>
+   <text x="552" y="230" text-anchor="middle" class="f-ink sm b" data-at="4">$150,000 ÷ 1,000</text>
+   <text x="552" y="250" text-anchor="middle" class="f-accent b" data-at="4">= $150 a kayak</text>
+  </svg></div>
+  <div class="cols" style="--n:4">
+   <div class="card" data-step="1"><span class="k">Direct materials</span><b>Become part of the product, easy to trace</b></div>
+   <div class="card" data-step="2"><span class="k">Direct labor</span><b>Hands-on work traced to each unit</b></div>
+   <div class="card" data-step="3"><span class="k">Overhead</span><b>Every other factory cost, including glue and supervisors</b></div>
+   <div class="card" data-step="4"><span class="k">Total</span><b>$60,000 + $40,000 + $50,000 = $150,000</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- SORT THE COSTS -->
+<section class="slide" data-section="1.2" data-title="Sort the costs" data-sim="sortcost">
+ <div class="slide-inner">
+  <h2>Sort Northstar's <em>costs</em></h2>
+  <div class="sim">
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag">Tap a cost, then tap its group</span><button class="btn small" id="sc-reset">Shuffle again</button></div>
+   <div class="tray" id="sc-tray"></div>
+   <div class="cat-grid">
+    <div class="bucket" data-type="dm" tabindex="0" role="button"><h3>Direct materials</h3><span class="sub">Part of the kayak</span><div class="bucket-list"></div></div>
+    <div class="bucket" data-type="dl" tabindex="0" role="button"><h3>Direct labor</h3><span class="sub">Hands on each unit</span><div class="bucket-list"></div></div>
+    <div class="bucket" data-type="oh" tabindex="0" role="button"><h3>Overhead</h3><span class="sub">Other factory costs</span><div class="bucket-list"></div></div>
+    <div class="bucket" data-type="sell" tabindex="0" role="button"><h3>Selling</h3><span class="sub">Get and fill orders</span><div class="bucket-list"></div></div>
+    <div class="bucket" data-type="admin" tabindex="0" role="button"><h3>Administrative</h3><span class="sub">Run the company</span><div class="bucket-list"></div></div>
+   </div>
+   <div class="feedback" id="sc-fb" aria-live="polite">Pick a cost to start.</div>
+  </div>
+ </div>
+</section>
+
+<!-- PRIME AND CONVERSION -->
+<section class="slide" data-section="1.2" data-title="Prime and conversion" data-sim="primeconv">
+ <div class="slide-inner">
+  <h2>Direct labor <em>counts twice</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Try it · move the costs</span>
+   <div class="pc-wrap" aria-hidden="true">
+    <div class="brk top" id="pc-prime-b" style="left:0;width:66.7%">Prime $100,000</div>
+    <div class="pc-bar"><div class="seg-dm" id="pc-dm-s" style="width:40%">DM</div><div class="seg-dl" id="pc-dl-s" style="width:26.7%">DL</div><div class="seg-oh" id="pc-oh-s" style="width:33.3%">MOH</div></div>
+    <div class="brk bot" id="pc-conv-b" style="left:40%;width:60%">Conversion $90,000</div>
+   </div>
+   <div class="cols" style="--n:3">
+    <div class="ctl"><label for="pc-dm">Direct materials <output id="pc-dm-o">$60,000</output></label><input type="range" id="pc-dm" min="0" max="100000" step="5000" value="60000"></div>
+    <div class="ctl"><label for="pc-dl">Direct labor <output id="pc-dl-o">$40,000</output></label><input type="range" id="pc-dl" min="0" max="100000" step="5000" value="40000"></div>
+    <div class="ctl"><label for="pc-oh">Overhead <output id="pc-oh-o">$50,000</output></label><input type="range" id="pc-oh" min="0" max="100000" step="5000" value="50000"></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Prime = DM + DL</div><div class="v" id="pc-prime">$100,000</div></div>
+    <div><div class="k">Conversion = DL + MOH</div><div class="v" id="pc-conv">$90,000</div></div>
+    <div><div class="k">Total manufacturing</div><div class="v pos" id="pc-total">$150,000</div></div>
+   </div>
+   <div class="formula" id="pc-f">Prime + conversion = $190,000, which is <b>$40,000 more</b> than the total: that's the direct labor, counted in both.</div>
+  </div>
+ </div>
+</section>
+
+<!-- SELLING AND ADMIN -->
+<section class="slide" data-section="1.2" data-title="Selling and administrative" data-key="nonmfg">
+ <div class="slide-inner">
+  <h2>Selling and <em>admin</em> costs</h2>
+  <div class="cols" style="--n:2">
+   <div class="card" data-step="1"><span class="k">Selling</span><b>Getting orders and delivering them</b><p>Ads, sales commissions, shipping to customers, the sales team.</p></div>
+   <div class="card" data-step="2"><span class="k">Administrative</span><b>Running the company as a whole</b><p>CEO's salary, accounting, HR, head office rent.</p></div>
+  </div>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 200" style="max-width:560px" aria-label="Rent on the factory is overhead; rent on the head office is administrative">
+   <path d="M40 160 L40 80 L80 55 L80 80 L120 55 L120 80 L160 55 L160 80 L200 55 L200 160 Z" class="f-surface2 s-ink2" stroke-width="1.5"/>
+   <text x="120" y="150" text-anchor="middle" class="f-ink2 sm">Factory</text>
+   <rect x="400" y="50" width="150" height="110" rx="6" class="f-surface2 s-ink2" stroke-width="1.5"/>
+   <g class="f-bg"><rect x="420" y="66" width="22" height="18"/><rect x="464" y="66" width="22" height="18"/><rect x="508" y="66" width="22" height="18"/><rect x="420" y="98" width="22" height="18"/><rect x="464" y="98" width="22" height="18"/><rect x="508" y="98" width="22" height="18"/></g>
+   <text x="475" y="150" text-anchor="middle" class="f-ink2 sm">Head office</text>
+   <g data-at="3" data-move="3" data-dx="-180" data-dy="40"><rect x="270" y="10" width="60" height="28" rx="8" class="f-amber"/><text x="300" y="29" text-anchor="middle" class="f-bg sm b">Rent</text></g>
+   <g data-at="4" data-move="4" data-dx="175" data-dy="40"><rect x="270" y="10" width="60" height="28" rx="8" class="f-ink2"/><text x="300" y="29" text-anchor="middle" class="f-bg sm b">Rent</text></g>
+   <text x="120" y="190" text-anchor="middle" class="f-amber sm b" data-at="3">→ overhead (product cost)</text>
+   <text x="475" y="190" text-anchor="middle" class="f-ink sm b" data-at="4">→ administrative (period cost)</text>
+  </svg></div>
+  <p class="tip" data-step="3"><b>Location test</b>The same kind of cost changes group depending on where it happens. Rent on the factory is overhead<span data-step="4">, but rent on the head office is administrative</span>.</p>
+ </div>
+</section>
+
+<!-- DIV 1.3 -->
+<section class="slide" data-section="1.3" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">1.3</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Product and period costs</h2><div class="chips"><span class="chip">Inventoriable</span><span class="chip">Cost of goods sold</span><span class="chip">Expensed now</span></div></div></div>
+ </div>
+</section>
+
+<!-- FLOW -->
+<section class="slide" data-section="1.3" data-title="Where the dollars go" data-sim="flow">
+ <div class="slide-inner">
+  <h2>Product costs <em>wait</em> in inventory</h2>
+  <div class="sim">
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag">Run the month</span><button class="btn small primary" id="fl-run">▶ Make 1,000 kayaks</button></div>
+   <div class="viz-wrap"><svg class="viz" viewBox="0 0 640 260" id="fl-svg" style="max-width:720px;margin-inline:auto" aria-label="Direct materials move from raw materials into work in process, where direct labor and overhead are added; finished kayaks go to finished goods, and to cost of goods sold when sold; period costs go straight to expense">
+    <rect x="6" y="6" width="438" height="248" rx="14" class="f-surface2" opacity=".55"/>
+    <rect x="456" y="6" width="178" height="248" rx="14" class="f-accent-soft"/>
+    <text x="20" y="26" class="f-ink2 sm b">BALANCE SHEET · ASSETS</text>
+    <text x="545" y="26" text-anchor="middle" class="f-accent sm b">INCOME STATEMENT</text>
+    <g id="fl-dl"><rect x="232" y="30" width="54" height="22" rx="7" class="f-accent"/><text x="259" y="46" text-anchor="middle" class="f-bg sm b">DL</text></g>
+    <g id="fl-oh"><rect x="290" y="30" width="58" height="22" rx="7" class="f-amber"/><text x="319" y="46" text-anchor="middle" class="f-bg sm b">MOH</text></g>
+    <rect x="20" y="66" width="120" height="66" rx="10" class="f-surface s-line"/><text x="80" y="94" text-anchor="middle" class="f-ink sm b">Raw</text><text x="80" y="112" text-anchor="middle" class="f-ink sm b">materials</text>
+    <rect x="165" y="66" width="120" height="66" rx="10" class="f-surface s-line"/><text x="225" y="94" text-anchor="middle" class="f-ink sm b">Work in</text><text x="225" y="112" text-anchor="middle" class="f-ink sm b">process</text>
+    <rect x="310" y="66" width="120" height="66" rx="10" class="f-surface s-accent" stroke-width="2"/><text x="370" y="90" text-anchor="middle" class="f-ink sm b">Finished goods</text><text x="370" y="116" text-anchor="middle" class="f-accent b" id="fl-fg-t">$30,000</text>
+    <rect x="470" y="66" width="150" height="66" rx="10" class="f-surface s-accent" stroke-width="2"/><text x="545" y="90" text-anchor="middle" class="f-ink sm b">Cost of goods sold</text><text x="545" y="116" text-anchor="middle" class="f-accent b" id="fl-cogs-t">$120,000</text>
+    <path d="M140 99 L165 99 M285 99 L310 99 M430 99 L470 99" class="s-ink2" stroke-width="2"/>
+    <g id="fl-dm"><rect x="56" y="140" width="48" height="22" rx="7" class="f-blue"/><text x="80" y="156" text-anchor="middle" class="f-bg sm b">DM</text></g>
+    <rect x="20" y="182" width="265" height="60" rx="10" class="f-amber-soft"/><text x="152" y="208" text-anchor="middle" class="f-ink sm b">Selling + administrative</text><text x="152" y="228" text-anchor="middle" class="f-amber sm b">Period costs $40,000</text>
+    <path d="M285 212 L470 212" class="f-none s-amber" stroke-width="2" stroke-dasharray="6 6"/>
+    <rect x="470" y="182" width="150" height="60" rx="10" class="f-surface s-amber" stroke-width="2"/><text x="545" y="208" text-anchor="middle" class="f-ink sm b">Expense now</text><text x="545" y="228" text-anchor="middle" class="f-amber sm b">$40,000</text>
+    <g id="fl-tokens"></g>
+   </svg></div>
+   <div class="ctl"><label for="fl-sold">Kayaks sold this month <output id="fl-sold-o">800</output></label><input type="range" id="fl-sold" min="0" max="1000" step="100" value="800"></div>
+   <div class="formula" id="fl-f">800 × $150 = <b>$120,000</b> to cost of goods sold · 200 × $150 = <b>$30,000</b> stays in finished goods</div>
+   <p class="hint" style="display:block">Only direct materials start in Raw materials. Direct labor and overhead are added straight into Work in process. Each dot is 100 finished kayaks.</p>
+  </div>
+ </div>
+</section>
+
+<!-- PRODUCT OR PERIOD -->
+<section class="slide" data-section="1.3" data-title="Product or period?" data-sim="pporp">
+ <div class="slide-inner">
+  <h2>Product or <em>period?</em></h2>
+  <div class="sim">
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag" id="pp-count">Cost 1 of 10</span><button class="btn small" id="pp-reset">Start over</button></div>
+   <div class="pp-stage">
+    <button type="button" class="pp-bin" id="pp-prod"><b>Product cost</b><span>Inventory → COGS when sold</span><span class="n" id="pp-pn">0</span></button>
+    <div class="pp-card" id="pp-card">Resin for kayak hulls</div>
+    <button type="button" class="pp-bin" id="pp-per"><b>Period cost</b><span>Expense this period</span><span class="n" id="pp-qn">0</span></button>
+   </div>
+   <div class="feedback" id="pp-fb" aria-live="polite">Factory cost → product. Selling or admin → period. Tap a side.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 1.4 -->
+<section class="slide" data-section="1.4" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">1.4</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Cost behavior</h2><div class="chips"><span class="chip">Variable</span><span class="chip">Fixed</span><span class="chip">Relevant range</span><span class="chip">Mixed: Y = a + bX</span></div></div></div>
+ </div>
+</section>
+
+<!-- BEHAVIOR -->
+<section class="slide" data-section="1.4" data-title="Variable vs fixed" data-sim="behavior">
+ <div class="slide-inner">
+  <h2>Total vs <em>per unit</em></h2>
+  <div class="sim">
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+    <div class="seg" role="group" aria-label="Cost type" id="bh-btns"><button type="button" data-t="v" aria-pressed="true">Variable: resin $45 a kayak</button><button type="button" data-t="f" aria-pressed="false">Fixed: rent $12,000 a month</button></div>
+   </div>
+   <div class="charts">
+    <div class="chart-box"><div class="k">Total cost</div><svg class="viz" viewBox="0 0 300 190" id="bh-tot" aria-label="Total cost chart"></svg></div>
+    <div class="chart-box"><div class="k">Cost per kayak</div><svg class="viz" viewBox="0 0 300 190" id="bh-unit" aria-label="Cost per kayak chart"></svg></div>
+   </div>
+   <div class="ctl"><label for="bh-x">Kayaks made <output id="bh-x-o">1,000</output></label><input type="range" id="bh-x" min="100" max="2000" step="50" value="1000"></div>
+   <div class="readout">
+    <div><div class="k">Total</div><div class="v" id="bh-t">$45,000</div></div>
+    <div><div class="k">Per kayak</div><div class="v pos" id="bh-u">$45.00</div></div>
+   </div>
+   <div class="formula" id="bh-f">Variable: total <b>rises</b> with volume, cost per kayak <b>stays</b> at $45.</div>
+  </div>
+ </div>
+</section>
+
+<!-- ACTIVITY BASE -->
+<section class="slide" data-section="1.4" data-title="The activity base" data-key="driver">
+ <div class="slide-inner">
+  <h2>What makes the cost <em>move?</em></h2>
+  <p class="lede">The <b>activity base</b> (or <b>cost driver</b>) is the measure of activity that causes a variable cost. Double the driver, double the cost.</p>
+  <div style="display:flex;flex-direction:column;gap:14px;max-width:820px">
+   <div class="meter blue" data-step="1"><span><b>Kayaks produced</b> → resin</span><div class="bar-h"><i class="grow" data-at="1" style="width:72%"></i></div><span class="mono">$45 each</span></div>
+   <div class="meter" data-step="2"><span><b>Machine hours</b> → mold maintenance</span><div class="bar-h"><i class="grow" data-at="2" style="width:48%"></i></div><span class="mono">per hour</span></div>
+   <div class="meter amber" data-step="3"><span><b>Miles driven</b> → delivery fuel</span><div class="bar-h"><i class="grow" data-at="3" style="width:60%"></i></div><span class="mono">per mile</span></div>
+  </div>
+  <p class="tip" data-step="3"><b>Exam tip</b>Unless a question says otherwise, assume the activity base is units produced (or units sold).</p>
+ </div>
+</section>
+
+<!-- COMMITTED VS DISCRETIONARY -->
+<section class="slide" data-section="1.4" data-title="Two kinds of fixed cost" data-key="fixedkinds">
+ <div class="slide-inner">
+  <h2>Fixed costs: <em>committed</em> or <em>discretionary</em></h2>
+  <div class="cols" style="--n:2">
+   <div class="card" data-step="1"><span class="k">Committed · long-term</span><b>Hard to cut quickly</b>
+    <div class="meter" style="grid-template-columns:110px 1fr"><span>Depreciation</span><div class="bar-h"><i class="grow" data-at="1"></i></div></div>
+    <div class="meter" style="grid-template-columns:110px 1fr"><span>Building lease</span><div class="bar-h"><i class="grow" data-at="1"></i></div></div>
+    <div class="meter" style="grid-template-columns:110px 1fr"><span>Insurance</span><div class="bar-h"><i class="grow" data-at="1"></i></div></div>
+   </div>
+   <div class="card" data-step="2"><span class="k">Discretionary · set each year</span><b>Can be trimmed for a while</b>
+    <div class="meter amber" style="grid-template-columns:110px 1fr"><span>Advertising</span><div class="bar-h"><i class="grow" data-at="2" data-shrink="3"></i></div></div>
+    <div class="meter amber" style="grid-template-columns:110px 1fr"><span>Training</span><div class="bar-h"><i class="grow" data-at="2" data-shrink="3"></i></div></div>
+    <div class="meter amber" style="grid-template-columns:110px 1fr"><span>Research</span><div class="bar-h"><i class="grow" data-at="2" data-shrink="3"></i></div></div>
+   </div>
+  </div>
+  <p class="tip" data-step="3"><b>Tough year</b>Watch the bars: managers trim the discretionary costs, but the committed ones can't move without selling the building or breaking the lease.</p>
+ </div>
+</section>
+
+<!-- RELEVANT RANGE -->
+<section class="slide" data-section="1.4" data-title="The relevant range" data-key="range">
+ <div class="slide-inner">
+  <h2>"Fixed" only <em>inside the range</em></h2>
+  <div class="split wide-left">
+   <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 290" aria-label="Rent is $12,000 from 0 to 1,500 kayaks, then steps up to $20,000">
+    <rect x="60" y="20" width="250" height="230" class="f-accent-soft" data-at="1"/>
+    <text x="185" y="44" text-anchor="middle" class="f-accent sm b" data-at="1">RELEVANT RANGE 0–1,500</text>
+    <path d="M60 250 L570 250 M60 250 L60 14" class="f-none s-ink2" stroke-width="1.5"/>
+    <text x="64" y="12" class="f-ink2 sm">Monthly rent</text>
+    <text x="60" y="270" text-anchor="middle" class="f-ink2 sm">0</text>
+    <text x="310" y="270" text-anchor="middle" class="f-ink2 sm">1,500</text>
+    <text x="560" y="270" text-anchor="middle" class="f-ink2 sm">3,000</text>
+    <text x="315" y="288" text-anchor="middle" class="f-ink2 sm">Kayaks per month</text>
+    <path d="M60 162 L310 162" class="f-none s-accent draw" stroke-width="4" data-at="1"/>
+    <text x="54" y="166" text-anchor="end" class="f-accent sm b" data-at="1">$12,000</text>
+    <path d="M310 162 L310 103" class="f-none s-red draw" stroke-width="3" data-at="2"/>
+    <path d="M310 103 L560 103" class="f-none s-ink2 draw" stroke-width="4" data-at="2"/>
+    <text x="54" y="107" text-anchor="end" class="f-ink2 sm b" data-at="2">$20,000</text>
+    <text x="440" y="92" text-anchor="middle" class="f-red sm b" data-at="2">second building needed</text>
+    <circle cx="70" cy="162" r="9" class="f-accent s-bg" stroke-width="3" data-at="3" data-move="3" data-dx="230" data-dy="0"/>
+   </svg></div>
+   <ul class="pts">
+    <li data-step="1">Northstar's building holds up to <b>1,500 kayaks</b> a month. Inside that range, rent is a flat <b>$12,000</b></li>
+    <li data-step="2">Past 1,500 it needs a second building, and rent <b>steps up</b> to $20,000</li>
+    <li data-step="3">Anywhere inside the range, the fixed cost stays put. Outside it, all bets are off</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<!-- MIXED -->
+<section class="slide" data-section="1.4" data-title="Mixed costs" data-sim="mixed">
+ <div class="slide-inner">
+  <h2>Mixed costs: <em>Y = a + bX</em></h2>
+  <div class="split wide-left">
+   <div class="sim">
+    <span class="sim-tag">Try it · factory electricity</span>
+    <svg class="viz" viewBox="0 0 400 220" id="mx-svg" style="max-height:200px" aria-label="Mixed cost line with fixed part and variable part"></svg>
+    <div class="ctl"><label for="mx-a">Fixed part a <output id="mx-a-o">$2,000</output></label><input type="range" id="mx-a" min="0" max="5000" step="500" value="2000"></div>
+    <div class="ctl"><label for="mx-b">Variable rate b <output id="mx-b-o">$4</output></label><input type="range" id="mx-b" min="0" max="8" step="0.5" value="4"></div>
+    <div class="ctl"><label for="mx-x">Kayaks X <output id="mx-x-o">1,000</output></label><input type="range" id="mx-x" min="0" max="2000" step="50" value="1000"></div>
+    <div class="formula" id="mx-f">Y = $2,000 + $4 × 1,000 = <b>$6,000</b></div>
+   </div>
+   <ul class="pts">
+    <li><b>a</b> = the fixed part: where the line starts on the cost axis</li>
+    <li><b>b</b> = variable cost per unit: the slope</li>
+    <li data-step="1"><b>X</b> = activity; <b>Y</b> = total cost</li>
+    <li data-step="2">Northstar's electricity: $2,000 a month + $4 a kayak = <b>$6,000</b> at 1,000 kayaks</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 1.5 -->
+<section class="slide" data-section="1.5" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">1.5</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Costs for decisions</h2><div class="chips"><span class="chip">Differential</span><span class="chip">Opportunity</span><span class="chip">Sunk</span></div></div></div>
+ </div>
+</section>
+
+<!-- DECISION LAB -->
+<section class="slide" data-section="1.5" data-title="Dealer or online?" data-sim="decision">
+ <div class="slide-inner">
+  <h2>Dealer or <em>online?</em></h2>
+  <div class="sim">
+   <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn small" id="dc-sunk" aria-pressed="false">1 · Cross out what's the same</button>
+    <button class="btn small" id="dc-opp" aria-pressed="false">2 · Count the opportunity cost</button>
+   </div>
+   <div class="dc">
+    <div class="dc-row h"><span></span><span class="mono">Dealer</span><span class="mono">Online</span><span class="mono">Difference</span></div>
+    <div class="dc-row"><span>Revenue</span><span class="mono">$40,000</span><span class="mono">$46,000</span><span class="mono diff">+$6,000</span></div>
+    <div class="dc-row"><span>Shipping</span><span class="mono">−$3,000</span><span class="mono">−$5,000</span><span class="mono diff">−$2,000</span></div>
+    <div class="dc-row"><span>Website and payment fees</span><span class="mono">$0</span><span class="mono">−$2,000</span><span class="mono diff">−$2,000</span></div>
+    <div class="dc-row" id="dc-opp-row" style="display:none"><span>Warehouse rent given up</span><span class="mono">$0</span><span class="mono">−$1,500</span><span class="mono diff">−$1,500</span></div>
+    <div class="dc-row" id="dc-sunk-row"><span>Molds bought last year</span><span class="mono">−$8,000</span><span class="mono">−$8,000</span><span class="mono diff">$0</span><i class="strike"></i></div>
+    <div class="dc-row net"><span>Net</span><span class="mono" id="dc-n1">$29,000</span><span class="mono" id="dc-n2">$31,000</span><span class="mono" id="dc-nd">+$2,000</span></div>
+   </div>
+   <div class="meter blue"><span>Dealer</span><div class="bar-h"><i id="dc-b1" style="transform:scaleX(.62)"></i></div><span class="mono" id="dc-v1">$29,000</span></div>
+   <div class="meter"><span>Online</span><div class="bar-h"><i id="dc-b2" style="transform:scaleX(.66)"></i></div><span class="mono" id="dc-v2">$31,000</span></div>
+   <div class="feedback" id="dc-fb" aria-live="polite">Northstar has 200 leftover kayaks. Online looks $2,000 better. Now press the two buttons.</div>
+  </div>
+ </div>
+</section>
+
+<!-- SUNK -->
+<section class="slide" data-section="1.5" data-title="Sunk costs" data-key="sunk">
+ <div class="slide-inner">
+  <h2>Spilled milk: <em>sunk costs</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 220" style="max-width:700px" aria-label="The $8,000 already spent on molds is the same on both paths">
+   <text x="300" y="16" text-anchor="middle" class="f-ink2 sm b">PAID LAST YEAR</text>
+   <path d="M300 116 C300 160 130 150 130 182" class="f-none s-ink2 draw" stroke-width="2.5" data-at="1"/>
+   <path d="M300 116 C300 160 470 150 470 182" class="f-none s-ink2 draw" stroke-width="2.5" data-at="1"/>
+   <circle cx="300" cy="70" r="46" class="f-amber-soft s-amber" stroke-width="2"/>
+   <text x="300" y="70" text-anchor="middle" class="f-ink b">$8,000</text>
+   <text x="300" y="90" text-anchor="middle" class="f-ink2 sm">molds</text>
+   <g data-at="1"><rect x="70" y="182" width="120" height="34" rx="10" class="f-surface2"/><text x="130" y="204" text-anchor="middle" class="f-ink b">Dealer</text></g>
+   <g data-at="1"><rect x="410" y="182" width="120" height="34" rx="10" class="f-surface2"/><text x="470" y="204" text-anchor="middle" class="f-ink b">Online</text></g>
+   <g data-at="2" transform="rotate(-12 424 66)"><rect x="360" y="46" width="128" height="40" rx="8" class="f-bg s-red" stroke-width="4"/><text x="424" y="75" text-anchor="middle" class="f-red b" style="font-size:24px;letter-spacing:.1em">SUNK</text></g>
+  </svg></div>
+  <div class="cols" style="--n:3">
+   <div class="card" data-step="1"><span class="k">Either way</span><b>The $8,000 is already spent</b></div>
+   <div class="card" data-step="2"><span class="k">So</span><b>It can't change the decision</b></div>
+   <div class="card" data-step="3"><span class="k">Relevant =</span><b>Future and different between the options</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 1.6 -->
+<section class="slide" data-section="1.6" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">1.6</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Income statement formats</h2><div class="chips"><span class="chip">Traditional</span><span class="chip">Contribution</span><span class="chip">Gross vs contribution margin</span></div></div></div>
+ </div>
+</section>
+
+<!-- FORMATS -->
+<section class="slide" data-section="1.6" data-title="Two formats, one profit" data-sim="formats">
+ <div class="slide-inner">
+  <h2>Reshuffle the rows, <em>same profit</em></h2>
+  <div class="split wide-left">
+   <div class="sim">
+    <div class="seg" role="group" aria-label="Format" id="fm-btns"><button type="button" data-f="t" aria-pressed="true">Traditional</button><button type="button" data-f="c" aria-pressed="false">Contribution</button></div>
+    <div class="st" id="fm-list">
+     <div class="st-row" data-id="sales"><span>Sales</span><span class="tag none">·</span><span class="amt">$100,000</span></div>
+     <div class="st-row" data-id="cogs"><span>Cost of goods sold</span><span class="tag">cogs</span><span class="amt">(60,000)</span></div>
+     <div class="st-row sub" data-id="gm"><span>Gross margin</span><span class="tag none">·</span><span class="amt">$40,000</span></div>
+     <div class="st-row" data-id="sv"><span>Selling, variable</span><span class="tag">selling</span><span class="amt">(5,000)</span></div>
+     <div class="st-row" data-id="sf"><span>Selling, fixed</span><span class="tag">selling</span><span class="amt">(10,000)</span></div>
+     <div class="st-row" data-id="av"><span>Admin, variable</span><span class="tag">admin</span><span class="amt">(2,000)</span></div>
+     <div class="st-row" data-id="af"><span>Admin, fixed</span><span class="tag">admin</span><span class="amt">(13,000)</span></div>
+     <div class="st-row sub" data-id="cm" style="display:none"><span>Contribution margin</span><span class="tag none">·</span><span class="amt">$33,000</span></div>
+     <div class="st-row total" data-id="noi"><span>Net operating income</span><span class="tag none">·</span><span class="amt">$10,000</span></div>
+    </div>
+   </div>
+   <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="card"><span class="k">Harbor Outfitters (a paddle shop)</span><b>1,000 paddles at $100 · each costs $60 to buy</b></div>
+    <ul class="pts">
+     <li><b>Traditional:</b> sorted by <b>function</b>. Gross margin = sales − COGS</li>
+     <li data-step="1"><b>Contribution:</b> sorted by <b>behavior</b>. Contribution margin = sales − <u>all</u> variable costs</li>
+     <li data-step="2">Either way: net operating income <b>$10,000</b></li>
+    </ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- CM AND VOLUME -->
+<section class="slide" data-section="1.6" data-title="Why managers like it" data-sim="cmvolume">
+ <div class="slide-inner">
+  <h2>Every paddle adds <em>$33</em></h2>
+  <div class="split wide-left">
+   <div class="sim">
+    <span class="sim-tag">Try it · change the volume</span>
+    <div class="ctl"><label for="cv-q">Paddles sold <output id="cv-q-o">1,000</output></label><input type="range" id="cv-q" min="0" max="2000" step="50" value="1000"></div>
+    <div class="st">
+     <div class="st-row"><span>Sales ($100 each)</span><span class="tag none">·</span><span class="amt" id="cv-s">$100,000</span></div>
+     <div class="st-row"><span>Variable expenses ($67 each)</span><span class="tag var">variable</span><span class="amt" id="cv-v">(67,000)</span></div>
+     <div class="st-row sub"><span>Contribution margin</span><span class="tag none">·</span><span class="amt" id="cv-cm">$33,000</span></div>
+     <div class="st-row"><span>Fixed expenses</span><span class="tag fix">fixed</span><span class="amt">(23,000)</span></div>
+     <div class="st-row total" id="cv-noi-row"><span>Net operating income</span><span class="tag none">·</span><span class="amt" id="cv-noi">$10,000</span></div>
+    </div>
+    <div class="meter"><span>Contribution margin</span><div class="bar-h"><i id="cv-bar" style="transform:scaleX(.5)"></i></div><span class="mono" id="cv-bar-v">$33,000</span></div>
+    <div class="meter amber"><span>Fixed to cover</span><div class="bar-h"><i style="transform:scaleX(.35)"></i></div><span class="mono">$23,000</span></div>
+   </div>
+   <ul class="pts">
+    <li>Fixed expenses don't move with volume</li>
+    <li data-step="1">So each extra paddle adds its <b>$33</b> contribution margin straight to profit</li>
+    <li data-step="2">Chapter 5 (CVP) builds on exactly this: find the volume where profit hits zero</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<!-- WHERE NEXT -->
+<section class="slide" data-section="1.6" data-title="Where it comes back" data-key="uses">
+ <div class="slide-inner">
+  <h2>You'll see the contribution format <em>again</em></h2>
+  <div class="flow">
+   <div class="node acc">Ch 1 · Contribution format</div>
+   <span class="arrow" data-step="1">→</span><div class="node soft" data-step="1">Ch 5 · Cost-volume-profit</div>
+   <span class="arrow" data-step="2">→</span><div class="node soft" data-step="2">Ch 6 · Segment reporting</div>
+   <span class="arrow" data-step="3">→</span><div class="node soft" data-step="3">Ch 8 · Budgeting</div>
+   <span class="arrow" data-step="4">→</span><div class="node soft" data-step="4">Ch 13 · Special decisions</div>
+  </div>
+  <svg class="viz" viewBox="0 0 600 60" style="max-width:760px" aria-hidden="true">
+   <path d="M20 30 L580 30" class="f-none s-accent draw" stroke-width="3" data-at="1"/>
+   <circle cx="20" cy="30" r="9" class="f-accent"/>
+   <circle cx="160" cy="30" r="9" class="f-accent" data-at="1"/>
+   <circle cx="300" cy="30" r="9" class="f-accent" data-at="2"/>
+   <circle cx="440" cy="30" r="9" class="f-accent" data-at="3"/>
+   <circle cx="580" cy="30" r="9" class="f-accent" data-at="4"/>
+  </svg>
+ </div>
+</section>
+
+<!-- MUST REMEMBER -->
+<section class="slide" data-section="end" data-title="Must-remember sheet">
+ <div class="slide-inner">
+  <p class="eyebrow">Chapter 1 · Review</p>
+  <h2>The <em>must-remember</em> sheet</h2>
+  <div class="remember" id="remember">
+   <div class="card"><span class="k">1.1</span><b>Managerial = insiders, future, relevance; financial = outsiders, past, GAAP</b></div>
+   <div class="card"><span class="k">1.1</span><b>Direct = easily traced to the cost object; ask "direct to what?"</b></div>
+   <div class="card"><span class="k">1.2</span><b>DM + DL + MOH = $150,000 → $150 a kayak</b></div>
+   <div class="card"><span class="k">1.2</span><b>Prime = DM + DL ($100,000); conversion = DL + MOH ($90,000)</b></div>
+   <div class="card"><span class="k">1.2</span><b>Glue and supervisors are overhead; head office rent is admin</b></div>
+   <div class="card"><span class="k">1.3</span><b>Product costs wait in inventory; period costs (selling, admin) are expensed now</b></div>
+   <div class="card"><span class="k">1.3</span><b>800 sold → COGS $120,000; 200 unsold → finished goods $30,000</b></div>
+   <div class="card"><span class="k">1.4</span><b>Variable: total moves, per unit constant. Fixed: total constant, per unit falls</b></div>
+   <div class="card"><span class="k">1.4</span><b>Fixed only inside the relevant range ($12,000 rent up to 1,500 kayaks)</b></div>
+   <div class="card"><span class="k">1.4</span><b>Mixed: Y = a + bX ($2,000 + $4 × 1,000 = $6,000)</b></div>
+   <div class="card"><span class="k">1.5</span><b>Relevant = future and different. Sunk costs ($8,000 molds) never count</b></div>
+   <div class="card"><span class="k">1.5</span><b>Opportunity cost ($1,500) counts but isn't in the books: online wins by $500</b></div>
+   <div class="card"><span class="k">1.6</span><b>Traditional sorts by function (gross margin); contribution sorts by behavior</b></div>
+   <div class="card"><span class="k">1.6</span><b>Contribution margin = sales − all variable costs ($33,000); same $10,000 profit</b></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="quiz.html">Take the quiz →</a><a class="btn" href="textbook.html">Read the textbook</a></div>
+ </div>
+</section>
+
+</main>
+
+<footer class="bottom">
+  <button class="btn" id="prev">← Back</button>
+  <span class="mono" id="count" style="font-size:13px;color:var(--ink-2)">1 / 27</span>
+  <span class="spacer"></span>
+  <span class="hint">← → keys · tap to advance</span>
+  <button class="btn primary" id="next">Next →</button>
+</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../../assets/deck.js"></script>
+<script src="learn.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
