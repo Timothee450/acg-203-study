@@ -7,11 +7,11 @@ window.QUIZ = {
   questions: [
     /* ---- 1.1 ---- */
     { q: "Managerial accounting mainly serves:",
-      options: ["Outside investors and creditors", "Managers and employees inside the organization", "Tax authorities", "Stock exchange regulators"], answer: 1,
+      options: ["Outside investors and creditors deciding whether to lend", "Managers and employees inside the organization", "Tax authorities checking taxable income", "Stock exchange regulators"], answer: 1,
       explain: "Managerial accounting gives insiders the information they need to plan, control and make decisions. Financial accounting is the one aimed at outsiders.",
       section: "s1-1-what" },
     { q: "Which statement describes managerial accounting rather than financial accounting?",
-      options: ["It must follow GAAP", "It reports on the company as a whole", "It emphasizes relevance and looks to the future", "It is required for public companies"], answer: 2,
+      options: ["It must follow generally accepted accounting principles", "It reports on the company as a whole", "It emphasizes relevance and looks to the future", "It is required for every publicly traded company"], answer: 2,
       explain: "Managerial accounting is about future plans and decisions, so relevance and timeliness matter more than precision. It is optional, has no GAAP requirement and often reports on segments.",
       section: "s1-1-what" },
     { q: "A factory makes three kayak models in one building. If the cost object is a single kayak, the factory rent is:",
@@ -19,7 +19,7 @@ window.QUIZ = {
       explain: "The rent supports all three models at once and can't be easily traced to one kayak, so it is an indirect (common) cost. It is still a manufacturing cost, not a selling or period cost.",
       section: "s1-1-objects" },
     { q: "The salary of a manager who runs one factory is best described as:",
-      options: ["Direct to every unit the factory makes", "Indirect to the factory", "Direct to the factory, but indirect to each unit", "A sunk cost"], answer: 2,
+      options: ["Direct to every unit the factory makes", "Indirect to the factory, because it is a salary", "Direct to the factory, but indirect to each unit", "A sunk cost that can be ignored"], answer: 2,
       explain: "Direct and indirect depend on the cost object. The salary is easily traced to the factory as a whole, but it can't be traced to any single unit.",
       section: "s1-1-objects" },
 
@@ -29,7 +29,7 @@ window.QUIZ = {
       explain: "They are indirect materials. Materials that can't be easily traced to units go into manufacturing overhead.",
       section: "s1-2-mfg" },
     { q: "Which of these is direct labor?",
-      options: ["Wages of a factory security guard", "Salary of the factory supervisor", "Wages of the workers who operate the molds", "Commissions paid to salespeople"], answer: 2,
+      options: ["Wages of the factory's night security guard", "Salary of the factory supervisor", "Wages of the workers who operate the molds", "Commissions paid to the company's salespeople"], answer: 2,
       explain: "Mold operators work on individual units, so their wages are easily traced. The guard and the supervisor are indirect labor (overhead), and commissions are a selling cost.",
       section: "s1-2-mfg" },
     { q: "A company reports direct materials of $30,000, direct labor of $20,000 and manufacturing overhead of $25,000. What is its prime cost?",
@@ -47,7 +47,7 @@ window.QUIZ = {
 
     /* ---- 1.3 ---- */
     { q: "Product costs include:",
-      options: ["Only direct materials and direct labor", "Direct materials, direct labor and manufacturing overhead", "Every cost incurred during the period", "Selling and administrative costs"], answer: 1,
+      options: ["Only direct materials and direct labor, nothing else", "Direct materials, direct labor and manufacturing overhead", "Every cost the company incurs during the period", "Selling and administrative costs"], answer: 1,
       explain: "All three manufacturing costs are product (inventoriable) costs. Selling and administrative costs are period costs.",
       section: "s1-3-product" },
     { q: "Period costs are:",
@@ -81,7 +81,7 @@ window.QUIZ = {
       explain: "Advertising is set by a yearly management decision and can be cut for a while without lasting damage. The others are committed fixed costs.",
       section: "s1-4-fixed" },
     { q: "The relevant range is:",
-      options: ["The band of activity within which assumptions about cost behavior hold", "The range of prices customers will accept", "The time period a budget covers", "The difference between the highest and lowest costs"], answer: 0,
+      options: ["The band of activity where the cost behavior assumptions hold", "The range of prices that customers are willing to accept", "The time period that a budget covers", "The difference between the highest and lowest costs of the year"], answer: 0,
       explain: "Inside the relevant range a fixed cost stays fixed and a variable rate stays constant. Outside it, for example when a second building is needed, the costs change.",
       section: "s1-4-range" },
     { q: "Monthly maintenance cost follows Y = $1,500 + $3X, where X is machine hours. What is the total cost at 800 machine hours?",
@@ -95,7 +95,7 @@ window.QUIZ = {
       explain: "Sunk costs are gone whatever you decide, so they are never relevant.",
       section: "s1-5-sunk" },
     { q: "Which statement about opportunity cost is true?",
-      options: ["It is recorded in the general ledger", "It is always a fixed cost", "It is another name for a sunk cost", "It is the benefit given up by choosing one option over another"], answer: 3,
+      options: ["It is recorded in the general ledger like any other cost", "It is always a fixed cost", "It is another name for a sunk cost from a past decision", "It is the benefit given up by choosing one option"], answer: 3,
       explain: "An opportunity cost is never recorded in the accounting records, but it belongs in the decision.",
       section: "s1-5-opp" },
     { q: "Option A brings $50,000 of revenue and $30,000 of costs. Option B brings $58,000 of revenue and $35,000 of costs. By how much is Option B better?",
