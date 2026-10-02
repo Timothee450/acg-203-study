@@ -1,55 +1,10 @@
-/* Chapter 1 learning deck: step animations and simulators. The slide engine is assets/deck.js.
-   Step animations are declared in the HTML, so most slides need no code of their own:
-     data-at="N"     appears at step N (N = 0 animates in when the slide opens)
-       + class draw  a path that draws itself
-       + class grow  a bar that grows from the left (data-shrink="M" trims it to 40% at step M)
-     data-move="N" data-dx data-dy   slides by (dx, dy) at step N
-     data-count="V"  counts up to V when the slide opens */
+/* Chapter 1 learning deck: simulators. The slide engine is assets/deck.js; the step animations
+   declared in learn.html (data-at, data-move, data-count) run through assets/steps.js. */
 (() => {
 const { $, $$, RM, D, clamp, num, usd, pressSeg } = SIEDeck;
 const paren = n => '(' + num(Math.round(n)) + ')';
 
-/* ---------- generic step animation ---------- */
-function anim(s, step, instant) {
-  let z = 0;
-  $$('[data-at]', s).forEach(el => {
-    const at = +el.dataset.at, on = step >= at;
-    const delay = !instant && at === 0 && on ? D(.2 + (z++) * .12) : 0;
-    if (el.classList.contains('draw')) {
-      if (!el._len) { el._len = (el.getTotalLength ? el.getTotalLength() : 600) + 2; gsap.set(el, { strokeDasharray: el._len, strokeDashoffset: el._len }); }
-      gsap.to(el, { strokeDashoffset: on ? 0 : el._len, duration: instant ? 0 : D(.9), delay, ease: 'power2.inOut', overwrite: 'auto' });
-    } else if (el.classList.contains('grow')) {
-      const cut = el.dataset.shrink && step >= +el.dataset.shrink;
-      gsap.to(el, { scaleX: on ? (cut ? .4 : 1) : 0, transformOrigin: '0% 50%', duration: instant ? 0 : D(.8), delay, ease: 'power3.out', overwrite: 'auto' });
-    } else {
-      gsap.to(el, { autoAlpha: on ? 1 : 0, scale: on ? 1 : .8, transformOrigin: '50% 50%', duration: instant ? 0 : D(.55), delay, ease: on ? 'back.out(1.6)' : 'power2.in', overwrite: 'auto' });
-    }
-    if (el.dataset.move) {
-      const m = step >= +el.dataset.move;
-      gsap.to(el, { x: m ? +el.dataset.dx : 0, y: m ? +el.dataset.dy : 0, duration: instant ? 0 : D(1), delay: instant ? 0 : delay + D(.15), ease: 'power2.inOut', overwrite: 'auto' });
-    }
-  });
-}
-function countUp(s) {
-  $$('[data-count]', s).forEach(el => {
-    const end = +el.dataset.count, o = { v: 0 };
-    if (RM) { el.textContent = usd(end); return; }
-    gsap.to(o, { v: end, duration: 1.2, delay: .8, ease: 'power2.out', onUpdate: () => { el.textContent = usd(Math.round(o.v)); } });
-  });
-}
-const G = {
-  enter: (s, step) => { anim(s, -1, true); anim(s, step, false); countUp(s); },
-  step: (s, step) => anim(s, step, false),
-};
-const Divider = {
-  enter: s => {
-    if (RM) return;
-    gsap.fromTo($('.divider .n', s), { scale: .4, rotation: -10, autoAlpha: 0 }, { scale: 1, rotation: 0, autoAlpha: 1, duration: .8, ease: 'back.out(2)', delay: .1 });
-    gsap.fromTo($$('.chip', s), { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .4, stagger: .08, delay: .45, ease: 'power3.out' });
-  },
-};
-const Hooks = { div: Divider };
-['title', 'audience', 'trace', 'factory', 'nonmfg', 'driver', 'fixedkinds', 'range', 'sunk', 'uses'].forEach(k => { Hooks[k] = G; });
+const Hooks = SIESteps.hooks(['title', 'audience', 'trace', 'factory', 'nonmfg', 'driver', 'fixedkinds', 'range', 'sunk', 'uses']);
 
 const Sims = {};
 

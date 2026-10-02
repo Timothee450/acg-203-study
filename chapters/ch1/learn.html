@@ -66,11 +66,11 @@
 <div class="app">
 <header class="top">
   <a class="crumb" href="index.html">← Chapter 1</a>
-  <button class="brand" id="menu-btn" aria-expanded="false" aria-controls="menu">Contents <span class="caret">▾</span></button>
+  <button type="button" class="brand" id="menu-btn" aria-expanded="false" aria-controls="menu">Contents <span class="caret">▾</span></button>
   <div class="track" id="track"><div class="fill" id="fill"></div></div>
   <span class="sec-label" id="sec-label">Intro</span>
   <nav class="menu" id="menu" hidden aria-label="Jump to section"></nav>
-  <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme">☾</button>
+  <button type="button" class="theme-btn" data-theme-toggle aria-label="Switch theme">☾</button>
 </header>
 
 <main class="stage" id="stage">
@@ -84,7 +84,7 @@
     <h1>What does a kayak <em>cost?</em></h1>
     <p class="lede">Follow Northstar Kayak Co. through one month: where each dollar goes, how costs act when production changes, and which costs matter when you decide.</p>
     <div class="chips"><span class="chip">1.1 Cost objects</span><span class="chip">1.2 Manufacturing</span><span class="chip">1.3 Product vs period</span><span class="chip">1.4 Behavior</span><span class="chip">1.5 Decisions</span><span class="chip">1.6 Formats</span></div>
-    <div><button class="btn primary" id="start-btn">Start the walkthrough →</button></div>
+    <div><button type="button" class="btn primary" id="start-btn">Start the walkthrough →</button></div>
    </div>
    <div class="cert">
     <div class="cert-in">
@@ -248,7 +248,7 @@
  <div class="slide-inner">
   <h2>Sort Northstar's <em>costs</em></h2>
   <div class="sim">
-   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag">Tap a cost, then tap its group</span><button class="btn small" id="sc-reset">Shuffle again</button></div>
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag">Tap a cost, then tap its group</span><button type="button" class="btn small" id="sc-reset">Shuffle again</button></div>
    <div class="tray" id="sc-tray"></div>
    <div class="cat-grid">
     <div class="bucket" data-type="dm" tabindex="0" role="button"><h3>Direct materials</h3><span class="sub">Part of the kayak</span><div class="bucket-list"></div></div>
@@ -323,7 +323,7 @@
  <div class="slide-inner">
   <h2>Product costs <em>wait</em> in inventory</h2>
   <div class="sim">
-   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag">Run the month</span><button class="btn small primary" id="fl-run">▶ Make 1,000 kayaks</button></div>
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag">Run the month</span><button type="button" class="btn small primary" id="fl-run">▶ Make 1,000 kayaks</button></div>
    <div class="viz-wrap"><svg class="viz" viewBox="0 0 640 260" id="fl-svg" style="max-width:720px;margin-inline:auto" aria-label="Direct materials move from raw materials into work in process, where direct labor and overhead are added; finished kayaks go to finished goods, and to cost of goods sold when sold; period costs go straight to expense">
     <rect x="6" y="6" width="438" height="248" rx="14" class="f-surface2" opacity=".55"/>
     <rect x="456" y="6" width="178" height="248" rx="14" class="f-accent-soft"/>
@@ -354,7 +354,7 @@
  <div class="slide-inner">
   <h2>Product or <em>period?</em></h2>
   <div class="sim">
-   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag" id="pp-count">Cost 1 of 10</span><button class="btn small" id="pp-reset">Start over</button></div>
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag" id="pp-count">Cost 1 of 10</span><button type="button" class="btn small" id="pp-reset">Start over</button></div>
    <div class="pp-stage">
     <button type="button" class="pp-bin" id="pp-prod"><b>Product cost</b><span>Inventory → COGS when sold</span><span class="n" id="pp-pn">0</span></button>
     <div class="pp-card" id="pp-card">Resin for kayak hulls</div>
@@ -495,8 +495,8 @@
   <h2>Dealer or <em>online?</em></h2>
   <div class="sim">
    <div style="display:flex;gap:10px;flex-wrap:wrap">
-    <button class="btn small" id="dc-sunk" aria-pressed="false">1 · Cross out what's the same</button>
-    <button class="btn small" id="dc-opp" aria-pressed="false">2 · Count the opportunity cost</button>
+    <button type="button" class="btn small" id="dc-sunk" aria-pressed="false">1 · Cross out what's the same</button>
+    <button type="button" class="btn small" id="dc-opp" aria-pressed="false">2 · Count the opportunity cost</button>
    </div>
    <div class="dc">
     <div class="dc-row h"><span></span><span class="mono">Dealer</span><span class="mono">Online</span><span class="mono">Difference</span></div>
@@ -652,15 +652,16 @@
 </main>
 
 <footer class="bottom">
-  <button class="btn" id="prev">← Back</button>
+  <button type="button" class="btn" id="prev">← Back</button>
   <span class="mono" id="count" style="font-size:13px;color:var(--ink-2)">1 / 27</span>
   <span class="spacer"></span>
   <span class="hint">← → keys · tap to advance</span>
-  <button class="btn primary" id="next">Next →</button>
+  <button type="button" class="btn primary" id="next">Next →</button>
 </footer>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="../../assets/deck.js"></script>
+<script src="../../assets/steps.js"></script>
 <script src="learn.js"></script>
 <script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
