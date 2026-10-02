@@ -10,5 +10,7 @@ test("chapter titles", function () {
   eq(CHAPTERS[1].title, "Job-Order Costing: Calculating Unit Product Costs");
   eq(CHAPTERS[2].title, "Job-Order Costing: Cost Flows and External Reporting");
   eq(CHAPTERS[3].title, "Process Costing");
+  eq(CHAPTERS[4].title, "Cost-Volume-Profit Relationships");
+  eq(CHAPTERS[5].title, "Variable Costing and Segment Reporting");
   CHAPTERS.forEach(function (c) { ok(typeof c.summary === "string" && c.summary.length > 20, c.id + " summary"); });
 });
