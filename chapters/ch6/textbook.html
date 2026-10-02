@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 6 Textbook · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/textbook.css">
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="../../index.html">ACG 203 <b>Study</b></a>
+  <a class="crumb" href="index.html">← Chapter 6</a>
+  <span class="spacer"></span>
+  <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme">☾</button>
+</div></header>
+
+<div class="wrap tb">
+  <nav class="tb-toc" aria-label="Chapter contents">
+    <details open id="toc-details"><summary>Contents</summary>
+      <ol>
+        <li><a href="#s6-1"><span class="num">6.1</span> Two ways to cost a unit</a>
+          <ol>
+            <li><a href="#s6-1-assume">Ground rules</a></li>
+            <li><a href="#s6-1-unit">Unit product cost</a></li>
+          </ol></li>
+        <li><a href="#s6-2"><span class="num">6.2</span> Two income statements</a></li>
+        <li><a href="#s6-3"><span class="num">6.3</span> Why the profits differ</a>
+          <ol>
+            <li><a href="#s6-3-diff">Reconciling the difference</a></li>
+            <li><a href="#s6-3-why">Why managers like variable costing</a></li>
+          </ol></li>
+        <li><a href="#s6-4"><span class="num">6.4</span> Segmented income statements</a>
+          <ol>
+            <li><a href="#s6-4-trace">Traceable vs common fixed costs</a></li>
+            <li><a href="#s6-4-margin">Segment margin</a></li>
+            <li><a href="#s6-4-levels">Levels of segments</a></li>
+          </ol></li>
+        <li><a href="#s6-5"><span class="num">6.5</span> Segment break-even</a></li>
+        <li><a href="#s6-6"><span class="num">6.6</span> Common mistakes</a></li>
+      </ol>
+    </details>
+  </nav>
+
+  <article class="tb-body">
+    <header>
+      <span class="label">Chapter 6 · Textbook</span>
+      <h1>Variable Costing and Segment Reporting</h1>
+      <p class="lede">The same company can report two different profits for the same year, depending on how it treats fixed factory overhead. This chapter compares the two methods, then splits a company into segments to see which parts actually earn money. The example is <strong>Cobalt Trail Packs</strong>, a fictional backpack maker.</p>
+    </header>
+
+    <!-- ================= 6.1 ================= -->
+    <section id="s6-1" aria-labelledby="h6-1">
+      <h2 id="h6-1"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 6.1</span>Two ways to cost a unit</h2>
+
+      <div class="sub" id="s6-1-assume">
+        <h3>Ground rules</h3>
+        <p>To keep the comparison clean, this chapter uses <strong>actual</strong> costs (no predetermined overhead rate), spreads fixed manufacturing overhead over the units <strong>actually produced</strong>, and assumes the variable cost per unit and total fixed overhead stay the same from year to year.</p>
+      </div>
+
+      <div class="sub" id="s6-1-unit">
+        <h3>Unit product cost</h3>
+        <p>The only difference between the two methods is <strong>fixed manufacturing overhead</strong>:</p>
+        <ul class="clean">
+          <li><span class="term">Absorption costing</span> (required for external reports) treats all manufacturing costs as product costs, fixed overhead included.</li>
+          <li><span class="term">Variable costing</span> treats only variable manufacturing costs as product costs. Under variable costing, fixed manufacturing overhead is a period cost, expensed in full each year.</li>
+        </ul>
+        <p>Cobalt Trail sells packs for <span class="num">$80</span>. Each pack uses $14 of direct materials, $10 of direct labor and $6 of variable overhead. Fixed manufacturing overhead is <span class="num">$200,000</span> a year, and the factory makes 10,000 packs a year.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Per pack</th><th>Variable costing</th><th>Absorption costing</th></tr></thead>
+            <tbody>
+              <tr><td>Direct materials</td><td class="num">$14</td><td class="num">$14</td></tr>
+              <tr><td>Direct labor</td><td class="num">10</td><td class="num">10</td></tr>
+              <tr><td>Variable manufacturing overhead</td><td class="num">6</td><td class="num">6</td></tr>
+              <tr><td>Fixed manufacturing overhead ($200,000 ÷ 10,000)</td><td class="num">—</td><td class="num">20</td></tr>
+              <tr><td><strong>Unit product cost</strong></td><td class="num"><strong>$30</strong></td><td class="num"><strong>$50</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Absorption: $30 + $200,000 ÷ 10,000 = $50. Selling and administrative costs ($5 a pack variable, $90,000 a year fixed) are period costs under <em>both</em> methods.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>Variable selling expenses are never part of unit product cost. Only manufacturing costs can be.</p></div>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · Unit product cost</span>
+          <div class="fields">
+            <div class="field"><label for="uc-v">Variable manufacturing cost per unit ($)</label><input type="number" id="uc-v" min="0" step="1" value="30"></div>
+            <div class="field"><label for="uc-f">Fixed manufacturing overhead ($)</label><input type="number" id="uc-f" min="0" step="1000" value="200000"></div>
+            <div class="field"><label for="uc-q">Units produced</label><input type="number" id="uc-q" min="0" step="500" value="10000"></div>
+          </div>
+          <div class="out">
+            <div class="stat"><span class="label">Variable costing</span><span class="v" id="uc-vc">$30</span></div>
+            <div class="stat hl"><span class="label">Absorption costing</span><span class="v" id="uc-ac">$50</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Absorption costing</dt><dd>Product cost = DM + DL + variable MOH + fixed MOH.</dd>
+          <dt>Variable costing</dt><dd>Product cost = DM + DL + variable MOH; fixed MOH is a period cost.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 6.2 ================= -->
+    <section id="s6-2" aria-labelledby="h6-2">
+      <h2 id="h6-2"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 6.2</span>Two income statements</h2>
+      <p>In Year 1, Cobalt Trail made 10,000 packs but sold only 8,000, so 2,000 went into ending inventory.</p>
+      <div class="table-wrap stmt">
+        <table>
+          <thead><tr><th>Variable costing (contribution format)</th><th>Year 1</th></tr></thead>
+          <tbody>
+            <tr><td>Sales (8,000 × $80)</td><td class="num">$640,000</td></tr>
+            <tr><td>Variable cost of goods sold (8,000 × $30)</td><td class="num">(240,000)</td></tr>
+            <tr><td>Variable selling and administrative (8,000 × $5)</td><td class="num">(40,000)</td></tr>
+            <tr><td><strong>Contribution margin</strong></td><td class="num">$360,000</td></tr>
+            <tr><td>Fixed manufacturing overhead</td><td class="num">(200,000)</td></tr>
+            <tr><td>Fixed selling and administrative</td><td class="num">(90,000)</td></tr>
+            <tr><td><strong>Net operating income</strong></td><td class="num"><strong>$70,000</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-wrap stmt">
+        <table>
+          <thead><tr><th>Absorption costing (traditional format)</th><th>Year 1</th></tr></thead>
+          <tbody>
+            <tr><td>Sales (8,000 × $80)</td><td class="num">$640,000</td></tr>
+            <tr><td>Cost of goods sold (8,000 × $50)</td><td class="num">(400,000)</td></tr>
+            <tr><td><strong>Gross margin</strong></td><td class="num">$240,000</td></tr>
+            <tr><td>Selling and administrative ($40,000 + $90,000)</td><td class="num">(130,000)</td></tr>
+            <tr><td><strong>Net operating income</strong></td><td class="num"><strong>$110,000</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Same company, same year: $70,000 one way, $110,000 the other. Ending inventory also differs: 2,000 × $30 = $60,000 under variable costing, 2,000 × $50 = $100,000 under absorption costing.</p>
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Contribution format</dt><dd>Separates variable and fixed costs; used with variable costing.</dd>
+          <dt>Traditional format</dt><dd>Sales − cost of goods sold = gross margin; used with absorption costing.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 6.3 ================= -->
+    <section id="s6-3" aria-labelledby="h6-3">
+      <h2 id="h6-3"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 6.3</span>Why the profits differ</h2>
+
+      <div class="sub" id="s6-3-diff">
+        <h3>Reconciling the difference</h3>
+        <p>Under absorption costing, each pack carries $20 of fixed overhead. The 2,000 unsold packs took 2,000 × $20 = $40,000 of Year 1's fixed overhead into inventory, so it isn't expensed yet. Variable costing expensed all $200,000. That is the whole difference: $110,000 − $70,000 = $40,000.</p>
+        <p>In Year 2 the factory again made 10,000 packs but sold 12,000, including the 2,000 left from Year 1. Those packs bring their $40,000 of fixed overhead out of inventory and into cost of goods sold:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th></th><th>Year 1 (made 10,000, sold 8,000)</th><th>Year 2 (made 10,000, sold 12,000)</th></tr></thead>
+            <tbody>
+              <tr><td>Variable costing NOI</td><td class="num">$70,000</td><td class="num">$250,000</td></tr>
+              <tr><td>+ Fixed MOH deferred in (released from) inventory</td><td class="num">40,000</td><td class="num">(40,000)</td></tr>
+              <tr><td>Absorption costing NOI</td><td class="num">$110,000</td><td class="num">$210,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>When…</th><th>Inventory</th><th>Higher net operating income</th></tr></thead>
+            <tbody>
+              <tr><td>Units produced &gt; units sold</td><td>Grows</td><td>Absorption</td></tr>
+              <tr><td>Units produced &lt; units sold</td><td>Shrinks</td><td>Variable</td></tr>
+              <tr><td>Units produced = units sold</td><td>No change</td><td>Same</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>When a company produces more than it sells, absorption costing reports the higher profit, because some fixed overhead waits in inventory. Over the two years together, both methods report $320,000: the timing differs, the total doesn't.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>Difference in NOI = change in inventory units × fixed manufacturing overhead per unit.</p></div>
+      </div>
+
+      <div class="sub" id="s6-3-why">
+        <h3>Why managers like variable costing</h3>
+        <ul class="clean">
+          <li><strong>It fits CVP.</strong> Variable costing keeps fixed costs fixed, so contribution margin and break-even work directly.</li>
+          <li><strong>Profit follows sales.</strong> Under absorption costing, a manager can raise profit just by producing more than needed, piling fixed overhead into inventory. Variable costing profit only rises when sales rise.</li>
+          <li><strong>It supports decisions.</strong> Absorption costing makes fixed overhead look like a per-unit cost that varies with volume, which can mislead pricing and keep-or-drop decisions.</li>
+        </ul>
+        <p>Absorption costing is still required for external financial reports and income taxes.</p>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Deferred fixed overhead</dt><dd>Fixed MOH held in ending inventory under absorption costing.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 6.4 ================= -->
+    <section id="s6-4" aria-labelledby="h6-4">
+      <h2 id="h6-4"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 6.4</span>Segmented income statements</h2>
+      <p>A <span class="term">segment</span> is any part of the business that managers want profit data for: a product line, a sales channel, a region, a store. Cobalt Trail sells through two channels, <strong>Online</strong> and <strong>Retail</strong> stores.</p>
+
+      <div class="sub" id="s6-4-trace">
+        <h3>Traceable vs common fixed costs</h3>
+        <p>A <span class="term">traceable fixed cost</span> exists because of the segment: if the segment were dropped, the traceable fixed cost would disappear. The website's hosting and the online marketing team are traceable to Online; store leases are traceable to Retail.</p>
+        <p>A <span class="term">common fixed cost</span> supports several segments at once and would stay even if one segment were dropped, such as the CEO's salary or the headquarters building. Common fixed costs should not be allocated to segments: any split would be arbitrary.</p>
+      </div>
+
+      <div class="sub" id="s6-4-margin">
+        <h3>Segment margin</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th></th><th>Total company</th><th>Online</th><th>Retail</th></tr></thead>
+            <tbody>
+              <tr><td>Sales</td><td class="num">$1,000,000</td><td class="num">$500,000</td><td class="num">$500,000</td></tr>
+              <tr><td>Variable expenses</td><td class="num">(500,000)</td><td class="num">(200,000)</td><td class="num">(300,000)</td></tr>
+              <tr><td><strong>Contribution margin</strong></td><td class="num">$500,000 (50%)</td><td class="num">$300,000 (60%)</td><td class="num">$200,000 (40%)</td></tr>
+              <tr><td>Traceable fixed expenses</td><td class="num">(300,000)</td><td class="num">(180,000)</td><td class="num">(120,000)</td></tr>
+              <tr><td><strong>Segment margin</strong></td><td class="num">$200,000</td><td class="num">$120,000</td><td class="num">$80,000</td></tr>
+              <tr><td>Common fixed expenses</td><td class="num">(100,000)</td><td></td><td></td></tr>
+              <tr><td><strong>Net operating income</strong></td><td class="num"><strong>$100,000</strong></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The <span class="term">segment margin</span> is contribution margin minus traceable fixed costs. It's the best gauge of a segment's long-run profitability: Retail adds $80,000 to the company's profit.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>Contribution margin is for short-run, volume decisions. Segment margin is for long-run decisions, such as keeping or dropping a segment.</p></div>
+      </div>
+
+      <div class="sub" id="s6-4-levels">
+        <h3>Levels of segments</h3>
+        <p>Segments can be broken down further. Online splits into the company <em>website</em> and an outside <em>marketplace</em>. The online team manager's salary is traceable to Online, but common to the website and the marketplace, because neither one alone would remove it. A cost can be traceable at one level and common at the level below.</p>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Traceable fixed cost</dt><dd>Exists because of the segment; disappears if the segment is dropped.</dd>
+          <dt>Common fixed cost</dt><dd>Supports several segments; stays if any one is dropped.</dd>
+          <dt>Segment margin</dt><dd>Segment CM − traceable fixed costs.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 6.5 ================= -->
+    <section id="s6-5" aria-labelledby="h6-5">
+      <h2 id="h6-5"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 6.5</span>Segment break-even</h2>
+      <p>A segment breaks even when its contribution margin covers its own traceable fixed costs:</p>
+      <p class="formula">Segment break-even sales = traceable fixed expenses ÷ segment CM ratio</p>
+      <p>Online: $180,000 ÷ 60% = $300,000. Retail: $120,000 ÷ 40% = $300,000.</p>
+      <p>The company as a whole must also cover the common fixed costs:</p>
+      <p class="formula">Company break-even sales = (traceable + common fixed expenses) ÷ overall CM ratio</p>
+      <p>Cobalt Trail: ($300,000 + $100,000) ÷ 50% = $800,000. That's more than the two segment break-evens added together ($600,000), because the common costs have to be covered too.</p>
+      <div class="tip"><span class="label">Exam tip</span><p>The company break-even assumes today's sales mix (here 50/50). If the mix changes, so does the overall CM ratio.</p></div>
+      <div class="panel tool">
+        <span class="label tool-tag">Try it · Segment break-even</span>
+        <div class="fields">
+          <div class="field"><label for="sb-of">Online traceable fixed ($)</label><input type="number" id="sb-of" min="0" step="10000" value="180000"></div>
+          <div class="field"><label for="sb-rf">Retail traceable fixed ($)</label><input type="number" id="sb-rf" min="0" step="10000" value="120000"></div>
+          <div class="field"><label for="sb-c">Common fixed ($)</label><input type="number" id="sb-c" min="0" step="10000" value="100000"></div>
+        </div>
+        <div class="out">
+          <div class="stat"><span class="label">Online (60% CM)</span><span class="v" id="sb-o">$300,000</span></div>
+          <div class="stat"><span class="label">Retail (40% CM)</span><span class="v" id="sb-r">$300,000</span></div>
+          <div class="stat hl"><span class="label">Company (50% CM)</span><span class="v" id="sb-t">$800,000</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 6.6 ================= -->
+    <section id="s6-6" aria-labelledby="h6-6">
+      <h2 id="h6-6"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 6.6</span>Common mistakes</h2>
+      <p><strong>Leaving costs out.</strong> Segment reports should include every cost the segment causes, all along the value chain: research, design, marketing, distribution and customer service, not just manufacturing.</p>
+      <p><strong>Using a poor allocation base.</strong> When a cost is assigned to segments, the base should be what actually drives that cost. Sales dollars rarely drive a cost.</p>
+      <p><strong>Splitting up common costs.</strong> Suppose Cobalt Trail spreads its $100,000 of common costs by floor space, and the stores use 90% of it. Retail is charged $90,000 and seems to lose $10,000 ($80,000 − $90,000). Dropping Retail looks smart, but the $100,000 of common costs would stay. The company would lose Retail's $80,000 segment margin, and NOI would fall from $100,000 to $20,000.</p>
+      <div class="tip"><span class="label">Exam tip</span><p>To decide whether to keep a segment, compare its segment margin with zero. Allocated common costs don't change the answer.</p></div>
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Arbitrary allocation</dt><dd>Splitting a common cost among segments; it can make a profitable segment look unprofitable.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="tb-next" aria-label="Next steps">
+      <a class="btn" href="learn.html">Try the animated lesson</a>
+      <a class="btn primary" href="quiz.html">Take the quiz →</a>
+    </nav>
+  </article>
+</div>
+
+<footer class="site-foot"><div class="wrap"><p>ACG 203 Study is independent study material. It is not affiliated with or endorsed by UNCW or McGraw-Hill. Companies and numbers in the examples are fictional.</p></div></footer>
+
+<script src="textbook.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

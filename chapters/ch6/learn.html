@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 6 Learning · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/deck.css">
+<style>
+.s-blue{stroke:var(--blue)} .f-blue-soft{fill:var(--blue-soft)} .s-red{stroke:var(--red)}
+.viz text{font-size:15px} .viz .sm{font-size:12.5px} .viz .b{font-weight:700} .viz .lg{font-size:22px}
+.sim-bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.receipt{display:flex;flex-direction:column;gap:2px;width:100%;font-family:var(--f-mono);font-size:15px}
+.receipt > div{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;border-bottom:1px dashed var(--line)}
+.receipt .tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:18px;color:var(--accent)}
+.pp-card{background:var(--surface);border:1.5px solid var(--ink);border-radius:14px;padding:16px;text-align:center;font-weight:700;font-size:18px;display:grid;place-items:center;min-height:80px}
+.bins{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:8px}
+@media (max-width:560px){.bins{grid-template-columns:1fr}}
+.pp-bin{border:2px dashed var(--line);border-radius:14px;padding:10px 8px;text-align:center;display:flex;flex-direction:column;gap:4px;justify-content:center;font-size:13px;color:var(--ink-2);background:none;cursor:pointer;touch-action:manipulation}
+.pp-bin b{color:var(--ink);font-size:14px;line-height:1.25}
+.pp-bin .n{font:700 20px var(--f-mono);color:var(--accent)}
+.sched3{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:12px}
+@media (max-width:860px){.sched3{grid-template-columns:1fr}}
+.sch{gap:2px;padding:14px 16px}
+.sch .ln{display:flex;justify-content:space-between;gap:10px;font:500 13.5px/1.5 var(--f-mono);padding:3px 0;border-bottom:1px dashed var(--line)}
+.sch .ln.sub{font-weight:700}
+.sch .ln.tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:15px;color:var(--accent);padding-top:6px}
+.tbl td.num,.tbl th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.tbl td,.tbl th{padding:6px 10px}
+.tbl tr.sub td{font-weight:700;border-top:2px solid var(--ink)}
+.tbl tr.hl td{color:var(--accent)}
+@media (max-width:520px){.tbl{font-size:12.5px}.tbl td,.tbl th{padding:5px 4px}.tbl th{font-size:10px}}
+.vs2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.vs2{grid-template-columns:1fr}}
+.vs2 .card{gap:6px}
+.vs2 .card b.big{font:700 24px/1.1 var(--f-mono)}
+.chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:8px;align-items:stretch}
+.chain .card{padding:12px 14px;gap:4px}
+.chain .card b{font:700 17px/1.3 var(--f-mono)}
+.chain .card span:last-child{font-size:12.5px;color:var(--ink-2)}
+.chain .arr{align-self:center;font:700 22px var(--f-mono);color:var(--accent)}
+@media (max-width:860px){.chain{grid-template-columns:1fr}.chain .arr{transform:rotate(90deg);justify-self:center;line-height:1}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <a class="crumb" href="index.html">← Chapter 6</a>
+  <button type="button" class="brand" id="menu-btn" aria-expanded="false" aria-controls="menu">Contents <span class="caret">▾</span></button>
+  <div class="track" id="track"><div class="fill" id="fill"></div></div>
+  <span class="sec-label" id="sec-label">Intro</span>
+  <nav class="menu" id="menu" hidden aria-label="Jump to section"></nav>
+  <button type="button" class="theme-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+</header>
+
+<main class="stage" id="stage">
+
+<!-- TITLE -->
+<section class="slide" data-section="intro" data-title="Welcome" data-key="title">
+ <div class="slide-inner">
+  <div class="split">
+   <div style="display:flex;flex-direction:column;gap:22px">
+    <p class="eyebrow">ACG 203 · Chapter 6</p>
+    <h1>One year, <em>two</em> profits</h1>
+    <p class="lede">Cobalt Trail Packs made 10,000 backpacks and sold 8,000. Its profit was $70,000, or $110,000. Both are correct. Here's why, and how to see which parts of a company really earn money.</p>
+    <div class="chips"><span class="chip">6.1 Unit cost</span><span class="chip">6.2 Statements</span><span class="chip">6.3 Reconcile</span><span class="chip">6.4 Segments</span><span class="chip">6.5 Break-even</span><span class="chip">6.6 Mistakes</span></div>
+    <div><button type="button" class="btn primary" id="start-btn">Start the walkthrough →</button></div>
+   </div>
+   <div class="cert">
+    <div class="cert-in">
+     <span class="k">Cobalt Trail · Year 1</span>
+     <div class="receipt">
+      <div data-at="0"><span>Unit cost, variable costing</span><span>$30</span></div>
+      <div data-at="0"><span>Unit cost, absorption costing</span><span>$50</span></div>
+      <div data-at="0"><span>NOI, variable costing</span><span>$70,000</span></div>
+      <div data-at="0"><span>NOI, absorption costing</span><span>$110,000</span></div>
+      <div class="tot" data-at="0"><span>Difference</span><span data-count="40000">$40,000</span></div>
+     </div>
+     <div class="cert-row"><span>Cobalt Trail Packs</span><span>2,000 packs in inventory</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 6.1 -->
+<section class="slide" data-section="6.1" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">6.1</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Two ways to cost a unit</h2><div class="chips"><span class="chip">Absorption</span><span class="chip">Variable</span><span class="chip">Fixed overhead</span></div></div></div>
+ </div>
+</section>
+
+<!-- UNIT COST -->
+<section class="slide" data-section="6.1" data-title="Unit product cost" data-key="unitcost">
+ <div class="slide-inner">
+  <h2>The only difference: <em>fixed overhead</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 220" style="max-width:760px" aria-label="Both methods include $14 materials, $10 labor and $6 variable overhead; absorption costing adds $20 of fixed overhead for $50 a pack">
+   <text x="20" y="44" class="f-ink sm b">Variable costing</text>
+   <text x="20" y="124" class="f-ink sm b">Absorption costing</text>
+   <rect x="150" y="26" width="112" height="30" rx="4" class="f-blue grow" data-at="1"/>
+   <rect x="262" y="26" width="80" height="30" rx="4" class="f-accent grow" data-at="1" data-d=".15"/>
+   <rect x="342" y="26" width="48" height="30" rx="4" class="f-amber grow" data-at="1" data-d=".3"/>
+   <text x="206" y="46" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".4">DM $14</text>
+   <text x="302" y="46" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".5">DL $10</text>
+   <text x="366" y="46" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".6">$6</text>
+   <text x="400" y="47" class="f-accent b" data-at="1" data-d=".7">= $30</text>
+   <rect x="150" y="106" width="112" height="30" rx="4" class="f-blue grow" data-at="1" data-d=".1"/>
+   <rect x="262" y="106" width="80" height="30" rx="4" class="f-accent grow" data-at="1" data-d=".25"/>
+   <rect x="342" y="106" width="48" height="30" rx="4" class="f-amber grow" data-at="1" data-d=".4"/>
+   <rect x="390" y="106" width="160" height="30" rx="4" class="f-red grow" data-at="2"/>
+   <text x="470" y="126" text-anchor="middle" class="f-bg sm b" data-at="2" data-d=".4">fixed MOH $20</text>
+   <text x="556" y="127" class="f-red b" data-at="2" data-d=".6">$50</text>
+   <text x="470" y="158" text-anchor="middle" class="f-red sm" data-at="2" data-d=".6">$200,000 ÷ 10,000 packs</text>
+   <text x="300" y="200" text-anchor="middle" class="f-ink sm b" data-at="3">Variable costing: the $200,000 is a period cost, expensed this year</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Both methods count direct materials, direct labor and variable overhead: <b>$30</b> a pack</li>
+   <li data-step="2"><b>Absorption costing</b> also loads $200,000 ÷ 10,000 = <b>$20</b> of fixed overhead into each pack: <b>$50</b></li>
+   <li data-step="3"><b>Variable costing</b> treats fixed manufacturing overhead as a period cost. Selling and admin costs are period costs under both</li>
+  </ul>
+ </div>
+</section>
+
+<!-- CLASSIFY SIM -->
+<section class="slide" data-section="6.1" data-title="Product cost or not?" data-sim="classify">
+ <div class="slide-inner">
+  <h2>Is it in the <em>unit cost?</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="cl-count">Cost 1 of 10</span><button type="button" class="btn small" id="cl-reset">Start over</button></div>
+   <div class="pp-card" id="cl-card">Direct materials</div>
+   <div class="bins" style="--n:3">
+    <button type="button" class="pp-bin" data-b="both"><b>Both methods</b><span>product cost either way</span><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="abs"><b>Absorption only</b><span>fixed factory cost</span><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="none"><b>Neither</b><span>period cost always</span><span class="n">0</span></button>
+   </div>
+   <div class="feedback" id="cl-fb" aria-live="polite">Is this cost part of a pack's unit product cost?</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 6.2 -->
+<section class="slide" data-section="6.2" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">6.2</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Two income statements</h2><div class="chips"><span class="chip">Contribution format</span><span class="chip">Traditional format</span></div></div></div>
+ </div>
+</section>
+
+<!-- TWO STATEMENTS -->
+<section class="slide" data-section="6.2" data-title="Side by side" data-key="twostmts">
+ <div class="slide-inner">
+  <h2>Year 1, <em>side by side</em></h2>
+  <div class="sched3" style="--n:2">
+   <div class="card sch" data-step="1"><span class="k">Variable costing · 8,000 sold</span>
+    <div class="ln" data-at="1"><span>Sales</span><span>$640,000</span></div>
+    <div class="ln" data-at="1" data-d=".1"><span>Variable COGS (8,000 × $30)</span><span>(240,000)</span></div>
+    <div class="ln" data-at="1" data-d=".2"><span>Variable S&amp;A (8,000 × $5)</span><span>(40,000)</span></div>
+    <div class="ln sub" data-at="1" data-d=".3"><span>Contribution margin</span><span>$360,000</span></div>
+    <div class="ln" data-at="1" data-d=".4"><span>Fixed MOH (all of it)</span><span>(200,000)</span></div>
+    <div class="ln" data-at="1" data-d=".5"><span>Fixed S&amp;A</span><span>(90,000)</span></div>
+    <div class="ln tot" data-at="1" data-d=".6"><span>Net operating income</span><span data-count="70000">$70,000</span></div>
+   </div>
+   <div class="card sch" data-step="2"><span class="k">Absorption costing · 8,000 sold</span>
+    <div class="ln" data-at="2"><span>Sales</span><span>$640,000</span></div>
+    <div class="ln" data-at="2" data-d=".1"><span>COGS (8,000 × $50)</span><span>(400,000)</span></div>
+    <div class="ln sub" data-at="2" data-d=".2"><span>Gross margin</span><span>$240,000</span></div>
+    <div class="ln" data-at="2" data-d=".3"><span>S&amp;A ($40,000 + $90,000)</span><span>(130,000)</span></div>
+    <div class="ln tot" data-at="2" data-d=".4"><span>Net operating income</span><span data-count="110000">$110,000</span></div>
+   </div>
+  </div>
+  <p class="tip" data-step="3"><b>Why</b>Absorption costing expensed only 8,000 × $20 = $160,000 of fixed overhead. The other $40,000 is sitting in the 2,000 unsold packs.</p>
+ </div>
+</section>
+
+<!-- STATEMENT SIM -->
+<section class="slide" data-section="6.2" data-title="Change production and sales" data-sim="stmtsim">
+ <div class="slide-inner">
+  <h2>Make more, sell less: <em>what happens?</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Year 1 · no beginning inventory</span>
+   <div class="cols" style="--n:2">
+    <div class="ctl"><label for="ss-m">Packs produced <output id="ss-m-o">10,000</output></label><input type="range" id="ss-m" min="8000" max="16000" step="1000" value="10000"></div>
+    <div class="ctl"><label for="ss-s">Packs sold <output id="ss-s-o">8,000</output></label><input type="range" id="ss-s" min="4000" max="10000" step="500" value="8000"></div>
+   </div>
+   <div class="vs2">
+    <div class="card"><span class="k">Variable costing NOI</span><b class="big" id="ss-v">$70,000</b><span class="mono" id="ss-vu">unit cost $30</span></div>
+    <div class="card"><span class="k">Absorption costing NOI</span><b class="big" id="ss-a">$110,000</b><span class="mono" id="ss-au">unit cost $50</span></div>
+   </div>
+   <div class="formula" id="ss-f" aria-live="polite">Difference = 2,000 packs left in inventory × $20 of fixed overhead = <b>$40,000</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 6.3 -->
+<section class="slide" data-section="6.3" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">6.3</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Why the profits differ</h2><div class="chips"><span class="chip">Deferred in inventory</span><span class="chip">Released later</span><span class="chip">Why managers care</span></div></div></div>
+ </div>
+</section>
+
+<!-- INVENTORY -->
+<section class="slide" data-section="6.3" data-title="Fixed overhead in inventory" data-key="inventory">
+ <div class="slide-inner">
+  <h2>$40,000 waits in the <em>warehouse</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 200" style="max-width:760px" aria-label="Ten blocks of $20,000 fixed overhead: eight are expensed with the packs sold, two wait in inventory as $40,000, then are expensed in Year 2">
+   <text x="300" y="18" text-anchor="middle" class="f-ink sm b">Fixed MOH $200,000 = 10 blocks of 1,000 packs × $20</text>
+   <g class="f-red">
+    <rect x="30" y="30" width="48" height="34" rx="5" data-at="0" data-move="1" data-dx="0" data-dy="104"/>
+    <rect x="84" y="30" width="48" height="34" rx="5" data-at="0" data-move="1" data-dx="0" data-dy="104" data-d=".05"/>
+    <rect x="138" y="30" width="48" height="34" rx="5" data-at="0" data-move="1" data-dx="0" data-dy="104" data-d=".1"/>
+    <rect x="192" y="30" width="48" height="34" rx="5" data-at="0" data-move="1" data-dx="0" data-dy="104" data-d=".15"/>
+    <rect x="246" y="30" width="48" height="34" rx="5" data-at="0" data-move="1" data-dx="0" data-dy="104" data-d=".2"/>
+    <rect x="300" y="30" width="48" height="34" rx="5" data-at="0" data-move="1" data-dx="0" data-dy="104" data-d=".25"/>
+    <rect x="354" y="30" width="48" height="34" rx="5" data-at="0" data-move="1" data-dx="0" data-dy="104" data-d=".3"/>
+    <rect x="408" y="30" width="48" height="34" rx="5" data-at="0" data-move="1" data-dx="0" data-dy="104" data-d=".35"/>
+   </g>
+   <g class="f-amber">
+    <rect x="470" y="30" width="48" height="34" rx="5" data-at="0" data-move="2" data-dx="0" data-dy="104"/>
+    <rect x="524" y="30" width="48" height="34" rx="5" data-at="0" data-move="2" data-dx="0" data-dy="104" data-d=".1"/>
+   </g>
+   <text x="243" y="122" text-anchor="middle" class="f-red sm b" data-at="1" data-d=".6">Year 1 cost of goods sold: 8,000 sold × $20 = $160,000</text>
+   <rect x="20" y="128" width="446" height="44" rx="8" class="f-none s-red" stroke-width="1.5" stroke-dasharray="5 4" data-at="1"/>
+   <text x="521" y="88" text-anchor="middle" class="f-amber sm b" data-at="1" data-d=".6" data-out="2">ending inventory</text>
+   <text x="521" y="106" text-anchor="middle" class="f-amber b" data-at="1" data-d=".7" data-out="2">$40,000</text>
+   <rect x="464" y="128" width="114" height="44" rx="8" class="f-none s-amber" stroke-width="1.5" stroke-dasharray="5 4" data-at="2"/>
+   <text x="508" y="192" text-anchor="middle" class="f-amber sm b" data-at="2" data-d=".9">Year 2 expense: $40,000</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Year 1: 8,000 of the 10,000 packs sell, taking $160,000 of fixed overhead with them. 2,000 × $20 = <b>$40,000</b> stays in inventory, so absorption NOI is $40,000 higher: $110,000 vs $70,000</li>
+   <li data-step="2">Year 2: 12,000 packs sell, including the 2,000 from inventory. The $40,000 is released, so absorption NOI is $40,000 <b>lower</b>: $210,000 vs $250,000</li>
+  </ul>
+ </div>
+</section>
+
+<!-- YEAR SIM -->
+<section class="slide" data-section="6.3" data-title="Two years" data-sim="yearsim">
+ <div class="slide-inner">
+  <h2>Over two years, it <em>evens out</em></h2>
+  <div class="sim">
+   <span class="sim-tag">10,000 packs made each year · $20 fixed MOH per pack</span>
+   <div class="cols" style="--n:2">
+    <div class="ctl"><label for="ys-1">Year 1 packs sold <output id="ys-1-o">8,000</output></label><input type="range" id="ys-1" min="6000" max="10000" step="500" value="8000"></div>
+    <div class="ctl"><label for="ys-2">Year 2 packs sold <output id="ys-2-o">12,000</output></label><input type="range" id="ys-2" min="6000" max="14000" step="500" value="12000"></div>
+   </div>
+   <div style="overflow-x:auto"><table class="tbl">
+    <thead><tr><th></th><th class="num">Year 1</th><th class="num">Year 2</th><th class="num">Total</th></tr></thead>
+    <tbody>
+     <tr><td>Inventory change</td><td class="num" id="ys-i1">+2,000</td><td class="num" id="ys-i2">−2,000</td><td class="num" id="ys-it">0</td></tr>
+     <tr><td>Variable NOI</td><td class="num" id="ys-v1">$70,000</td><td class="num" id="ys-v2">$250,000</td><td class="num" id="ys-vt">$320,000</td></tr>
+     <tr class="hl"><td>Absorption NOI</td><td class="num" id="ys-a1">$110,000</td><td class="num" id="ys-a2">$210,000</td><td class="num" id="ys-at">$320,000</td></tr>
+    </tbody>
+   </table></div>
+   <div class="feedback" id="ys-fb" aria-live="polite">Inventory ends where it started, so the two-year totals match: $320,000 either way.</div>
+  </div>
+ </div>
+</section>
+
+<!-- WHICH IS HIGHER SIM -->
+<section class="slide" data-section="6.3" data-title="Which is higher?" data-sim="which">
+ <div class="slide-inner">
+  <h2>Which profit is <em>higher?</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="wh-count">Case 1 of 8</span><button type="button" class="btn small" id="wh-reset">Start over</button></div>
+   <div class="pp-card" id="wh-card">Produced 50,000, sold 45,000</div>
+   <div class="bins" style="--n:3">
+    <button type="button" class="pp-bin" data-b="abs"><b>Absorption higher</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="var"><b>Variable higher</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="same"><b>Same</b><span class="n">0</span></button>
+   </div>
+   <div class="feedback" id="wh-fb" aria-live="polite">Watch what happens to inventory.</div>
+  </div>
+ </div>
+</section>
+
+<!-- WHY VARIABLE COSTING -->
+<section class="slide" data-section="6.3" data-title="The overproduction trap" data-key="whyvc">
+ <div class="slide-inner">
+  <h2>Profit from <em>overproducing?</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 200" style="max-width:760px" aria-label="With sales fixed at 8,000 packs, producing 16,000 raises absorption profit to $170,000 while variable costing stays at $70,000">
+   <text x="20" y="20" class="f-ink2 sm b">Sales stay at 8,000 packs</text>
+   <text x="160" y="56" text-anchor="end" class="f-ink sm b">Variable costing</text>
+   <rect x="170" y="38" width="105" height="30" rx="4" class="f-blue grow" data-at="1"/>
+   <text x="283" y="59" class="f-blue sm b" data-at="1" data-d=".4">$70,000 however much is made</text>
+   <text x="160" y="106" text-anchor="end" class="f-ink sm b">Absorption, make 10,000</text>
+   <rect x="170" y="88" width="165" height="30" rx="4" class="f-accent grow" data-at="1" data-d=".2"/>
+   <text x="343" y="109" class="f-accent sm b" data-at="1" data-d=".6">$110,000</text>
+   <text x="160" y="156" text-anchor="end" class="f-ink sm b">Absorption, make 16,000</text>
+   <rect x="170" y="138" width="255" height="30" rx="4" class="f-red grow" data-at="2"/>
+   <text x="433" y="159" class="f-red sm b" data-at="2" data-d=".4">$170,000</text>
+   <text x="300" y="194" text-anchor="middle" class="f-ink sm" data-at="3">8,000 unsold packs × $12.50 = $100,000 of fixed overhead parked in inventory</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Variable costing profit only moves when <b>sales</b> move</li>
+   <li data-step="2">Under absorption costing, making 16,000 packs that nobody bought lifts profit to $170,000</li>
+   <li data-step="3">That's why managers prefer variable costing inside the company: it fits CVP and can't be pumped up by building inventory. Absorption costing is still required for outside reports and taxes</li>
+  </ul>
+ </div>
+</section>
+
+<!-- DIV 6.4 -->
+<section class="slide" data-section="6.4" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">6.4</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Segmented income statements</h2><div class="chips"><span class="chip">Traceable</span><span class="chip">Common</span><span class="chip">Segment margin</span></div></div></div>
+ </div>
+</section>
+
+<!-- TRACEABLE -->
+<section class="slide" data-section="6.4" data-title="Traceable vs common" data-key="traceable">
+ <div class="slide-inner">
+  <h2>Would it <em>disappear?</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 228" style="max-width:760px" aria-label="Online has $180,000 of traceable fixed costs and Retail $120,000; $100,000 of common costs sit above both and stay if Retail is dropped">
+   <g data-at="2"><rect x="200" y="10" width="200" height="44" rx="10" class="f-amber-soft s-amber" stroke-width="1.5"/><text x="300" y="30" text-anchor="middle" class="f-ink sm b">Common: CEO, headquarters</text><text x="300" y="46" text-anchor="middle" class="f-amber sm b">$100,000</text></g>
+   <path d="M260 54 L150 96" class="f-none s-amber draw" stroke-width="2" data-at="2" data-d=".3"/>
+   <path d="M340 54 L450 96" class="f-none s-amber draw" stroke-width="2" data-at="2" data-d=".3" data-out="3"/>
+   <rect x="60" y="96" width="180" height="44" rx="10" class="f-surface s-line"/><text x="150" y="123" text-anchor="middle" class="f-ink b">Online</text>
+   <g data-out="3" data-at="0"><rect x="360" y="96" width="180" height="44" rx="10" class="f-surface s-line"/><text x="450" y="123" text-anchor="middle" class="f-ink b">Retail stores</text></g>
+   <g data-at="1"><rect x="60" y="160" width="180" height="50" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="150" y="181" text-anchor="middle" class="f-ink sm">website, online ads</text><text x="150" y="200" text-anchor="middle" class="f-blue sm b">traceable $180,000</text></g>
+   <g data-at="1" data-d=".15" data-out="3"><rect x="360" y="160" width="180" height="50" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="450" y="181" text-anchor="middle" class="f-ink sm">store leases, staff</text><text x="450" y="200" text-anchor="middle" class="f-blue sm b">traceable $120,000</text></g>
+   <path d="M150 140 L150 158" class="f-none s-blue" stroke-width="2" data-at="1"/>
+   <path d="M450 140 L450 158" class="f-none s-blue" stroke-width="2" data-at="1" data-out="3"/>
+   <text x="450" y="186" text-anchor="middle" class="f-red b" data-at="3" data-d=".4">dropped: $120,000 gone</text>
+   <text x="300" y="80" text-anchor="middle" class="f-amber sm b" data-at="3" data-d=".6">still $100,000</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">A <b>traceable</b> fixed cost exists because of the segment: the website for Online, the store leases for Retail</li>
+   <li data-step="2">A <b>common</b> fixed cost supports both segments, like the CEO's salary and headquarters</li>
+   <li data-step="3">Drop Retail and its $120,000 of traceable costs disappear. The $100,000 of common costs stay</li>
+  </ul>
+ </div>
+</section>
+
+<!-- SEG SORT SIM -->
+<section class="slide" data-section="6.4" data-title="Sort the fixed costs" data-sim="segsort">
+ <div class="slide-inner">
+  <h2>Traceable to whom, or <em>common?</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="sg-count">Cost 1 of 9</span><button type="button" class="btn small" id="sg-reset">Start over</button></div>
+   <div class="pp-card" id="sg-card">Website hosting</div>
+   <div class="bins" style="--n:3">
+    <button type="button" class="pp-bin" data-b="online"><b>Traceable: Online</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="retail"><b>Traceable: Retail</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="common"><b>Common</b><span class="n">0</span></button>
+   </div>
+   <div class="feedback" id="sg-fb" aria-live="polite">Ask: if this segment closed, would the cost disappear?</div>
+  </div>
+ </div>
+</section>
+
+<!-- SEGMENT MARGIN -->
+<section class="slide" data-section="6.4" data-title="Segment margin" data-key="segmargin">
+ <div class="slide-inner">
+  <h2>Who adds what to <em>profit</em></h2>
+  <div class="sched3">
+   <div class="card sch" data-step="1"><span class="k">Online</span>
+    <div class="ln" data-at="1"><span>Sales</span><span>$500,000</span></div>
+    <div class="ln" data-at="1" data-d=".1"><span>CM (60%)</span><span>$300,000</span></div>
+    <div class="ln" data-at="1" data-d=".2"><span>Traceable fixed</span><span>(180,000)</span></div>
+    <div class="ln tot" data-at="1" data-d=".3"><span>Segment margin</span><span data-count="120000">$120,000</span></div>
+   </div>
+   <div class="card sch" data-step="1"><span class="k">Retail</span>
+    <div class="ln" data-at="1" data-d=".2"><span>Sales</span><span>$500,000</span></div>
+    <div class="ln" data-at="1" data-d=".3"><span>CM (40%)</span><span>$200,000</span></div>
+    <div class="ln" data-at="1" data-d=".4"><span>Traceable fixed</span><span>(120,000)</span></div>
+    <div class="ln tot" data-at="1" data-d=".5"><span>Segment margin</span><span data-count="80000">$80,000</span></div>
+   </div>
+   <div class="card sch" data-step="2"><span class="k">Company</span>
+    <div class="ln" data-at="2"><span>Segment margins</span><span>$200,000</span></div>
+    <div class="ln" data-at="2" data-d=".1"><span>Common fixed</span><span>(100,000)</span></div>
+    <div class="ln tot" data-at="2" data-d=".2"><span>Net operating income</span><span data-count="100000">$100,000</span></div>
+   </div>
+  </div>
+  <p class="tip" data-step="3"><b>Rule</b>Segment margin = CM − traceable fixed costs. It's the long-run test of a segment. Common costs appear only in the company column.</p>
+ </div>
+</section>
+
+<!-- SEGMENT STATEMENT SIM -->
+<section class="slide" data-section="6.4" data-title="Grow a segment" data-sim="segstmt">
+ <div class="slide-inner">
+  <h2>Grow a segment, watch the <em>margins</em></h2>
+  <div class="sim">
+   <div class="cols" style="--n:2">
+    <div class="ctl"><label for="st-o">Online sales <output id="st-o-o">$500,000</output></label><input type="range" id="st-o" min="200000" max="800000" step="20000" value="500000"></div>
+    <div class="ctl"><label for="st-r">Retail sales <output id="st-r-o">$500,000</output></label><input type="range" id="st-r" min="200000" max="800000" step="20000" value="500000"></div>
+   </div>
+   <div style="overflow-x:auto"><table class="tbl">
+    <thead><tr><th></th><th class="num">Total</th><th class="num">Online</th><th class="num">Retail</th></tr></thead>
+    <tbody>
+     <tr><td>CM</td><td class="num" id="st-ct">$500,000</td><td class="num" id="st-co">$300,000</td><td class="num" id="st-cr">$200,000</td></tr>
+     <tr><td>Traceable fixed</td><td class="num">(300,000)</td><td class="num">(180,000)</td><td class="num">(120,000)</td></tr>
+     <tr class="sub"><td>Segment margin</td><td class="num" id="st-mt">$200,000</td><td class="num" id="st-mo">$120,000</td><td class="num" id="st-mr">$80,000</td></tr>
+     <tr class="hl"><td>NOI (after $100,000 common)</td><td class="num" id="st-n">$100,000</td><td></td><td></td></tr>
+    </tbody>
+   </table></div>
+   <div class="feedback" id="st-fb" aria-live="polite">Each extra $1 of sales adds 60¢ online, 40¢ in Retail.</div>
+  </div>
+ </div>
+</section>
+
+<!-- LEVELS -->
+<section class="slide" data-section="6.4" data-title="Levels of segments" data-key="levels">
+ <div class="slide-inner">
+  <h2>Traceable here, <em>common</em> there</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 200" style="max-width:720px" aria-label="The online manager's $60,000 salary is traceable to Online but common to its website and marketplace sub-segments">
+   <rect x="210" y="14" width="180" height="44" rx="10" class="f-surface s-line"/><text x="300" y="41" text-anchor="middle" class="f-ink b">Online</text>
+   <g data-at="1"><rect x="430" y="14" width="160" height="44" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="510" y="33" text-anchor="middle" class="f-ink sm">online manager</text><text x="510" y="50" text-anchor="middle" class="f-blue sm b">$60,000</text></g>
+   <path d="M390 36 L428 36" class="f-none s-blue" stroke-width="2" data-at="1"/>
+   <text x="510" y="78" text-anchor="middle" class="f-blue sm b" data-at="1" data-d=".3">traceable to Online</text>
+   <path d="M260 58 L150 120 M340 58 L450 120" class="f-none s-ink2 draw" stroke-width="2" data-at="2"/>
+   <g data-at="2" data-d=".3"><rect x="60" y="120" width="180" height="44" rx="10" class="f-surface s-line"/><text x="150" y="147" text-anchor="middle" class="f-ink b">Website</text></g>
+   <g data-at="2" data-d=".4"><rect x="360" y="120" width="180" height="44" rx="10" class="f-surface s-line"/><text x="450" y="147" text-anchor="middle" class="f-ink b">Marketplace</text></g>
+   <text x="300" y="190" text-anchor="middle" class="f-amber sm b" data-at="3">to the website and marketplace, the same $60,000 is common</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">The online team manager exists because of Online: traceable to Online</li>
+   <li data-step="2">Split Online into the company website and an outside marketplace</li>
+   <li data-step="3">Closing either one alone wouldn't remove the manager, so at that level the salary is <b>common</b></li>
+  </ul>
+ </div>
+</section>
+
+<!-- DIV 6.5 -->
+<section class="slide" data-section="6.5" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">6.5</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Segment break-even</h2><div class="chips"><span class="chip">Traceable ÷ CM ratio</span><span class="chip">Add the common costs</span></div></div></div>
+ </div>
+</section>
+
+<!-- BE KEY -->
+<section class="slide" data-section="6.5" data-title="Break-even by segment" data-key="bekey">
+ <div class="slide-inner">
+  <h2>$300,000 + $300,000 ≠ <em>$800,000</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 206" style="max-width:760px" aria-label="Online and Retail each break even at $300,000; the company needs $800,000 because it also covers $100,000 of common costs">
+   <text x="20" y="30" class="f-ink sm b" data-at="1">Online: $180,000 ÷ 60% = $300,000</text>
+   <rect x="20" y="40" width="165" height="26" rx="4" class="f-blue grow" data-at="1" data-d=".2"/>
+   <text x="20" y="92" class="f-ink sm b" data-at="2">Retail: $120,000 ÷ 40% = $300,000</text>
+   <rect x="20" y="102" width="165" height="26" rx="4" class="f-amber grow" data-at="2" data-d=".2"/>
+   <text x="20" y="156" class="f-ink sm b" data-at="3">Company: ($300,000 + $100,000) ÷ 50% = $800,000</text>
+   <rect x="20" y="166" width="440" height="26" rx="4" class="f-accent grow" data-at="3" data-d=".2"/>
+   <rect x="20" y="166" width="330" height="26" rx="4" class="f-none s-bg" stroke-width="2" stroke-dasharray="4 4" data-at="3" data-d=".9"/>
+   <text x="185" y="185" text-anchor="middle" class="f-bg sm b" data-at="3" data-d=".9">segments: $600,000</text>
+   <text x="405" y="185" text-anchor="middle" class="f-bg sm b" data-at="3" data-d="1">+ $200,000</text>
+   <text x="470" y="185" class="f-ink2 sm" data-at="3" data-d="1.1">= $100,000 ÷ 50%</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Segment break-even = traceable fixed ÷ segment CM ratio</li>
+   <li data-step="2">Each channel covers its own traceable costs at $300,000 of sales</li>
+   <li data-step="3">The company must also cover the $100,000 of common costs, at today's 50/50 mix (overall CM ratio <b>50%</b>)</li>
+  </ul>
+ </div>
+</section>
+
+<!-- SEG BE SIM -->
+<section class="slide" data-section="6.5" data-title="Move the break-evens" data-sim="segbe">
+ <div class="slide-inner">
+  <h2>Move the <em>break-evens</em></h2>
+  <div class="sim">
+   <div class="cols" style="--n:2">
+    <div class="ctl"><label for="sb-o">Online traceable fixed <output id="sb-o-o">$180,000</output></label><input type="range" id="sb-o" min="60000" max="300000" step="10000" value="180000"></div>
+    <div class="ctl"><label for="sb-r">Retail traceable fixed <output id="sb-r-o">$120,000</output></label><input type="range" id="sb-r" min="40000" max="240000" step="10000" value="120000"></div>
+    <div class="ctl"><label for="sb-c">Common fixed <output id="sb-c-o">$100,000</output></label><input type="range" id="sb-c" min="0" max="200000" step="10000" value="100000"></div>
+    <div class="ctl"><label for="sb-m">Online's share of sales <output id="sb-m-o">50%</output></label><input type="range" id="sb-m" min="10" max="90" step="5" value="50"></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Online (60%)</div><div class="v" id="sb-ob">$300,000</div></div>
+    <div><div class="k">Retail (40%)</div><div class="v" id="sb-rb">$300,000</div></div>
+    <div><div class="k" id="sb-ck">Company (50%)</div><div class="v pos" id="sb-cb">$800,000</div></div>
+   </div>
+   <div class="feedback" id="sb-fb" aria-live="polite">The company needs $200,000 more than the two segments combined, to cover common costs.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 6.6 -->
+<section class="slide" data-section="6.6" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">6.6</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Common mistakes</h2><div class="chips"><span class="chip">Missing costs</span><span class="chip">Bad allocation bases</span><span class="chip">Splitting common costs</span></div></div></div>
+ </div>
+</section>
+
+<!-- TRAP -->
+<section class="slide" data-section="6.6" data-title="The allocation trap" data-key="trap">
+ <div class="slide-inner">
+  <h2>Don't drop a <em>profitable</em> segment</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 214" style="max-width:760px" aria-label="Retail's $80,000 segment margin minus a $90,000 share of common costs looks like a $10,000 loss, but dropping Retail would cut company profit from $100,000 to $20,000">
+   <text x="20" y="22" class="f-ink sm b">Retail segment margin</text>
+   <rect x="20" y="30" width="320" height="32" rx="4" class="f-blue grow" data-at="1"/>
+   <text x="180" y="51" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".4">$80,000</text>
+   <text x="20" y="90" class="f-ink sm b" data-at="1" data-d=".2">− 90% of common costs (by floor space)</text>
+   <rect x="20" y="98" width="360" height="32" rx="4" class="f-red grow" data-at="1" data-d=".4"/>
+   <text x="200" y="119" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".8">$90,000</text>
+   <text x="390" y="119" class="f-red b" data-at="1" data-d="1">= −$10,000?</text>
+   <text x="20" y="170" class="f-ink b" data-at="2">Drop Retail: company NOI $100,000 → $20,000</text>
+   <text x="20" y="194" class="f-ink2 sm" data-at="2" data-d=".2">the $100,000 of common costs stay; only Retail's $80,000 segment margin disappears</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Splitting common costs by floor space charges Retail $90,000, so it seems to lose money</li>
+   <li data-step="2">But the common costs don't leave with Retail. Dropping it throws away $80,000 of segment margin</li>
+   <li data-step="3">Also avoid leaving out costs from the value chain (design, delivery, customer service) and allocating with bases that don't drive the cost</li>
+  </ul>
+ </div>
+</section>
+
+<!-- DROP SIM -->
+<section class="slide" data-section="6.6" data-title="Keep or drop?" data-sim="dropsim">
+ <div class="slide-inner">
+  <h2>Keep Retail, or <em>drop it?</em></h2>
+  <div class="sim">
+   <div class="sim-bar">
+    <div class="seg" role="group" aria-label="How common costs are split" id="dp-alloc"><button type="button" data-a="0" aria-pressed="true">Not allocated</button><button type="button" data-a=".5" aria-pressed="false">By sales (50%)</button><button type="button" data-a=".9" aria-pressed="false">By floor space (90%)</button></div>
+    <div class="seg" role="group" aria-label="Decision" id="dp-drop"><button type="button" data-d="0" aria-pressed="true">Keep Retail</button><button type="button" data-d="1" aria-pressed="false">Drop Retail</button></div>
+   </div>
+   <div class="vs2">
+    <div class="card"><span class="k">Retail's report card</span><b class="big" id="dp-r">$80,000</b><span class="mono" id="dp-rn">segment margin, nothing allocated</span></div>
+    <div class="card"><span class="k">Company net operating income</span><b class="big" id="dp-n">$100,000</b><span class="mono" id="dp-nn">both channels open</span></div>
+   </div>
+   <div class="feedback" id="dp-fb" aria-live="polite">Retail adds $80,000 to profit. Splitting the common costs changes how it looks, not what it earns.</div>
+  </div>
+ </div>
+</section>
+
+<!-- RECAP -->
+<section class="slide" data-section="end" data-title="The chapter in four ideas" data-key="recap">
+ <div class="slide-inner">
+  <h2>Cobalt Trail in <em>four ideas</em></h2>
+  <div class="chain">
+   <div class="card" data-at="1"><span class="k">Unit cost</span><b>$30 vs $50</b><span>fixed MOH in or out</span></div>
+   <span class="arr" data-at="1" data-d=".2" aria-hidden="true">→</span>
+   <div class="card" data-at="1" data-d=".3"><span class="k">Profit gap</span><b>$40,000</b><span>2,000 packs × $20 in inventory</span></div>
+   <span class="arr" data-at="2" aria-hidden="true">→</span>
+   <div class="card" data-at="2" data-d=".15"><span class="k">Segment margin</span><b>$120,000 · $80,000</b><span>CM − traceable fixed</span></div>
+   <span class="arr" data-at="3" aria-hidden="true">→</span>
+   <div class="card" data-at="3" data-d=".15"><span class="k">Break-even</span><b>$800,000</b><span>(traceable + common) ÷ 50%</span></div>
+  </div>
+  <ul class="pts">
+   <li data-step="1">Fixed overhead in inventory explains every difference between the two profits</li>
+   <li data-step="2">Judge segments by segment margin, not by profit after allocated common costs</li>
+   <li data-step="3">The company break-even covers common costs too, so at today's mix it's above the sum of the segments</li>
+  </ul>
+ </div>
+</section>
+
+<!-- MUST REMEMBER -->
+<section class="slide" data-section="end" data-title="Must-remember sheet">
+ <div class="slide-inner">
+  <p class="eyebrow">Chapter 6 · Review</p>
+  <h2>The <em>must-remember</em> sheet</h2>
+  <div class="remember" id="remember">
+   <div class="card"><span class="k">6.1</span><b>Absorption: DM + DL + VOH + fixed MOH per unit ($50)</b></div>
+   <div class="card"><span class="k">6.1</span><b>Variable: DM + DL + VOH ($30); fixed MOH is a period cost</b></div>
+   <div class="card"><span class="k">6.2</span><b>Selling and admin costs are period costs under both methods</b></div>
+   <div class="card"><span class="k">6.3</span><b>NOI difference = change in inventory units × fixed MOH per unit</b></div>
+   <div class="card"><span class="k">6.3</span><b>Produced &gt; sold → absorption NOI higher; produced &lt; sold → variable higher</b></div>
+   <div class="card"><span class="k">6.3</span><b>Variable costing fits CVP and can't be inflated by overproducing</b></div>
+   <div class="card"><span class="k">6.4</span><b>Traceable fixed cost disappears if the segment is dropped; common stays</b></div>
+   <div class="card"><span class="k">6.4</span><b>Segment margin = CM − traceable fixed costs</b></div>
+   <div class="card"><span class="k">6.4</span><b>Traceable at one level can be common at the level below</b></div>
+   <div class="card"><span class="k">6.5</span><b>Segment BE = traceable fixed ÷ CM ratio; company BE adds common costs</b></div>
+   <div class="card"><span class="k">6.6</span><b>Don't allocate common costs; judge a segment by its segment margin</b></div>
+   <div class="card"><span class="k">6.6</span><b>Include value-chain costs; allocate only with real cost drivers</b></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="quiz.html">Take the quiz →</a><a class="btn" href="textbook.html">Read the textbook</a></div>
+ </div>
+</section>
+
+</main>
+
+<footer class="bottom">
+  <button type="button" class="btn" id="prev">← Back</button>
+  <span class="mono" id="count" style="font-size:13px;color:var(--ink-2)">1 / 26</span>
+  <span class="spacer"></span>
+  <span class="hint">← → keys · tap to advance</span>
+  <button type="button" class="btn primary" id="next">Next →</button>
+</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../../assets/deck.js"></script>
+<script src="../../assets/steps.js"></script>
+<script src="learn.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
