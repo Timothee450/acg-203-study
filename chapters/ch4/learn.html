@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 4 Learning · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/deck.css">
+<style>
+.s-blue{stroke:var(--blue)} .f-blue-soft{fill:var(--blue-soft)} .s-red{stroke:var(--red)}
+.viz text{font-size:15px} .viz .sm{font-size:12.5px} .viz .b{font-weight:700} .viz .lg{font-size:20px}
+.sim-bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.receipt{display:flex;flex-direction:column;gap:2px;width:100%;font-family:var(--f-mono);font-size:15px}
+.receipt > div{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;border-bottom:1px dashed var(--line)}
+.receipt .tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:18px;color:var(--accent)}
+/* flow board */
+.board{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.board .outside{grid-column:1 / -1;border:1.5px dashed var(--line);border-radius:12px;padding:8px 12px;text-align:center;font-size:13px;color:var(--ink-2)}
+.acct{border:2px solid var(--line);border-radius:14px;background:var(--bg);padding:10px 12px;display:flex;flex-direction:column;gap:4px;transition:border-color .25s,background .25s}
+.acct .k{font:600 10.5px/1.25 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.acct .bal{font:700 19px/1.2 var(--f-mono);font-variant-numeric:tabular-nums}
+.acct.hot{border-color:var(--accent);background:var(--accent-soft)}
+.fly{position:absolute;left:0;top:0;z-index:5;pointer-events:none;background:var(--accent);color:var(--on-accent);font:700 13px var(--f-mono);padding:5px 10px;border-radius:999px;white-space:nowrap}
+@media (max-width:760px){.board{grid-template-columns:1fr 1fr}.board .acct:last-child{grid-column:1 / -1}.acct .bal{font-size:17px}}
+/* sorters */
+.pp-card{background:var(--surface);border:1.5px solid var(--ink);border-radius:14px;padding:18px 16px;text-align:center;font-weight:700;font-size:19px;display:grid;place-items:center;min-height:88px}
+.bins{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:8px}
+@media (max-width:640px){.bins{grid-template-columns:1fr 1fr}.bins > :last-child:nth-child(odd){grid-column:1 / -1}}
+.pp-bin{border:2px dashed var(--line);border-radius:14px;padding:10px 8px;text-align:center;display:flex;flex-direction:column;gap:4px;justify-content:center;font-size:13px;color:var(--ink-2);background:none;cursor:pointer;touch-action:manipulation}
+.pp-bin b{color:var(--ink);font-size:14px;line-height:1.25}
+.pp-bin .n{font:700 20px var(--f-mono);color:var(--accent)}
+/* tanks */
+.tanks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px 12px}
+.tank{height:34px;border:2px solid var(--ink-2);border-radius:999px;overflow:hidden;position:relative;transition:opacity .3s}
+.tank i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent)}
+.tank.dim{opacity:.25}
+/* meters */
+.meter{display:grid;grid-template-columns:minmax(110px,170px) minmax(0,1fr) 96px;gap:12px;align-items:center;font-size:14.5px}
+.meter .bar-h{height:20px;border-radius:6px;display:flex;overflow:hidden;background:var(--surface-2)}
+.meter .bar-h > i{height:100%;display:block}
+.meter .mono{text-align:right}
+.i-done{background:var(--accent)} .i-end{background:var(--amber)}
+@media (max-width:520px){.meter{grid-template-columns:1fr 90px}.meter .bar-h{grid-column:1 / -1;grid-row:2}}
+.stack{display:flex;height:44px;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.stack > div{display:flex;align-items:center;justify-content:center;font:600 12.5px var(--f-mono);color:var(--on-accent);overflow:hidden;white-space:nowrap;min-width:0}
+.seg-a{background:var(--accent)} .seg-b{background:var(--amber)} .seg-m{background:var(--blue)}
+/* report cards */
+.sched3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.sched3{grid-template-columns:1fr}}
+.sch{gap:2px;padding:14px 16px}
+.sch .ln{display:flex;justify-content:space-between;gap:10px;font:500 13.5px/1.5 var(--f-mono);padding:3px 0;border-bottom:1px dashed var(--line)}
+.sch .ln.tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:15px;color:var(--accent);padding-top:6px}
+/* spot the slip */
+.slip{display:flex;flex-direction:column;gap:8px;max-width:640px;width:100%;margin:0 auto}
+.slip button{display:flex;justify-content:space-between;gap:12px;text-align:left;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);padding:10px 14px;font:500 14.5px var(--f-mono);color:var(--ink);cursor:pointer;touch-action:manipulation}
+.slip button.right{border-color:var(--accent);background:var(--accent-soft)}
+.slip button.wrong{border-color:var(--red)}
+.slip .chk{font:600 13px var(--f-mono);color:var(--ink-2);text-align:right}
+/* recap chain */
+.chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:8px;align-items:stretch}
+.chain .card{padding:12px 14px;gap:4px}
+.chain .card b{font:700 17px/1.3 var(--f-mono)}
+.chain .card span:last-child{font-size:12.5px;color:var(--ink-2)}
+.chain .arr{align-self:center;font:700 22px var(--f-mono);color:var(--accent)}
+@media (max-width:860px){.chain{grid-template-columns:1fr}.chain .arr{transform:rotate(90deg);justify-self:center;line-height:1}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <a class="crumb" href="index.html">← Chapter 4</a>
+  <button type="button" class="brand" id="menu-btn" aria-expanded="false" aria-controls="menu">Contents <span class="caret">▾</span></button>
+  <div class="track" id="track"><div class="fill" id="fill"></div></div>
+  <span class="sec-label" id="sec-label">Intro</span>
+  <nav class="menu" id="menu" hidden aria-label="Jump to section"></nav>
+  <button type="button" class="theme-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+</header>
+
+<main class="stage" id="stage">
+
+<!-- TITLE -->
+<section class="slide" data-section="intro" data-title="Welcome" data-key="title">
+ <div class="slide-inner">
+  <div class="split">
+   <div style="display:flex;flex-direction:column;gap:22px">
+    <p class="eyebrow">ACG 203 · Chapter 4</p>
+    <h1>Cost the <em>flow</em></h1>
+    <p class="lede">Seabright Hot Sauce Co. never makes "a job". Sauce pours through Blending, then Bottling, all day. Here's how to cost a gallon when there are no jobs to track.</p>
+    <div class="chips"><span class="chip">4.1 Process costing</span><span class="chip">4.2 Cost flow</span><span class="chip">4.3 Equivalent units</span><span class="chip">4.4 Cost per unit</span><span class="chip">4.5 Assign &amp; reconcile</span><span class="chip">4.6 Operation costing</span></div>
+    <div><button type="button" class="btn primary" id="start-btn">Start the walkthrough →</button></div>
+   </div>
+   <div class="cert">
+    <div class="cert-in">
+     <span class="k">Blending department · May</span>
+     <div class="receipt">
+      <div data-at="0"><span>Equivalent units, materials</span><span>38,800</span></div>
+      <div data-at="0"><span>Equivalent units, conversion</span><span>37,000</span></div>
+      <div data-at="0"><span>Cost per equivalent unit</span><span>$4.00</span></div>
+      <div data-at="0"><span>Ending work in process</span><span>$16,500</span></div>
+      <div class="tot" data-at="0"><span>Transferred to Bottling</span><span data-count="136000">$136,000</span></div>
+     </div>
+     <div class="cert-row"><span>Seabright Hot Sauce Co.</span><span>Weighted-average</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 4.1 -->
+<section class="slide" data-section="4.1" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">4.1</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Process vs job-order costing</h2><div class="chips"><span class="chip">Departments, not jobs</span><span class="chip">Processing departments</span><span class="chip">Conversion cost</span></div></div></div>
+ </div>
+</section>
+
+<!-- TWO WAYS -->
+<section class="slide" data-section="4.1" data-title="Jobs or a flow?" data-key="twoways">
+ <div class="slide-inner">
+  <h2>Jobs, or a <em>flow?</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 192" style="max-width:760px" aria-label="A job shop keeps a cost sheet for each different job; a process line pours identical gallons through Blending and Bottling and collects cost by department">
+   <path d="M300 8 L300 186" class="s-line" stroke-width="1.5" stroke-dasharray="4 6"/>
+   <text x="150" y="22" text-anchor="middle" class="f-ink2 sm b">EVERY ORDER DIFFERENT</text>
+   <text x="450" y="22" text-anchor="middle" class="f-accent sm b">ONE PRODUCT, NONSTOP</text>
+   <g data-at="1"><rect x="25" y="48" width="70" height="50" rx="6" class="f-accent"/><text x="60" y="116" text-anchor="middle" class="f-ink2 sm">Job 1</text><rect x="28" y="128" width="64" height="34" rx="6" class="f-surface s-line"/><text x="60" y="150" text-anchor="middle" class="f-ink sm b">$4,200</text></g>
+   <g data-at="1" data-d=".15"><circle cx="150" cy="73" r="26" class="f-amber"/><text x="150" y="116" text-anchor="middle" class="f-ink2 sm">Job 2</text><rect x="118" y="128" width="64" height="34" rx="6" class="f-surface s-line"/><text x="150" y="150" text-anchor="middle" class="f-ink sm b">$900</text></g>
+   <g data-at="1" data-d=".3"><rect x="222" y="38" width="36" height="70" rx="4" class="f-blue"/><text x="240" y="116" text-anchor="middle" class="f-ink2 sm">Job 3</text><rect x="208" y="128" width="64" height="34" rx="6" class="f-surface s-line"/><text x="240" y="150" text-anchor="middle" class="f-ink sm b">$7,600</text></g>
+   <text x="150" y="182" text-anchor="middle" class="f-ink2 sm" data-at="1" data-d=".5">a cost sheet per job</text>
+   <g data-at="2"><rect x="318" y="44" width="124" height="56" rx="10" class="f-surface s-line"/><text x="380" y="68" text-anchor="middle" class="f-ink sm b">Blending</text><text x="380" y="88" text-anchor="middle" class="f-ink2 sm">all its May costs</text></g>
+   <g data-at="2" data-d=".1"><rect x="466" y="44" width="124" height="56" rx="10" class="f-surface s-line"/><text x="528" y="68" text-anchor="middle" class="f-ink sm b">Bottling</text><text x="528" y="88" text-anchor="middle" class="f-ink2 sm">all its May costs</text></g>
+   <path d="M318 150 L590 150" class="f-none s-ink2" stroke-width="4" stroke-linecap="round" data-at="2"/>
+   <rect x="326" y="126" width="12" height="22" rx="3" class="f-accent" data-at="2" data-move="2" data-dx="150" data-dy="0" data-d=".2"/>
+   <rect x="346" y="126" width="12" height="22" rx="3" class="f-accent" data-at="2" data-move="2" data-dx="150" data-dy="0" data-d=".26"/>
+   <rect x="366" y="126" width="12" height="22" rx="3" class="f-accent" data-at="2" data-move="2" data-dx="150" data-dy="0" data-d=".32"/>
+   <rect x="386" y="126" width="12" height="22" rx="3" class="f-accent" data-at="2" data-move="2" data-dx="150" data-dy="0" data-d=".38"/>
+   <rect x="406" y="126" width="12" height="22" rx="3" class="f-accent" data-at="2" data-move="2" data-dx="150" data-dy="0" data-d=".44"/>
+   <text x="454" y="182" text-anchor="middle" class="f-accent sm" data-at="2" data-d=".5">department cost ÷ equivalent units</text>
+  </svg></div>
+  <div class="cols" style="--n:3">
+   <div class="card" data-step="1"><span class="k">Job-order</span><b>Different orders: costs collected by job, on a job cost sheet</b></div>
+   <div class="card" data-step="2"><span class="k">Process</span><b>Identical units: costs collected by department, then spread over the units</b></div>
+   <div class="card" data-step="3"><span class="k">Both</span><b>Same accounts and flow: Raw Materials → Work in Process → Finished Goods → Cost of Goods Sold</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- DEPARTMENTS -->
+<section class="slide" data-section="4.1" data-title="Processing departments" data-key="depts">
+ <div class="slide-inner">
+  <h2>Department by <em>department</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 214" style="max-width:760px" aria-label="Blending adds materials, labor and overhead; the sauce and its cost move to Bottling, which adds bottles, labor and overhead; labor plus overhead is conversion cost">
+   <g data-at="3"><path d="M118 28 L118 22 L252 22 L252 28" class="f-none s-amber" stroke-width="2"/><text x="185" y="15" text-anchor="middle" class="f-amber sm b">conversion = labor + overhead</text></g>
+   <g data-at="1"><rect x="48" y="34" width="64" height="24" rx="12" class="f-blue"/><text x="80" y="51" text-anchor="middle" class="f-bg sm b">materials</text></g>
+   <g data-at="1" data-d=".1"><rect x="118" y="34" width="64" height="24" rx="12" class="f-accent"/><text x="150" y="51" text-anchor="middle" class="f-bg sm b">labor</text></g>
+   <g data-at="1" data-d=".2"><rect x="188" y="34" width="64" height="24" rx="12" class="f-amber"/><text x="220" y="51" text-anchor="middle" class="f-bg sm b">overhead</text></g>
+   <path d="M80 60 L80 96 M150 60 L150 96 M220 60 L220 96" class="f-none s-ink2 draw" stroke-width="2" data-at="1" data-d=".3"/>
+   <g data-at="2"><rect x="338" y="34" width="64" height="24" rx="12" class="f-blue"/><text x="370" y="51" text-anchor="middle" class="f-bg sm b">bottles</text></g>
+   <g data-at="2" data-d=".1"><rect x="408" y="34" width="64" height="24" rx="12" class="f-accent"/><text x="440" y="51" text-anchor="middle" class="f-bg sm b">labor</text></g>
+   <g data-at="2" data-d=".2"><rect x="478" y="34" width="64" height="24" rx="12" class="f-amber"/><text x="510" y="51" text-anchor="middle" class="f-bg sm b">overhead</text></g>
+   <path d="M370 60 L370 96 M440 60 L440 96 M510 60 L510 96" class="f-none s-ink2 draw" stroke-width="2" data-at="2" data-d=".3"/>
+   <g data-at="0"><rect x="40" y="100" width="220" height="70" rx="12" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="150" y="128" text-anchor="middle" class="f-ink b">Blending</text><text x="150" y="152" text-anchor="middle" class="f-ink2 sm">chili mash, vinegar, spices</text></g>
+   <g data-at="0"><rect x="330" y="100" width="220" height="70" rx="12" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="440" y="128" text-anchor="middle" class="f-ink b">Bottling</text><text x="440" y="152" text-anchor="middle" class="f-ink2 sm">fills, caps, labels</text></g>
+   <path d="M260 135 L322 135" class="f-none s-accent draw" stroke-width="3" data-at="2"/>
+   <path d="M318 129 L327 135 L318 141z" class="f-accent" data-at="2" data-d=".7"/>
+   <text x="295" y="196" text-anchor="middle" class="f-accent sm b" data-at="2" data-d=".5">sauce moves on, and its cost moves with it</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">A <b>processing department</b> adds materials, labor or overhead, and treats every gallon exactly the same</li>
+   <li data-step="2">The sauce moves on to Bottling in a fixed order, and its cost goes with it</li>
+   <li data-step="3"><b>Conversion cost</b> = direct labor + manufacturing overhead: the cost of turning materials into product</li>
+  </ul>
+ </div>
+</section>
+
+<!-- DIV 4.2 -->
+<section class="slide" data-section="4.2" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">4.2</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Recording the flow</h2><div class="chips"><span class="chip">WIP per department</span><span class="chip">Transferred-in cost</span><span class="chip">Journal entries</span></div></div></div>
+ </div>
+</section>
+
+<!-- TRANSFER -->
+<section class="slide" data-section="4.2" data-title="The cost rides along" data-key="transfer">
+ <div class="slide-inner">
+  <h2>The cost <em>rides along</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 206" style="max-width:760px" aria-label="$136,000 moves from Work in Process–Blending to Work in Process–Bottling, $180,000 moves to Finished Goods, and $170,000 moves to Cost of Goods Sold">
+   <g data-at="1" data-out="2" data-move="1" data-dx="150" data-dy="0"><rect x="15" y="8" width="120" height="28" rx="14" class="f-accent"/><text x="75" y="27" text-anchor="middle" class="f-bg sm b">$136,000</text></g>
+   <g data-at="2" data-out="3" data-move="2" data-dx="150" data-dy="0"><rect x="165" y="8" width="120" height="28" rx="14" class="f-accent"/><text x="225" y="27" text-anchor="middle" class="f-bg sm b">$180,000</text></g>
+   <g data-at="3" data-move="3" data-dx="150" data-dy="0"><rect x="315" y="8" width="120" height="28" rx="14" class="f-red"/><text x="375" y="27" text-anchor="middle" class="f-bg sm b">$170,000</text></g>
+   <rect x="10" y="50" width="130" height="90" rx="12" class="f-blue-soft s-blue" stroke-width="1.5"/>
+   <rect x="160" y="50" width="130" height="90" rx="12" class="f-blue-soft s-blue" stroke-width="1.5"/>
+   <rect x="310" y="50" width="130" height="90" rx="12" class="f-blue-soft s-blue" stroke-width="1.5"/>
+   <rect x="460" y="50" width="130" height="90" rx="12" class="f-red-soft s-red" stroke-width="1.5"/>
+   <text x="75" y="72" text-anchor="middle" class="f-ink sm b">WIP–Blending</text>
+   <text x="225" y="72" text-anchor="middle" class="f-ink sm b">WIP–Bottling</text>
+   <text x="375" y="72" text-anchor="middle" class="f-ink sm b">Finished Goods</text>
+   <text x="525" y="72" text-anchor="middle" class="f-ink sm b">Cost of Goods Sold</text>
+   <text x="75" y="112" text-anchor="middle" class="f-ink b lg" data-at="0" data-out="1">$152,500</text>
+   <text x="75" y="112" text-anchor="middle" class="f-accent b lg" data-at="1" data-d=".9" data-count="16500">$16,500</text>
+   <text x="225" y="112" text-anchor="middle" class="f-ink b lg" data-at="0" data-out="1">$56,000</text>
+   <text x="225" y="112" text-anchor="middle" class="f-ink b lg" data-at="1" data-d=".9" data-out="2" data-count="192000">$192,000</text>
+   <text x="225" y="112" text-anchor="middle" class="f-accent b lg" data-at="2" data-d=".9" data-count="12000">$12,000</text>
+   <text x="375" y="112" text-anchor="middle" class="f-ink b lg" data-at="0" data-out="2">$25,000</text>
+   <text x="375" y="112" text-anchor="middle" class="f-ink b lg" data-at="2" data-d=".9" data-out="3" data-count="205000">$205,000</text>
+   <text x="375" y="112" text-anchor="middle" class="f-accent b lg" data-at="3" data-d=".9" data-count="35000">$35,000</text>
+   <text x="525" y="112" text-anchor="middle" class="f-ink b lg" data-at="0" data-out="3">$0</text>
+   <text x="525" y="112" text-anchor="middle" class="f-red b lg" data-at="3" data-d=".9" data-count="170000">$170,000</text>
+   <text x="75" y="132" text-anchor="middle" class="f-ink2 sm" data-at="0" data-out="1">after its own costs</text><text x="75" y="132" text-anchor="middle" class="f-ink2 sm" data-at="1" data-d=".9">left in ending WIP</text>
+   <text x="225" y="132" text-anchor="middle" class="f-ink2 sm" data-at="0" data-out="1">after its own costs</text><text x="225" y="132" text-anchor="middle" class="f-ink2 sm" data-at="1" data-d=".9" data-out="2">with transferred-in cost</text><text x="225" y="132" text-anchor="middle" class="f-ink2 sm" data-at="2" data-d=".9">left in ending WIP</text>
+   <path d="M140 95 L154 95" class="f-none s-accent" stroke-width="3" data-at="1"/>
+   <path d="M290 95 L304 95" class="f-none s-accent" stroke-width="3" data-at="2"/>
+   <path d="M440 95 L454 95" class="f-none s-red" stroke-width="3" data-at="3"/>
+   <text x="300" y="172" text-anchor="middle" class="f-ink sm b mono" data-at="1" data-d="1" data-out="2">Dr WIP–Bottling 136,000 · Cr WIP–Blending 136,000</text>
+   <text x="300" y="172" text-anchor="middle" class="f-ink sm b" data-at="2" data-d="1" data-out="3">Dr Finished Goods 180,000 · Cr WIP–Bottling 180,000</text>
+   <text x="300" y="172" text-anchor="middle" class="f-ink sm b" data-at="3" data-d="1">Dr Cost of Goods Sold 170,000 · Cr Finished Goods 170,000</text>
+   <text x="300" y="196" text-anchor="middle" class="f-ink2 sm" data-at="1" data-d="1.1" data-out="2">In Bottling, the $136,000 is called transferred-in cost</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">(4) Blending sends <b>$136,000</b> of finished sauce to Bottling. Bottling treats this <b>transferred-in cost</b> as one more input</li>
+   <li data-step="2">(5) Bottling finishes cases costing <b>$180,000</b>: cost of goods manufactured</li>
+   <li data-step="3">(6) Cases costing <b>$170,000</b> are sold</li>
+  </ul>
+ </div>
+</section>
+
+<!-- FLOW SIM -->
+<section class="slide" data-section="4.2" data-title="Run May" data-sim="flow">
+ <div class="slide-inner">
+  <h2>Run May through <em>two departments</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="fl-count">Entry 0 of 6</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" id="fl-reset">Start over</button><button type="button" class="btn small primary" id="fl-next">Next entry →</button></div></div>
+   <div class="board" id="fl-board">
+    <div class="outside" data-a="out">Payroll · Manufacturing Overhead (applied at each department's rate)</div>
+    <div class="acct" data-a="rm"><span class="k">Raw Materials</span><b class="bal">$115,000</b></div>
+    <div class="acct" data-a="bl"><span class="k">WIP–Blending</span><b class="bal">$12,600</b></div>
+    <div class="acct" data-a="bo"><span class="k">WIP–Bottling</span><b class="bal">$10,000</b></div>
+    <div class="acct" data-a="fg"><span class="k">Finished Goods</span><b class="bal">$25,000</b></div>
+    <div class="acct" data-a="cogs"><span class="k">Cost of Goods Sold</span><b class="bal">$0</b></div>
+   </div>
+   <div class="feedback" id="fl-fb" aria-live="polite">May 1 balances are shown. Press <b>Next entry</b> to post the first transaction.</div>
+  </div>
+ </div>
+</section>
+
+<!-- JE SORT SIM -->
+<section class="slide" data-section="4.2" data-title="Which account is debited?" data-sim="jeproc">
+ <div class="slide-inner">
+  <h2>Which account gets the <em>debit?</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="jp-count">Event 1 of 8</span><button type="button" class="btn small" id="jp-reset">Start over</button></div>
+   <div class="pp-card" id="jp-card">Chili mash is issued to Blending</div>
+   <div class="bins" style="--n:4">
+    <button type="button" class="pp-bin" data-b="bl"><b>WIP–Blending</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="bo"><b>WIP–Bottling</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="fg"><b>Finished Goods</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="cogs"><b>Cost of Goods Sold</b><span class="n">0</span></button>
+   </div>
+   <div class="feedback" id="jp-fb" aria-live="polite">Read the event, then tap the account that's debited.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 4.3 -->
+<section class="slide" data-section="4.3" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">4.3</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Equivalent units</h2><div class="chips"><span class="chip">Partly finished units</span><span class="chip">Materials vs conversion</span><span class="chip">Weighted-average</span></div></div></div>
+ </div>
+</section>
+
+<!-- PARTIAL -->
+<section class="slide" data-section="4.3" data-title="The idea" data-key="partial">
+ <div class="slide-inner">
+  <h2>Two halves = <em>one</em> whole</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 190" style="max-width:760px" aria-label="Two tanks each half full pour into one full tank; eight tanks a quarter full hold the work of two full tanks">
+   <rect x="40" y="16" width="240" height="40" rx="20" class="f-none s-ink2" stroke-width="2"/>
+   <rect x="40" y="70" width="240" height="40" rx="20" class="f-none s-ink2" stroke-width="2" data-at="0" data-out="2"/>
+   <rect x="42" y="18" width="118" height="36" rx="18" class="f-accent grow" data-at="1"/>
+   <rect x="42" y="72" width="118" height="36" rx="18" class="f-accent grow" data-at="1" data-d=".2" data-move="2" data-dx="118" data-dy="-54"/>
+   <text x="300" y="42" class="f-ink sm b" data-at="1" data-out="2">50% done</text>
+   <text x="300" y="96" class="f-ink sm b" data-at="1" data-d=".2" data-out="2">50% done</text>
+   <text x="300" y="42" class="f-accent b" data-at="2" data-d="1">= 1 equivalent unit</text>
+   <g data-at="3">
+    <rect x="40" y="134" width="50" height="22" rx="11" class="f-none s-ink2" stroke-width="1.5"/><rect x="100" y="134" width="50" height="22" rx="11" class="f-none s-ink2" stroke-width="1.5"/><rect x="160" y="134" width="50" height="22" rx="11" class="f-none s-ink2" stroke-width="1.5"/><rect x="220" y="134" width="50" height="22" rx="11" class="f-none s-ink2" stroke-width="1.5"/>
+    <rect x="280" y="134" width="50" height="22" rx="11" class="f-none s-ink2" stroke-width="1.5"/><rect x="340" y="134" width="50" height="22" rx="11" class="f-none s-ink2" stroke-width="1.5"/><rect x="400" y="134" width="50" height="22" rx="11" class="f-none s-ink2" stroke-width="1.5"/><rect x="460" y="134" width="50" height="22" rx="11" class="f-none s-ink2" stroke-width="1.5"/>
+   </g>
+   <g class="f-amber">
+    <rect x="41" y="135" width="12.5" height="20" rx="6" data-at="3" data-d=".3"/><rect x="101" y="135" width="12.5" height="20" rx="6" data-at="3" data-d=".35"/><rect x="161" y="135" width="12.5" height="20" rx="6" data-at="3" data-d=".4"/><rect x="221" y="135" width="12.5" height="20" rx="6" data-at="3" data-d=".45"/>
+    <rect x="281" y="135" width="12.5" height="20" rx="6" data-at="3" data-d=".5"/><rect x="341" y="135" width="12.5" height="20" rx="6" data-at="3" data-d=".55"/><rect x="401" y="135" width="12.5" height="20" rx="6" data-at="3" data-d=".6"/><rect x="461" y="135" width="12.5" height="20" rx="6" data-at="3" data-d=".65"/>
+   </g>
+   <text x="275" y="182" text-anchor="middle" class="f-amber sm b" data-at="3" data-d=".8">8,000 gallons × 25% = 2,000 equivalent units</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">At month end, some gallons are only partly blended. They can't count as whole gallons, and they can't be ignored</li>
+   <li data-step="2">Two half-done gallons hold the same work as one finished gallon: <b>1 equivalent unit</b></li>
+   <li data-step="3"><b>Equivalent units</b> = partly finished units × percent complete</li>
+  </ul>
+ </div>
+</section>
+
+<!-- TANKS SIM -->
+<section class="slide" data-section="4.3" data-title="Pour them together" data-sim="eutanks">
+ <div class="slide-inner">
+  <h2>Pour the partial work <em>together</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag">Each tank = 1,000 gallons · <span id="et-eu">2,000</span> equivalent units</span><button type="button" class="btn small primary" id="et-pour">Pour together</button></div>
+   <div class="cols" style="--n:2">
+    <div class="ctl"><label for="et-n">Gallons in process <output id="et-n-o">8,000</output></label><input type="range" id="et-n" min="1000" max="10000" step="1000" value="8000"></div>
+    <div class="ctl"><label for="et-p">Percent complete <output id="et-p-o">25%</output></label><input type="range" id="et-p" min="0" max="100" step="5" value="25"></div>
+   </div>
+   <div class="tanks" id="et-tanks" aria-hidden="true"></div>
+   <div class="feedback" id="et-fb" aria-live="polite">8,000 gallons × 25% = 2,000 equivalent units. Press <b>Pour together</b> to see why.</div>
+  </div>
+ </div>
+</section>
+
+<!-- WEIGHTED-AVERAGE EU -->
+<section class="slide" data-section="4.3" data-title="Weighted-average units" data-key="waeu">
+ <div class="slide-inner">
+  <h2>Done + what's in the <em>tank</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 222" style="max-width:760px" aria-label="Materials: 34,000 completed plus 4,800 in ending inventory = 38,800 equivalent units. Conversion: 34,000 plus 3,000 = 37,000">
+   <text x="130" y="64" text-anchor="end" class="f-ink sm b">Materials</text>
+   <text x="130" y="158" text-anchor="end" class="f-ink sm b">Conversion</text>
+   <rect x="140" y="44" width="374" height="32" rx="4" class="f-accent grow" data-at="1"/>
+   <rect x="140" y="138" width="374" height="32" rx="4" class="f-accent grow" data-at="1" data-d=".15"/>
+   <text x="327" y="65" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".5">34,000 completed</text>
+   <text x="327" y="159" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".6">34,000 completed</text>
+   <rect x="515" y="44" width="66" height="32" rx="4" class="f-none s-amber" stroke-width="1.5" stroke-dasharray="4 3" data-at="2"/>
+   <rect x="515" y="138" width="66" height="32" rx="4" class="f-none s-amber" stroke-width="1.5" stroke-dasharray="4 3" data-at="2"/>
+   <rect x="515" y="44" width="52.8" height="32" rx="4" class="f-amber grow" data-at="2" data-d=".3"/>
+   <rect x="515" y="138" width="33" height="32" rx="4" class="f-amber grow" data-at="2" data-d=".4"/>
+   <text x="581" y="36" text-anchor="end" class="f-amber sm b" data-at="2" data-d=".5">6,000 × 80% = 4,800</text>
+   <text x="581" y="130" text-anchor="end" class="f-amber sm b" data-at="2" data-d=".6">6,000 × 50% = 3,000</text>
+   <text x="581" y="98" text-anchor="end" class="f-accent b" data-at="3" data-count="38800" data-fmt="num">38,800</text>
+   <text x="581" y="192" text-anchor="end" class="f-accent b" data-at="3" data-d=".15" data-count="37000" data-fmt="num">37,000</text>
+   <text x="140" y="214" class="f-ink2 sm" data-at="3" data-d=".4">the 4,000 gallons that began May partly done are inside the 34,000</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Every gallon that left Blending counts as a whole unit: <b>34,000</b></li>
+   <li data-step="2">Add the work sitting in the 6,000 gallons of ending inventory: materials 80% done, conversion 50% done</li>
+   <li data-step="3">Equivalent units: <b>38,800</b> for materials, <b>37,000</b> for conversion. Beginning inventory's percent complete never enters</li>
+  </ul>
+ </div>
+</section>
+
+<!-- EU CALC SIM -->
+<section class="slide" data-section="4.3" data-title="Count the equivalent units" data-sim="eucalc">
+ <div class="slide-inner">
+  <h2>Change the tank, count the <em>units</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Try it · 34,000 completed, 6,000 in ending inventory</span>
+   <div class="cols" style="--n:3">
+    <div class="ctl"><label for="ec-m">Ending: materials % done <output id="ec-m-o">80%</output></label><input type="range" id="ec-m" min="0" max="100" step="5" value="80"></div>
+    <div class="ctl"><label for="ec-c">Ending: conversion % done <output id="ec-c-o">50%</output></label><input type="range" id="ec-c" min="0" max="100" step="5" value="50"></div>
+    <div class="ctl"><label for="ec-b">Beginning: conversion % done <output id="ec-b-o">40%</output></label><input type="range" id="ec-b" min="0" max="100" step="5" value="40"></div>
+   </div>
+   <div class="meter"><span>Materials</span><div class="bar-h"><i class="i-done" style="width:85%"></i><i class="i-end" id="ec-mb" style="width:12%"></i></div><span class="mono" id="ec-mv">38,800</span></div>
+   <div class="meter"><span>Conversion</span><div class="bar-h"><i class="i-done" style="width:85%"></i><i class="i-end" id="ec-cb" style="width:7.5%"></i></div><span class="mono" id="ec-cv">37,000</span></div>
+   <div class="formula" id="ec-f">Materials 34,000 + 6,000 × 80% = <b>38,800</b> · Conversion 34,000 + 6,000 × 50% = <b>37,000</b></div>
+   <div class="feedback" id="ec-fb" aria-live="polite">Try the beginning-inventory slider too.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 4.4 -->
+<section class="slide" data-section="4.4" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">4.4</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Cost per equivalent unit</h2><div class="chips"><span class="chip">Beginning + added</span><span class="chip">÷ equivalent units</span><span class="chip">By category</span></div></div></div>
+ </div>
+</section>
+
+<!-- PER UNIT -->
+<section class="slide" data-section="4.4" data-title="Cost per equivalent unit" data-key="perunit">
+ <div class="slide-inner">
+  <h2>Pool the cost, then <em>divide</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 204" style="max-width:760px" aria-label="Materials: $9,000 + $88,000 = $97,000 divided by 38,800 = $2.50. Conversion: $3,600 + $51,900 = $55,500 divided by 37,000 = $1.50. Total $4.00">
+   <text x="20" y="18" class="f-blue sm b">MATERIALS</text>
+   <text x="320" y="18" class="f-accent sm b">CONVERSION</text>
+   <rect x="20" y="28" width="260" height="28" rx="5" class="f-surface2"/>
+   <rect x="320" y="28" width="260" height="28" rx="5" class="f-surface2"/>
+   <rect x="20" y="28" width="24" height="28" rx="5" class="f-ink2 grow" data-at="1"/>
+   <rect x="44" y="28" width="228" height="28" rx="5" class="f-blue grow" data-at="1" data-d=".2"/>
+   <rect x="320" y="28" width="9" height="28" rx="3" class="f-ink2 grow" data-at="1" data-d=".1"/>
+   <rect x="329" y="28" width="135" height="28" rx="5" class="f-accent grow" data-at="1" data-d=".3"/>
+   <text x="20" y="76" class="f-ink2 sm" data-at="1" data-d=".4">$9,000 beginning + $88,000 added</text>
+   <text x="320" y="76" class="f-ink2 sm" data-at="1" data-d=".5">$3,600 beginning + $51,900 added</text>
+   <text x="20" y="100" class="f-ink b" data-at="1" data-d=".6" data-count="97000">$97,000</text>
+   <text x="320" y="100" class="f-ink b" data-at="1" data-d=".7" data-count="55500">$55,500</text>
+   <text x="20" y="126" class="f-ink2 sm b" data-at="2">÷ 38,800 equivalent units</text>
+   <text x="320" y="126" class="f-ink2 sm b" data-at="2" data-d=".1">÷ 37,000 equivalent units</text>
+   <text x="20" y="158" class="f-blue b" style="font-size:26px" data-at="2" data-d=".3" data-count="2.5" data-fmt="usd2">$2.50</text>
+   <text x="320" y="158" class="f-accent b" style="font-size:26px" data-at="2" data-d=".4" data-count="1.5" data-fmt="usd2">$1.50</text>
+   <g data-at="3"><rect x="120" y="172" width="360" height="30" rx="15" class="f-accent-soft"/><text x="300" y="192" text-anchor="middle" class="f-accent b">A finished gallon: $2.50 + $1.50 = $4.00</text></g>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Weighted-average pools beginning inventory's cost with May's added cost, for each category</li>
+   <li data-step="2">Then divides each pool by its <b>own</b> equivalent units: $97,000 ÷ 38,800 = <b>$2.50</b>; $55,500 ÷ 37,000 = <b>$1.50</b></li>
+   <li data-step="3">A finished gallon carries all of both: <b>$4.00</b></li>
+  </ul>
+ </div>
+</section>
+
+<!-- COST PER UNIT SIM -->
+<section class="slide" data-section="4.4" data-title="Price a gallon" data-sim="costpu">
+ <div class="slide-inner">
+  <h2>What does a gallon <em>cost?</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag">Try it · equivalent units 38,800 and 37,000</span>
+    <div class="seg" role="group" aria-label="Method" id="cu-btns"><button type="button" data-w="1" aria-pressed="true">Weighted-average</button><button type="button" data-w="0" aria-pressed="false">Forget beginning cost</button></div>
+   </div>
+   <div class="cols" style="--n:2">
+    <div class="ctl"><label for="cu-m">Materials added in May <output id="cu-m-o">$88,000</output></label><input type="range" id="cu-m" min="60000" max="120000" step="2000" value="88000"></div>
+    <div class="ctl"><label for="cu-c">Conversion added in May <output id="cu-c-o">$51,900</output></label><input type="range" id="cu-c" min="30000" max="81000" step="300" value="51900"></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Materials per EU</div><div class="v" id="cu-pm">$2.50</div></div>
+    <div><div class="k">Conversion per EU</div><div class="v" id="cu-pc">$1.50</div></div>
+    <div><div class="k">Finished gallon</div><div class="v pos" id="cu-pt">$4.00</div></div>
+   </div>
+   <div class="formula" id="cu-f">($9,000 + $88,000) ÷ 38,800 = $2.50 · ($3,600 + $51,900) ÷ 37,000 = $1.50 · <b>$4.00 a gallon</b></div>
+   <div class="feedback" id="cu-fb" aria-live="polite">Weighted-average: beginning cost plus cost added, divided by equivalent units.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 4.5 -->
+<section class="slide" data-section="4.5" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">4.5</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Assigning costs and reconciling</h2><div class="chips"><span class="chip">Transferred out</span><span class="chip">Ending inventory</span><span class="chip">Cost reconciliation</span></div></div></div>
+ </div>
+</section>
+
+<!-- SPLIT -->
+<section class="slide" data-section="4.5" data-title="Split the pool" data-key="split">
+ <div class="slide-inner">
+  <h2>$152,500 goes <em>two places</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 196" style="max-width:760px" aria-label="Blending's $152,500 splits into $136,000 transferred to Bottling and $16,500 of ending work in process">
+   <text x="40" y="22" class="f-ink sm b" data-at="1">$12,600 beginning + $139,900 added = $152,500 to account for</text>
+   <rect x="40" y="32" width="43" height="34" rx="4" class="f-ink2 grow" data-at="1"/>
+   <rect x="83" y="32" width="477" height="34" rx="4" class="f-blue grow" data-at="1" data-d=".2"/>
+   <rect x="40" y="32" width="463.7" height="34" rx="4" class="f-accent" data-at="2" data-move="2" data-dx="0" data-dy="56"/>
+   <rect x="503.7" y="32" width="56.3" height="34" rx="4" class="f-amber" data-at="2" data-move="2" data-dx="0" data-dy="104"/>
+   <text x="271" y="110" text-anchor="middle" class="f-bg sm b" data-at="2" data-d="1">to Bottling: 34,000 × $4.00 = $136,000</text>
+   <text x="495" y="158" text-anchor="end" class="f-amber sm b" data-at="2" data-d="1.1">ending work in process $16,500</text>
+   <text x="300" y="190" text-anchor="middle" class="f-ink sm" data-at="3">4,800 × $2.50 = $12,000 materials + 3,000 × $1.50 = $4,500 conversion</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Blending has <b>$152,500</b> to account for</li>
+   <li data-step="2">Finished gallons are 100% done: 34,000 × $4.00 = <b>$136,000</b> moves to Bottling. The rest, <b>$16,500</b>, stays in ending inventory</li>
+   <li data-step="3">Ending inventory uses its equivalent units, category by category: <b>$12,000 + $4,500 = $16,500</b></li>
+  </ul>
+ </div>
+</section>
+
+<!-- ASSIGN SIM -->
+<section class="slide" data-section="4.5" data-title="The whole report" data-sim="assign">
+ <div class="slide-inner">
+  <h2>Run the whole <em>production report</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Try it · 40,000 gallons to account for, $152,500 of cost</span>
+   <div class="cols" style="--n:3">
+    <div class="ctl"><label for="as-d">Gallons completed <output id="as-d-o">34,000</output></label><input type="range" id="as-d" min="30000" max="40000" step="1000" value="34000"></div>
+    <div class="ctl"><label for="as-m">Ending: materials % done <output id="as-m-o">80%</output></label><input type="range" id="as-m" min="0" max="100" step="5" value="80"></div>
+    <div class="ctl"><label for="as-c">Ending: conversion % done <output id="as-c-o">50%</output></label><input type="range" id="as-c" min="0" max="100" step="5" value="50"></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Equivalent units</div><div class="v" id="as-eu">38,800 · 37,000</div></div>
+    <div><div class="k">Cost per EU</div><div class="v" id="as-cpu">$4.00</div></div>
+    <div><div class="k">Transferred out</div><div class="v pos" id="as-out">$136,000</div></div>
+    <div><div class="k">Ending WIP</div><div class="v" id="as-wip">$16,500</div></div>
+   </div>
+   <div class="stack" aria-hidden="true"><div class="seg-a" id="as-so" style="width:89.2%">to Bottling</div><div class="seg-b" id="as-sw" style="width:10.8%">WIP</div></div>
+   <div class="formula" id="as-f">$136,000 transferred + $16,500 ending = <b>$152,500</b> = $152,500 to account for ✓</div>
+  </div>
+ </div>
+</section>
+
+<!-- REPORT -->
+<section class="slide" data-section="4.5" data-title="The production report" data-key="report">
+ <div class="slide-inner">
+  <h2>The production report in <em>three parts</em></h2>
+  <div class="sched3">
+   <div class="card sch" data-step="1"><span class="k">1 · Units</span>
+    <div class="ln" data-at="1"><span>Beginning WIP</span><span>4,000</span></div>
+    <div class="ln" data-at="1" data-d=".1"><span>+ Started</span><span>36,000</span></div>
+    <div class="ln" data-at="1" data-d=".2"><span>Transferred out</span><span>34,000</span></div>
+    <div class="ln" data-at="1" data-d=".3"><span>+ Ending WIP</span><span>6,000</span></div>
+    <div class="ln tot" data-at="1" data-d=".4"><span>Both sides</span><span data-count="40000" data-fmt="num">40,000</span></div>
+   </div>
+   <div class="card sch" data-step="2"><span class="k">2 · Cost per equivalent unit</span>
+    <div class="ln" data-at="2"><span>Materials $97,000 ÷ 38,800</span><span>$2.50</span></div>
+    <div class="ln" data-at="2" data-d=".1"><span>Conversion $55,500 ÷ 37,000</span><span>$1.50</span></div>
+    <div class="ln tot" data-at="2" data-d=".2"><span>Per gallon</span><span data-count="4" data-fmt="usd2">$4.00</span></div>
+   </div>
+   <div class="card sch" data-step="3"><span class="k">3 · Cost reconciliation</span>
+    <div class="ln" data-at="3"><span>To account for</span><span>$152,500</span></div>
+    <div class="ln" data-at="3" data-d=".1"><span>Transferred out</span><span>$136,000</span></div>
+    <div class="ln" data-at="3" data-d=".2"><span>+ Ending WIP</span><span>16,500</span></div>
+    <div class="ln tot" data-at="3" data-d=".3"><span>Accounted for</span><span data-count="152500">$152,500</span></div>
+   </div>
+  </div>
+  <p class="tip" data-step="3"><b>Exam tip</b>If the two cost totals don't match, check ending inventory first: it must use equivalent units, not whole gallons.</p>
+ </div>
+</section>
+
+<!-- SPOT THE SLIP SIM -->
+<section class="slide" data-section="4.5" data-title="Spot the slip" data-sim="recon">
+ <div class="slide-inner">
+  <h2>Spot the <em>slip</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="rc-count">Report 1 of 4</span><button type="button" class="btn small" id="rc-reset">Start over</button></div>
+   <p style="margin:0;color:var(--ink-2)" id="rc-intro">Each report has one wrong line. Tap it.</p>
+   <div class="slip" id="rc-lines"></div>
+   <div class="feedback" id="rc-fb" aria-live="polite">Which line is wrong?</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 4.6 -->
+<section class="slide" data-section="4.6" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">4.6</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Operation costing</h2><div class="chips"><span class="chip">Batches</span><span class="chip">Shared operations</span><span class="chip">Hybrid</span></div></div></div>
+ </div>
+</section>
+
+<!-- HYBRID -->
+<section class="slide" data-section="4.6" data-title="A hybrid" data-key="hybrid">
+ <div class="slide-inner">
+  <h2>Half job-order, half <em>process</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 206" style="max-width:760px" aria-label="Leather boots and canvas sneakers carry different materials but pass through the same Cutting and Stitching operations at the same conversion cost per pair">
+   <g data-at="0"><rect x="10" y="28" width="160" height="46" rx="10" class="f-surface s-line"/><text x="90" y="48" text-anchor="middle" class="f-ink sm b">Batch 12</text><text x="90" y="66" text-anchor="middle" class="f-ink2 sm">leather boots</text></g>
+   <g data-at="0"><rect x="10" y="98" width="160" height="46" rx="10" class="f-surface s-line"/><text x="90" y="118" text-anchor="middle" class="f-ink sm b">Batch 13</text><text x="90" y="136" text-anchor="middle" class="f-ink2 sm">canvas sneakers</text></g>
+   <g data-at="1"><rect x="186" y="36" width="104" height="30" rx="15" class="f-blue"/><text x="238" y="56" text-anchor="middle" class="f-bg sm b">leather $38</text></g>
+   <g data-at="1" data-d=".15"><rect x="186" y="106" width="104" height="30" rx="15" class="f-blue"/><text x="238" y="126" text-anchor="middle" class="f-bg sm b">canvas $9</text></g>
+   <text x="238" y="90" text-anchor="middle" class="f-blue sm b" data-at="1" data-d=".3">traced to batch</text>
+   <rect x="320" y="12" width="110" height="148" rx="12" class="f-accent-soft s-accent" stroke-width="1.5"/>
+   <rect x="460" y="12" width="110" height="148" rx="12" class="f-accent-soft s-accent" stroke-width="1.5"/>
+   <text x="375" y="30" text-anchor="middle" class="f-ink sm b">Cutting</text>
+   <text x="515" y="30" text-anchor="middle" class="f-ink sm b">Stitching</text>
+   <path d="M290 51 L580 51" class="f-none s-ink2 draw" stroke-width="3" data-at="2"/>
+   <path d="M290 121 L580 121" class="f-none s-ink2 draw" stroke-width="3" data-at="2" data-d=".15"/>
+   <text x="375" y="92" text-anchor="middle" class="f-accent b" data-at="2" data-d=".6">$4 a pair</text>
+   <text x="515" y="92" text-anchor="middle" class="f-accent b" data-at="2" data-d=".7">$6 a pair</text>
+   <text x="445" y="176" text-anchor="middle" class="f-accent sm" data-at="2" data-d=".8">conversion: same for every pair</text>
+   <text x="300" y="200" text-anchor="middle" class="f-ink sm b" data-at="3">Boots: $38 + $4 + $6 = $48 a pair · Sneakers: $9 + $4 + $6 = $19 a pair</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Materials differ a lot between batches, so they're traced to each batch, like job-order costing</li>
+   <li data-step="2">Every pair gets the same cutting and stitching, so conversion is one rate per operation, like process costing</li>
+   <li data-step="3">That mix is <b>operation costing</b>: a hybrid for batches of different products sharing the same operations</li>
+  </ul>
+ </div>
+</section>
+
+<!-- WHICH SYSTEM SIM -->
+<section class="slide" data-section="4.6" data-title="Pick the system" data-sim="whichsys">
+ <div class="slide-inner">
+  <h2>Job-order, process, or <em>operation?</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="ws-count">Business 1 of 9</span><button type="button" class="btn small" id="ws-reset">Start over</button></div>
+   <div class="pp-card" id="ws-card">Custom wedding cakes</div>
+   <div class="bins" style="--n:3">
+    <button type="button" class="pp-bin" data-b="job"><b>Job-order</b><span>each order different</span><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="proc"><b>Process</b><span>identical units, nonstop</span><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="op"><b>Operation</b><span>different batches, same steps</span><span class="n">0</span></button>
+   </div>
+   <div class="feedback" id="ws-fb" aria-live="polite">Read the business, then tap the costing system it fits.</div>
+  </div>
+ </div>
+</section>
+
+<!-- RECAP -->
+<section class="slide" data-section="end" data-title="May in four steps" data-key="recap">
+ <div class="slide-inner">
+  <h2>The production report in <em>four moves</em></h2>
+  <div class="chain">
+   <div class="card" data-at="1"><span class="k">1 · Units</span><b>40,000 gal</b><span>34,000 transferred + 6,000 in process</span></div>
+   <span class="arr" data-at="1" data-d=".2" aria-hidden="true">→</span>
+   <div class="card" data-at="1" data-d=".3"><span class="k">2 · Equivalent units</span><b>38,800 · 37,000</b><span>materials · conversion</span></div>
+   <span class="arr" data-at="2" aria-hidden="true">→</span>
+   <div class="card" data-at="2" data-d=".15"><span class="k">3 · Cost per EU</span><b>$2.50 + $1.50</b><span>= $4.00 a finished gallon</span></div>
+   <span class="arr" data-at="3" aria-hidden="true">→</span>
+   <div class="card" data-at="3" data-d=".15"><span class="k">4 · Assign &amp; reconcile</span><b>$136,000 + $16,500</b><span>= $152,500 to account for ✓</span></div>
+  </div>
+  <ul class="pts">
+   <li data-step="1">Count the gallons, then turn ending inventory into equivalent units</li>
+   <li data-step="2">Pool each category's cost and divide by its own equivalent units</li>
+   <li data-step="3">Price what left and what stayed, and check that it all adds back to the total</li>
+  </ul>
+ </div>
+</section>
+
+<!-- MUST REMEMBER -->
+<section class="slide" data-section="end" data-title="Must-remember sheet">
+ <div class="slide-inner">
+  <p class="eyebrow">Chapter 4 · Review</p>
+  <h2>The <em>must-remember</em> sheet</h2>
+  <div class="remember" id="remember">
+   <div class="card"><span class="k">4.1</span><b>Process costing: identical units, costs collected by department</b></div>
+   <div class="card"><span class="k">4.1</span><b>Conversion cost = direct labor + manufacturing overhead</b></div>
+   <div class="card"><span class="k">4.2</span><b>Each department has its own Work in Process account</b></div>
+   <div class="card"><span class="k">4.2</span><b>Transfer: Dr WIP–next department, Cr WIP–this department ($136,000)</b></div>
+   <div class="card"><span class="k">4.3</span><b>Equivalent units = partly finished units × percent complete</b></div>
+   <div class="card"><span class="k">4.3</span><b>Weighted-average EU = units transferred out + EU in ending WIP: 38,800 and 37,000</b></div>
+   <div class="card"><span class="k">4.3</span><b>Beginning WIP's percent complete never enters weighted-average</b></div>
+   <div class="card"><span class="k">4.4</span><b>Cost per EU = (beginning cost + cost added) ÷ EU: $2.50 + $1.50 = $4.00</b></div>
+   <div class="card"><span class="k">4.5</span><b>Transferred out = units × full cost per EU: 34,000 × $4.00 = $136,000</b></div>
+   <div class="card"><span class="k">4.5</span><b>Ending WIP = EU × cost per EU, by category: $12,000 + $4,500 = $16,500</b></div>
+   <div class="card"><span class="k">4.5</span><b>Reconciliation: $12,600 + $139,900 = $136,000 + $16,500 = $152,500</b></div>
+   <div class="card"><span class="k">4.6</span><b>Operation costing: materials by batch, conversion by operation</b></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="quiz.html">Take the quiz →</a><a class="btn" href="textbook.html">Read the textbook</a></div>
+ </div>
+</section>
+
+</main>
+
+<footer class="bottom">
+  <button type="button" class="btn" id="prev">← Back</button>
+  <span class="mono" id="count" style="font-size:13px;color:var(--ink-2)">1 / 26</span>
+  <span class="spacer"></span>
+  <span class="hint">← → keys · tap to advance</span>
+  <button type="button" class="btn primary" id="next">Next →</button>
+</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../../assets/deck.js"></script>
+<script src="../../assets/steps.js"></script>
+<script src="learn.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

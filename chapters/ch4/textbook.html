@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 4 Textbook · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/textbook.css">
+<style>.je td:first-child{padding-left:14px}.je td.cr{padding-left:40px}.je td.num{text-align:right;white-space:nowrap}</style>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="../../index.html">ACG 203 <b>Study</b></a>
+  <a class="crumb" href="index.html">← Chapter 4</a>
+  <span class="spacer"></span>
+  <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme">☾</button>
+</div></header>
+
+<div class="wrap tb">
+  <nav class="tb-toc" aria-label="Chapter contents">
+    <details open id="toc-details"><summary>Contents</summary>
+      <ol>
+        <li><a href="#s4-1"><span class="num">4.1</span> Process vs job-order costing</a>
+          <ol>
+            <li><a href="#s4-1-compare">Same goal, different unit</a></li>
+            <li><a href="#s4-1-depts">Processing departments</a></li>
+          </ol></li>
+        <li><a href="#s4-2"><span class="num">4.2</span> Recording the flow</a>
+          <ol>
+            <li><a href="#s4-2-inputs">Materials, labor and overhead</a></li>
+            <li><a href="#s4-2-transfers">Transfers between departments</a></li>
+          </ol></li>
+        <li><a href="#s4-3"><span class="num">4.3</span> Equivalent units</a>
+          <ol>
+            <li><a href="#s4-3-idea">The idea</a></li>
+            <li><a href="#s4-3-wa">Weighted-average method</a></li>
+          </ol></li>
+        <li><a href="#s4-4"><span class="num">4.4</span> Cost per equivalent unit</a></li>
+        <li><a href="#s4-5"><span class="num">4.5</span> Assigning costs and reconciling</a>
+          <ol>
+            <li><a href="#s4-5-assign">Transferred out and ending inventory</a></li>
+            <li><a href="#s4-5-recon">Cost reconciliation</a></li>
+          </ol></li>
+        <li><a href="#s4-6"><span class="num">4.6</span> Operation costing</a></li>
+      </ol>
+    </details>
+  </nav>
+
+  <article class="tb-body">
+    <header>
+      <span class="label">Chapter 4 · Textbook</span>
+      <h1>Process Costing</h1>
+      <p class="lede">Job-order costing tracks one order at a time. Many companies make the same product nonstop, so there are no separate jobs to track. This chapter costs that kind of output. The example is May at <strong>Seabright Hot Sauce Co.</strong>, where every gallon of sauce passes through two departments: <strong>Blending</strong>, then <strong>Bottling</strong>.</p>
+    </header>
+
+    <!-- ================= 4.1 ================= -->
+    <section id="s4-1" aria-labelledby="h4-1">
+      <h2 id="h4-1"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 4.1</span>Process vs job-order costing</h2>
+
+      <div class="sub" id="s4-1-compare">
+        <h3>Same goal, different unit</h3>
+        <p>Both systems answer the same question: what does one unit cost? Both use the same accounts (Raw Materials, Work in Process, Finished Goods, Manufacturing Overhead, Cost of Goods Sold) and the same flow from materials to sales. The difference is <em>where</em> costs are collected.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th></th><th>Job-order costing</th><th>Process costing</th></tr></thead>
+            <tbody>
+              <tr><td>Output</td><td>Many different jobs</td><td>One identical product, made continuously</td></tr>
+              <tr><td>Costs collected by</td><td>Job</td><td>Department</td></tr>
+              <tr><td>Key document</td><td>Job cost sheet</td><td>Department production report</td></tr>
+              <tr><td>Unit cost</td><td>Job cost ÷ units in the job</td><td>Department cost ÷ equivalent units, for the period</td></tr>
+              <tr><td>Examples</td><td>Custom signs, home builders, law cases</td><td>Hot sauce, paint, cereal, gasoline</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tip"><span class="label">Exam tip</span><p>If every unit is the same and production never stops, it's process costing. If each order is different, it's job-order costing.</p></div>
+      </div>
+
+      <div class="sub" id="s4-1-depts">
+        <h3>Processing departments</h3>
+        <p>A <span class="term">processing department</span> is a stage of production that puts cost into the product: it uses materials, people, machines or all three. Every unit that passes through gets the same work, so what comes out is identical. Products usually move through departments in a fixed order.</p>
+        <p>At Seabright, chili mash and vinegar are cooked and blended in <strong>Blending</strong>. The sauce then moves to <strong>Bottling</strong>, which adds bottles, caps and labels.</p>
+        <p>In process costing, direct labor is often small next to materials and overhead, so labor and overhead are combined. <span class="term">Conversion cost</span> is direct labor plus manufacturing overhead: the cost of turning materials into product.</p>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Process costing</dt><dd>Costing identical units made continuously, by department.</dd>
+          <dt>Processing department</dt><dd>A department that adds materials, labor or overhead, treating every unit the same way.</dd>
+          <dt>Conversion cost</dt><dd>Direct labor + manufacturing overhead.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 4.2 ================= -->
+    <section id="s4-2" aria-labelledby="h4-2">
+      <h2 id="h4-2"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 4.2</span>Recording the flow</h2>
+      <p>The entries look like job-order costing's, with one change: each department has its <strong>own</strong> Work in Process account, and costs are traced to departments instead of jobs.</p>
+
+      <div class="sub" id="s4-2-inputs">
+        <h3>Materials, labor and overhead</h3>
+        <p><strong>(1) Materials.</strong> Blending used $88,000 of chili mash, vinegar and spices. Bottling used $14,000 of bottles, caps and labels. Materials can be added in any department.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Work in Process–Blending</td><td class="num">88,000</td><td></td></tr>
+          <tr><td>Work in Process–Bottling</td><td class="num">14,000</td><td></td></tr>
+          <tr><td class="cr">Raw Materials</td><td></td><td class="num">102,000</td></tr>
+        </tbody></table></div>
+        <p><strong>(2) Labor.</strong> Direct labor is traced to departments: $18,900 in Blending and $12,000 in Bottling.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Work in Process–Blending</td><td class="num">18,900</td><td></td></tr>
+          <tr><td>Work in Process–Bottling</td><td class="num">12,000</td><td></td></tr>
+          <tr><td class="cr">Salaries and Wages Payable</td><td></td><td class="num">30,900</td></tr>
+        </tbody></table></div>
+        <p><strong>(3) Overhead.</strong> Each department applies overhead with its own predetermined rate. Blending applied $30 per machine-hour × 1,100 hours = $33,000; Bottling applied $40 per machine-hour × 500 hours = $20,000.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Work in Process–Blending</td><td class="num">33,000</td><td></td></tr>
+          <tr><td>Work in Process–Bottling</td><td class="num">20,000</td><td></td></tr>
+          <tr><td class="cr">Manufacturing Overhead</td><td></td><td class="num">53,000</td></tr>
+        </tbody></table></div>
+        <p>So Blending's conversion cost for May is $18,900 + $33,000 = <span class="num">$51,900</span>.</p>
+      </div>
+
+      <div class="sub" id="s4-2-transfers">
+        <h3>Transfers between departments</h3>
+        <p><strong>(4)</strong> Finished sauce leaves Blending for Bottling, carrying its cost with it: <span class="num">$136,000</span> (section 4.5 shows where this number comes from). In Bottling it is called <span class="term">transferred-in cost</span>, and it's treated like one more input.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Work in Process–Bottling</td><td class="num">136,000</td><td></td></tr>
+          <tr><td class="cr">Work in Process–Blending</td><td></td><td class="num">136,000</td></tr>
+        </tbody></table></div>
+        <p><strong>(5)</strong> Bottling finished cases costing <span class="num">$180,000</span> and sent them to the warehouse. That is the cost of goods manufactured.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Finished Goods</td><td class="num">180,000</td><td></td></tr>
+          <tr><td class="cr">Work in Process–Bottling</td><td></td><td class="num">180,000</td></tr>
+        </tbody></table></div>
+        <p><strong>(6)</strong> Cases costing <span class="num">$170,000</span> were sold.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Cost of Goods Sold</td><td class="num">170,000</td><td></td></tr>
+          <tr><td class="cr">Finished Goods</td><td></td><td class="num">170,000</td></tr>
+        </tbody></table></div>
+        <p>Bottling's T-account: $10,000 at May 1 + $136,000 transferred in + $14,000 materials + $12,000 labor + $20,000 overhead = $192,000. After $180,000 moves to Finished Goods, $12,000 is still in process.</p>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Transferred-in cost</dt><dd>Cost that arrives from an earlier department with the units.</dd>
+          <dt>Work in Process by department</dt><dd>Each processing department keeps its own Work in Process account.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 4.3 ================= -->
+    <section id="s4-3" aria-labelledby="h4-3">
+      <h2 id="h4-3"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 4.3</span>Equivalent units</h2>
+
+      <div class="sub" id="s4-3-idea">
+        <h3>The idea</h3>
+        <p>At the end of a month, a department almost always has units that are only partly done. You can't count a half-blended gallon as a whole gallon, and you can't ignore it either. <span class="term">Equivalent units</span> convert partly finished units into the number of whole units the same work could have finished:</p>
+        <p class="formula">Equivalent units = partly finished units × percent complete</p>
+        <p>For example, 8,000 gallons that are 25% blended hold the same work as 2,000 finished gallons.</p>
+        <p>Materials and conversion are counted separately, because they're often added at different times. Spices might all go in at the start, while labor and overhead are spread across the whole process.</p>
+      </div>
+
+      <div class="sub" id="s4-3-wa">
+        <h3>Weighted-average method</h3>
+        <p>The <span class="term">weighted-average method</span> blends last month's work on beginning inventory with this month's work. It counts every unit that left the department as complete, plus the work sitting in ending inventory:</p>
+        <p class="formula">Equivalent units = units completed and transferred out + equivalent units in ending work in process</p>
+        <p>Blending's units for May:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Gallons</th><th>Units</th></tr></thead>
+            <tbody>
+              <tr><td>Beginning work in process (materials 75%, conversion 40% complete)</td><td class="num">4,000</td></tr>
+              <tr><td>Started in May</td><td class="num">36,000</td></tr>
+              <tr><td>Completed and transferred to Bottling</td><td class="num">34,000</td></tr>
+              <tr><td>Ending work in process (materials 80%, conversion 50% complete)</td><td class="num">6,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Units to account for: 4,000 + 36,000 = 40,000. Units accounted for: 34,000 + 6,000 = 40,000. Now the equivalent units:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th></th><th>Materials</th><th>Conversion</th></tr></thead>
+            <tbody>
+              <tr><td>Completed and transferred out</td><td class="num">34,000</td><td class="num">34,000</td></tr>
+              <tr><td>Ending work in process: 6,000 × 80% and 6,000 × 50%</td><td class="num">4,800</td><td class="num">3,000</td></tr>
+              <tr><td><strong>Equivalent units of production</strong></td><td class="num"><strong>38,800</strong></td><td class="num"><strong>37,000</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Materials: 34,000 + (6,000 × 80%) = 38,800. Conversion: 34,000 + (6,000 × 50%) = 37,000.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>Under the weighted-average method, the percent complete of beginning work in process never enters the calculation. The 4,000 gallons that started May partly done are inside the 34,000 completed, counted as whole units.</p></div>
+        <p>The other method, <span class="term">FIFO</span>, counts only the work done this period. It's covered in the textbook's appendix; this course's examples use weighted-average.</p>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · Equivalent units</span>
+          <div class="fields">
+            <div class="field"><label for="eu-done">Completed and transferred</label><input type="number" id="eu-done" min="0" step="1000" value="34000"></div>
+            <div class="field"><label for="eu-end">Units in ending WIP</label><input type="number" id="eu-end" min="0" step="1000" value="6000"></div>
+            <div class="field"><label for="eu-m">Materials % complete</label><input type="number" id="eu-m" min="0" max="100" step="5" value="80"></div>
+            <div class="field"><label for="eu-c">Conversion % complete</label><input type="number" id="eu-c" min="0" max="100" step="5" value="50"></div>
+          </div>
+          <div class="out">
+            <div class="stat hl"><span class="label">EU · materials</span><span class="v" id="eu-om">38,800</span></div>
+            <div class="stat hl"><span class="label">EU · conversion</span><span class="v" id="eu-oc">37,000</span></div>
+          </div>
+          <p class="note" id="eu-note"></p>
+        </div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Equivalent units</dt><dd>Partly finished units restated as whole units of work.</dd>
+          <dt>Weighted-average method</dt><dd>Completed units + equivalent units in ending work in process; mixes prior and current work.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 4.4 ================= -->
+    <section id="s4-4" aria-labelledby="h4-4">
+      <h2 id="h4-4"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 4.4</span>Cost per equivalent unit</h2>
+      <p>With the weighted-average method, beginning inventory's cost is added to this month's cost, then divided by the equivalent units:</p>
+      <p class="formula">Cost per equivalent unit = (cost of beginning work in process + cost added this period) ÷ equivalent units</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Blending, May</th><th>Materials</th><th>Conversion</th></tr></thead>
+          <tbody>
+            <tr><td>Cost of beginning work in process</td><td class="num">$9,000</td><td class="num">$3,600</td></tr>
+            <tr><td>Cost added in May</td><td class="num">88,000</td><td class="num">51,900</td></tr>
+            <tr><td>Total cost</td><td class="num">$97,000</td><td class="num">$55,500</td></tr>
+            <tr><td>÷ Equivalent units</td><td class="num">38,800</td><td class="num">37,000</td></tr>
+            <tr><td><strong>Cost per equivalent unit</strong></td><td class="num"><strong>$2.50</strong></td><td class="num"><strong>$1.50</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Materials: $97,000 ÷ 38,800 = $2.50. Conversion: $55,500 ÷ 37,000 = $1.50. A fully blended gallon costs $2.50 + $1.50 = <span class="num">$4.00</span>.</p>
+      <div class="tip"><span class="label">Exam tip</span><p>Divide each cost category by its own equivalent units. Materials cost never gets divided by conversion units.</p></div>
+      <div class="panel tool">
+        <span class="label tool-tag">Try it · Cost per equivalent unit</span>
+        <div class="fields">
+          <div class="field"><label for="cp-beg">Beginning WIP cost ($)</label><input type="number" id="cp-beg" min="0" step="100" value="9000"></div>
+          <div class="field"><label for="cp-add">Cost added ($)</label><input type="number" id="cp-add" min="0" step="1000" value="88000"></div>
+          <div class="field"><label for="cp-eu">Equivalent units</label><input type="number" id="cp-eu" min="0" step="100" value="38800"></div>
+        </div>
+        <div class="out">
+          <div class="stat"><span class="label">Total cost</span><span class="v" id="cp-tot">$97,000</span></div>
+          <div class="stat hl"><span class="label">Cost per EU</span><span class="v" id="cp-out">$2.50</span></div>
+        </div>
+      </div>
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Cost per equivalent unit</dt><dd>(Beginning WIP cost + cost added) ÷ equivalent units, for each cost category.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 4.5 ================= -->
+    <section id="s4-5" aria-labelledby="h4-5">
+      <h2 id="h4-5"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 4.5</span>Assigning costs and reconciling</h2>
+
+      <div class="sub" id="s4-5-assign">
+        <h3>Transferred out and ending inventory</h3>
+        <p>Each department needs two numbers: the cost of the units it sent on, and the cost of the units still in its ending inventory.</p>
+        <p><strong>Transferred out.</strong> Completed units are 100% done for every input: 34,000 × $4.00 = $136,000. That's the amount in entry (4).</p>
+        <p><strong>Ending work in process.</strong> Use the equivalent units in ending inventory for each category:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ending work in process</th><th>Equivalent units</th><th>Cost per EU</th><th>Cost</th></tr></thead>
+            <tbody>
+              <tr><td>Materials</td><td class="num">4,800</td><td class="num">$2.50</td><td class="num">$12,000</td></tr>
+              <tr><td>Conversion</td><td class="num">3,000</td><td class="num">$1.50</td><td class="num">$4,500</td></tr>
+              <tr><td><strong>Total</strong></td><td></td><td></td><td class="num"><strong>$16,500</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>So 4,800 × $2.50 = $12,000 and 3,000 × $1.50 = $4,500, for $16,500 still in Blending.</p>
+      </div>
+
+      <div class="sub" id="s4-5-recon">
+        <h3>Cost reconciliation</h3>
+        <p>A <span class="term">cost reconciliation report</span> proves nothing was lost or double-counted: the costs the department had to account for must equal the costs it assigned.</p>
+        <div class="table-wrap stmt">
+          <table>
+            <tbody>
+              <tr><td>Cost of beginning work in process ($9,000 + $3,600)</td><td class="num">$12,600</td></tr>
+              <tr><td>+ Cost added in May ($88,000 + $51,900)</td><td class="num">139,900</td></tr>
+              <tr><td><strong>Total cost to account for</strong></td><td class="num"><strong>$152,500</strong></td></tr>
+              <tr><td>Transferred out to Bottling</td><td class="num">$136,000</td></tr>
+              <tr><td>+ Ending work in process</td><td class="num">16,500</td></tr>
+              <tr><td><strong>Total cost accounted for</strong></td><td class="num"><strong>$152,500</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tip"><span class="label">Exam tip</span><p>If the two totals don't match, check the equivalent units first. The most common slip is using total units instead of equivalent units for ending inventory.</p></div>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · Production report in one step</span>
+          <div class="fields">
+            <div class="field"><label for="pr-bm">Beginning WIP: materials ($)</label><input type="number" id="pr-bm" min="0" step="100" value="9000"></div>
+            <div class="field"><label for="pr-bc">Beginning WIP: conversion ($)</label><input type="number" id="pr-bc" min="0" step="100" value="3600"></div>
+            <div class="field"><label for="pr-am">Added: materials ($)</label><input type="number" id="pr-am" min="0" step="1000" value="88000"></div>
+            <div class="field"><label for="pr-ac">Added: conversion ($)</label><input type="number" id="pr-ac" min="0" step="1000" value="51900"></div>
+            <div class="field"><label for="pr-done">Completed and transferred</label><input type="number" id="pr-done" min="0" step="1000" value="34000"></div>
+            <div class="field"><label for="pr-end">Units in ending WIP</label><input type="number" id="pr-end" min="0" step="1000" value="6000"></div>
+            <div class="field"><label for="pr-pm">Materials % complete</label><input type="number" id="pr-pm" min="0" max="100" step="5" value="80"></div>
+            <div class="field"><label for="pr-pc">Conversion % complete</label><input type="number" id="pr-pc" min="0" max="100" step="5" value="50"></div>
+          </div>
+          <div class="out">
+            <div class="stat"><span class="label">Cost per EU</span><span class="v" id="pr-cpu">$4.00</span></div>
+            <div class="stat hl"><span class="label">Transferred out</span><span class="v" id="pr-out">$136,000</span></div>
+            <div class="stat"><span class="label">Ending WIP</span><span class="v" id="pr-wip">$16,500</span></div>
+            <div class="stat"><span class="label">Check</span><span class="v" id="pr-chk">$152,500 = $152,500</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Cost of units transferred out</dt><dd>Units completed × total cost per equivalent unit.</dd>
+          <dt>Cost reconciliation report</dt><dd>Shows that beginning cost + cost added = cost transferred out + ending work in process.</dd>
+          <dt>Production report</dt><dd>A department's summary of units, equivalent units, costs per unit and the reconciliation.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 4.6 ================= -->
+    <section id="s4-6" aria-labelledby="h4-6">
+      <h2 id="h4-6"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 4.6</span>Operation costing</h2>
+      <p>Some factories sit between the two systems. <span class="term">Operation costing</span> is a hybrid used when batches of <em>different</em> products pass through the <em>same</em> operations.</p>
+      <p>Picture a fictional sneaker maker, Kestrel Footwear. It runs batches of leather boots and canvas sneakers through the same Cutting and Stitching departments. Materials differ a lot between batches, so they're traced to each batch, as in job-order costing. Cutting and stitching take about the same effort per pair, so conversion costs are averaged across all pairs in each operation, as in process costing. If leather costs $38 a pair, canvas $9 a pair, and cutting and stitching cost $4 and $6 a pair, a pair of boots costs $38 + $4 + $6 = $48 and a pair of sneakers costs $9 + $4 + $6 = $19.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Cost</th><th>Treated like</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>Materials</td><td>Job-order: traced to each batch</td><td>Leather costs far more than canvas</td></tr>
+            <tr><td>Conversion</td><td>Process: one rate per operation</td><td>Every pair gets the same cutting and stitching</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Operation costing</dt><dd>Hybrid system: materials by batch, conversion cost by operation.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="tb-next" aria-label="Next steps">
+      <a class="btn" href="learn.html">Try the animated lesson</a>
+      <a class="btn primary" href="quiz.html">Take the quiz →</a>
+    </nav>
+  </article>
+</div>
+
+<footer class="site-foot"><div class="wrap"><p>ACG 203 Study is independent study material. It is not affiliated with or endorsed by UNCW or McGraw-Hill. Companies and numbers in the examples are fictional.</p></div></footer>
+
+<script src="textbook.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
