@@ -23,3 +23,11 @@ CHAPTERS.forEach(function (c) {
     ok(js.indexOf("SIEDeck.start(") > -1, "learn.js must call SIEDeck.start");
   });
 });
+CHAPTERS.forEach(function (c) {
+  var dir = "chapters/" + c.id + "/", html = readFile(dir + "learn.html"), js = readFile(dir + "learn.js");
+  test(c.id + ": decks that use step animations load assets/steps.js between deck.js and learn.js", function () {
+    if (js.indexOf("SIESteps") === -1) return;
+    var d = html.indexOf('src="../../assets/deck.js"'), st = html.indexOf('src="../../assets/steps.js"'), l = html.indexOf('src="learn.js"');
+    ok(st > d && l > st, "steps.js must load after deck.js and before learn.js");
+  });
+});
