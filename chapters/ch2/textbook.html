@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 2 Textbook · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/textbook.css">
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="../../index.html">ACG 203 <b>Study</b></a>
+  <a class="crumb" href="index.html">← Chapter 2</a>
+  <span class="spacer"></span>
+  <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme">☾</button>
+</div></header>
+
+<div class="wrap tb">
+  <nav class="tb-toc" aria-label="Chapter contents">
+    <details open id="toc-details"><summary>Contents</summary>
+      <ol>
+        <li><a href="#s2-1"><span class="num">2.1</span> Job-order costing</a>
+          <ol>
+            <li><a href="#s2-1-when">When it's used</a></li>
+            <li><a href="#s2-1-sheet">The job cost sheet</a></li>
+          </ol></li>
+        <li><a href="#s2-2"><span class="num">2.2</span> Predetermined overhead rate</a>
+          <ol>
+            <li><a href="#s2-2-base">Allocation bases</a></li>
+            <li><a href="#s2-2-compute">Computing the rate</a></li>
+          </ol></li>
+        <li><a href="#s2-3"><span class="num">2.3</span> Applying overhead</a>
+          <ol>
+            <li><a href="#s2-3-apply">Rate × actual base</a></li>
+          </ol></li>
+        <li><a href="#s2-4"><span class="num">2.4</span> Total and unit job cost</a>
+          <ol>
+            <li><a href="#s2-4-total">Adding it up</a></li>
+            <li><a href="#s2-4-base">Choosing a good base</a></li>
+          </ol></li>
+        <li><a href="#s2-5"><span class="num">2.5</span> Multiple overhead rates</a>
+          <ol>
+            <li><a href="#s2-5-depts">Departmental rates</a></li>
+            <li><a href="#s2-5-price">Why it changes the price</a></li>
+          </ol></li>
+        <li><a href="#s2-6"><span class="num">2.6</span> Job cost sheets and the statements</a>
+          <ol>
+            <li><a href="#s2-6-ledger">Inventories and COGS</a></li>
+            <li><a href="#s2-6-under">Under- and overapplied</a></li>
+            <li><a href="#s2-6-service">Service companies</a></li>
+          </ol></li>
+      </ol>
+    </details>
+  </nav>
+
+  <article class="tb-body">
+    <header>
+      <span class="label">Chapter 2 · Textbook</span>
+      <h1>Job-Order Costing: Calculating Unit Product Costs</h1>
+      <p class="lede">When every order is different, you have to cost each one separately. This chapter shows how: trace materials and labor to the job, then apply overhead with a rate set before the year starts. The examples follow <strong>Harborlight Sign Works</strong>, a fictional shop that builds custom signs to order.</p>
+    </header>
+
+    <!-- ================= 2.1 ================= -->
+    <section id="s2-1" aria-labelledby="h2-1">
+      <h2 id="h2-1"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 2.1</span>Job-order costing</h2>
+
+      <div class="sub" id="s2-1-when">
+        <h3>When it's used</h3>
+        <p>A <span class="term">job-order costing</span> system fits a business that makes <strong>many different products</strong> in a period, usually <strong>to a customer's order</strong>. Each order (a <span class="term">job</span>) is unique, so its costs have to be tracked separately.</p>
+        <ul class="clean">
+          <li>A shop building 20 storefront signs for one restaurant, then a single lobby sign for a dentist</li>
+          <li>A custom home builder, a ship repair yard, a print shop, a wedding caterer</li>
+          <li>Service firms too: a law firm costs each client's case; an ad agency costs each campaign</li>
+        </ul>
+        <p>The opposite is a company that makes one identical product continuously, like a cereal maker or a paint factory. That calls for process costing, covered in Chapter 4.</p>
+      </div>
+
+      <div class="sub" id="s2-1-sheet">
+        <h3>The job cost sheet</h3>
+        <p>Every job gets a <span class="term">job cost sheet</span>, a record that collects all of the job's costs: direct materials, direct labor and applied overhead. Two source documents feed it:</p>
+        <ul class="clean">
+          <li><span class="term">Materials requisition form:</span> a request to take materials out of the storeroom. It names the job the materials are for, so their cost is charged straight to that job as direct materials.</li>
+          <li><span class="term">Employee time ticket:</span> an hour-by-hour record of what a worker did. Hours spent on a job are charged to it as direct labor (hours × wage rate).</li>
+        </ul>
+        <p>Direct materials and direct labor are <strong>traced</strong>. Manufacturing overhead can't be traced, because rent, utilities and supervisors serve every job at once, so it has to be <strong>allocated</strong> using an overhead rate.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>Indirect materials and indirect labor never appear on a job cost sheet as such. They're part of manufacturing overhead and reach the job only through the overhead rate.</p></div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Job-order costing</dt><dd>Costing each unique order (job) separately.</dd>
+          <dt>Job cost sheet</dt><dd>The record of a job's direct materials, direct labor and applied overhead.</dd>
+          <dt>Materials requisition form</dt><dd>Source document that charges direct materials to a specific job.</dd>
+          <dt>Employee time ticket</dt><dd>Source document that charges direct labor hours to a specific job.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 2.2 ================= -->
+    <section id="s2-2" aria-labelledby="h2-2">
+      <h2 id="h2-2"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 2.2</span>Predetermined overhead rate</h2>
+
+      <div class="sub" id="s2-2-base">
+        <h3>Allocation bases, and why the rate is set in advance</h3>
+        <p>An <span class="term">allocation base</span> is the measure used to spread overhead across jobs, such as direct labor-hours (DLH), direct labor cost or machine-hours (MH). A job that uses more of the base gets more overhead.</p>
+        <p>The rate is <span class="term">predetermined</span>, meaning it's computed from <strong>estimates before the year begins</strong>. Why not wait and use actual figures?</p>
+        <ul class="clean">
+          <li>Actual overhead isn't known until the year ends, but managers need job costs now, to price bids and value inventory.</li>
+          <li>Actual overhead jumps around month to month (heating in winter, repairs), which would make identical jobs cost different amounts depending on the month.</li>
+          <li>Activity varies by season. Spreading fixed overhead over a slow month's few hours would make jobs look expensive just because they were made in a slow month.</li>
+        </ul>
+      </div>
+
+      <div class="sub" id="s2-2-compute">
+        <h3>Computing the rate</h3>
+        <p class="formula">Predetermined overhead rate = estimated total manufacturing overhead ÷ estimated total amount of the allocation base</p>
+        <p>The estimate is built in four steps:</p>
+        <ol class="clean" style="list-style:decimal;padding-left:22px">
+          <li>Estimate the total allocation base for next year. Harborlight expects <span class="num">50,000</span> direct labor-hours.</li>
+          <li>Estimate the total <strong>fixed</strong> overhead: <span class="num">$300,000</span> (rent, salaried supervisors, depreciation).</li>
+          <li>Estimate the <strong>variable</strong> overhead per unit of the base: <span class="num">$2</span> per direct labor-hour (power, supplies).</li>
+          <li>Total estimated overhead = fixed + variable rate × base: $300,000 + $2 × 50,000 = $400,000. Divide by the base.</li>
+        </ol>
+        <p class="formula num">$400,000 ÷ 50,000 DLH = $8 per direct labor-hour</p>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · Predetermined overhead rate</span>
+          <div class="fields">
+            <div class="field"><label for="po-base">Estimated base (hours)</label><input type="number" id="po-base" min="1" step="1000" value="50000"></div>
+            <div class="field"><label for="po-fixed">Estimated fixed overhead ($)</label><input type="number" id="po-fixed" min="0" step="10000" value="300000"></div>
+            <div class="field"><label for="po-var">Variable overhead per hour ($)</label><input type="number" id="po-var" min="0" step="0.5" value="2"></div>
+          </div>
+          <div class="out">
+            <div class="stat"><span class="label">Estimated total overhead</span><span class="v" id="po-total">$400,000</span></div>
+            <div class="stat hl"><span class="label">Predetermined rate</span><span class="v" id="po-rate">$8.00 / hour</span></div>
+          </div>
+          <p class="note" id="po-note"></p>
+        </div>
+        <div class="tip"><span class="label">Exam tip</span><p>Both halves of the rate are <strong>estimates</strong>. A question that gives you actual overhead and actual hours is setting a trap: the rate always uses the estimated figures.</p></div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Allocation base</dt><dd>The measure (DLH, labor cost, MH) used to assign overhead to jobs.</dd>
+          <dt>Predetermined overhead rate</dt><dd>Estimated total overhead ÷ estimated total allocation base, set before the year.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 2.3 ================= -->
+    <section id="s2-3" aria-labelledby="h2-3">
+      <h2 id="h2-3"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 2.3</span>Applying overhead</h2>
+
+      <div class="sub" id="s2-3-apply">
+        <h3>Rate × actual base</h3>
+        <p>During the year, overhead is charged to each job as the job uses the base. This is called <span class="term">overhead application</span>:</p>
+        <p class="formula">Overhead applied to a job = predetermined overhead rate × <strong>actual</strong> amount of the base used by the job</p>
+        <p>Harborlight's <strong>Job 214</strong> is 20 storefront signs. Its time tickets show 120 direct labor-hours, so:</p>
+        <p class="formula num">120 direct labor-hours × $8 = $960 of overhead applied</p>
+        <p>Notice the mix: the <em>rate</em> comes from estimates made last year, but the <em>hours</em> are the job's actual hours. Nobody waits for the year's actual overhead bill.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>"Applied" overhead (rate × actual base) and "actual" overhead (the real bills) are different numbers. They're compared at year end in section 2.6.</p></div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Overhead application</dt><dd>Charging overhead to jobs: predetermined rate × actual base used.</dd>
+          <dt>Applied overhead</dt><dd>The overhead charged to jobs during the period.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 2.4 ================= -->
+    <section id="s2-4" aria-labelledby="h2-4">
+      <h2 id="h2-4"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 2.4</span>Total and unit job cost</h2>
+
+      <div class="sub" id="s2-4-total">
+        <h3>Adding it up</h3>
+        <p>The job cost sheet totals three lines:</p>
+        <div class="table-wrap stmt">
+          <table>
+            <thead><tr><th>Job 214 · 20 signs</th><th>Amount</th></tr></thead>
+            <tbody>
+              <tr><td>Direct materials (from requisitions)</td><td class="num">$2,600</td></tr>
+              <tr><td>Direct labor (120 hours × $20)</td><td class="num">$2,400</td></tr>
+              <tr><td>Manufacturing overhead applied (120 hours × $8)</td><td class="num">$960</td></tr>
+              <tr><td><strong>Total job cost</strong></td><td class="num"><strong>$5,960</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The <span class="term">unit product cost</span> is the total job cost divided by the units in the job: $5,960 ÷ 20 = $298 a sign. That is the cost each sign carries in inventory, and the starting point for pricing.</p>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · Job cost</span>
+          <div class="fields">
+            <div class="field"><label for="jc-dm">Direct materials ($)</label><input type="number" id="jc-dm" min="0" step="100" value="2600"></div>
+            <div class="field"><label for="jc-h">Direct labor-hours</label><input type="number" id="jc-h" min="0" step="1" value="120"></div>
+            <div class="field"><label for="jc-w">Wage rate ($ per hour)</label><input type="number" id="jc-w" min="0" step="1" value="20"></div>
+            <div class="field"><label for="jc-r">Overhead rate ($ per hour)</label><input type="number" id="jc-r" min="0" step="0.5" value="8"></div>
+            <div class="field"><label for="jc-u">Units in the job</label><input type="number" id="jc-u" min="1" step="1" value="20"></div>
+          </div>
+          <div class="out">
+            <div class="stat"><span class="label">Direct labor</span><span class="v" id="jc-dl">$2,400</span></div>
+            <div class="stat"><span class="label">Overhead applied</span><span class="v" id="jc-oh">$960</span></div>
+            <div class="stat hl"><span class="label">Total job cost</span><span class="v" id="jc-total">$5,960</span></div>
+            <div class="stat"><span class="label">Unit product cost</span><span class="v" id="jc-unit">$298.00</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub" id="s2-4-base">
+        <h3>Choosing a good base</h3>
+        <p>Direct materials and direct labor are traced accurately. Overhead is only as accurate as the allocation base. The base should be a <span class="term">cost driver</span>: something that actually causes overhead. In a shop full of automated cutting machines, machine-hours may drive overhead far better than labor-hours. Using a poor base gives some jobs too much overhead and others too little, which leads to bad prices and bad decisions.</p>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Total job cost</dt><dd>Direct materials + direct labor + applied overhead.</dd>
+          <dt>Unit product cost</dt><dd>Total job cost ÷ units in the job.</dd>
+          <dt>Cost driver</dt><dd>A factor that causes overhead costs; the best allocation base.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 2.5 ================= -->
+    <section id="s2-5" aria-labelledby="h2-5">
+      <h2 id="h2-5"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 2.5</span>Multiple overhead rates</h2>
+
+      <div class="sub" id="s2-5-depts">
+        <h3>Departmental rates</h3>
+        <p>A single <span class="term">plantwide overhead rate</span> assumes one base drives all overhead. Many companies instead compute a separate rate for each department, each with the base that fits it. Harborlight has two departments:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th></th><th>Cutting (machine-heavy)</th><th>Finishing (hand work)</th></tr></thead>
+            <tbody>
+              <tr><td>Allocation base</td><td>Machine-hours</td><td>Direct labor-hours</td></tr>
+              <tr><td>Estimated base</td><td class="num">40,000 MH</td><td class="num">40,000 DLH</td></tr>
+              <tr><td>Estimated fixed overhead</td><td class="num">$180,000</td><td class="num">$60,000</td></tr>
+              <tr><td>Variable overhead per unit of base</td><td class="num">$3</td><td class="num">$1</td></tr>
+              <tr><td>Estimated total overhead</td><td class="num">$300,000</td><td class="num">$100,000</td></tr>
+              <tr><td><strong>Departmental rate</strong></td><td class="num"><strong>$7.50</strong> per MH</td><td class="num"><strong>$2.50</strong> per DLH</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Job 214 used 80 machine-hours in Cutting and 90 direct labor-hours in Finishing (plus 30 labor-hours in Cutting, for 120 labor-hours in all):</p>
+        <ul class="clean">
+          <li>Cutting: 80 machine-hours × $7.50 = $600</li>
+          <li>Finishing: 90 direct labor-hours × $2.50 = $225</li>
+          <li>Overhead applied: <span class="num">$825</span>, not the $960 the plantwide rate gave</li>
+        </ul>
+        <p>Job 214's cost becomes $2,600 + $2,400 + $825 = <span class="num">$5,825</span>, or <span class="num">$291.25</span> a sign. The job is light on machine time, so the plantwide labor-hour rate was charging it overhead it didn't really cause.</p>
+      </div>
+
+      <div class="sub" id="s2-5-price">
+        <h3>Why it changes the price</h3>
+        <p>Many job shops price by marking up cost. At a 50% markup, Job 214 would be bid at $5,960 × 1.5 = $8,940 using the plantwide rate, but $5,825 × 1.5 = $8,737.50 with departmental rates. With overcosted jobs, a shop loses bids it should win; with undercosted jobs, it wins bids that lose money.</p>
+        <p>Taking the idea further, a company can build a rate for each <em>activity</em> (setups, inspections, machine time). That is <strong>activity-based costing</strong>, the subject of Chapter 7.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>With departmental rates, apply each department's rate to the job's base <strong>in that department</strong>, then add the departments together.</p></div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Plantwide overhead rate</dt><dd>One predetermined rate for the whole factory.</dd>
+          <dt>Departmental overhead rates</dt><dd>A separate rate for each department, each with its own base.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 2.6 ================= -->
+    <section id="s2-6" aria-labelledby="h2-6">
+      <h2 id="h2-6"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 2.6</span>Job cost sheets and the statements</h2>
+
+      <div class="sub" id="s2-6-ledger">
+        <h3>Inventories and cost of goods sold</h3>
+        <p>Together, all the job cost sheets form a <span class="term">subsidiary ledger</span>. They explain exactly which jobs make up the balance sheet's inventories and the income statement's cost of goods sold:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Job</th><th>Status at year end</th><th>Cost</th><th>Where it's reported</th></tr></thead>
+            <tbody>
+              <tr><td>301, 302, 303</td><td>Finished and sold</td><td class="num">$8,000 + $5,000 + $7,000</td><td>Cost of goods sold <span class="num">$20,000</span></td></tr>
+              <tr><td>304, 305</td><td>Finished, not yet sold</td><td class="num">$6,000 + $3,000</td><td>Finished goods <span class="num">$9,000</span></td></tr>
+              <tr><td>306</td><td>Still in process</td><td class="num">$4,000</td><td>Work in process <span class="num">$4,000</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub" id="s2-6-under">
+        <h3>Under- and overapplied overhead</h3>
+        <p>Because the rate is built on estimates, the overhead applied to jobs during the year almost never equals the actual overhead incurred.</p>
+        <ul class="clean">
+          <li><span class="term">Underapplied overhead:</span> applied is <strong>less</strong> than actual. The jobs were undercosted.</li>
+          <li><span class="term">Overapplied overhead:</span> applied is <strong>more</strong> than actual. The jobs were overcosted.</li>
+        </ul>
+        <p>Harborlight actually used 49,000 direct labor-hours, so it applied 49,000 × $8 = <span class="num">$392,000</span>. Its actual overhead bills came to <span class="num">$412,000</span>. Overhead was underapplied by $20,000.</p>
+        <p>The simplest fix is to adjust cost of goods sold. Underapplied overhead is added to cost of goods sold, so it increases cost of goods sold and lowers net operating income. Overapplied overhead is subtracted from cost of goods sold, so it decreases cost of goods sold and raises net operating income. Chapter 3 covers the journal entries behind this.</p>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · Under or overapplied?</span>
+          <div class="fields">
+            <div class="field"><label for="ua-rate">Predetermined rate ($ per hour)</label><input type="number" id="ua-rate" min="0" step="0.5" value="8"></div>
+            <div class="field"><label for="ua-hours">Actual hours worked</label><input type="number" id="ua-hours" min="0" step="1000" value="49000"></div>
+            <div class="field"><label for="ua-actual">Actual overhead ($)</label><input type="number" id="ua-actual" min="0" step="1000" value="412000"></div>
+          </div>
+          <div class="out">
+            <div class="stat"><span class="label">Overhead applied</span><span class="v" id="ua-applied">$392,000</span></div>
+            <div class="stat hl"><span class="label">Result</span><span class="v" id="ua-res">$20,000 underapplied</span></div>
+          </div>
+          <p class="note" id="ua-note"></p>
+        </div>
+        <div class="tip"><span class="label">Exam tip</span><p>Remember "<strong>under</strong> → COGS goes <strong>up</strong>". The jobs were charged too little, so cost of goods sold is topped up.</p></div>
+      </div>
+
+      <div class="sub" id="s2-6-service">
+        <h3>Service companies</h3>
+        <p>Job-order costing isn't just for factories. A law firm treats each case as a job: lawyers' hours are direct labor, court filing fees are direct costs, and office overhead is applied with a rate per billable hour. Hospitals, architects, consultants and movie studios cost their work the same way.</p>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Subsidiary ledger</dt><dd>The set of job cost sheets behind work in process, finished goods and cost of goods sold.</dd>
+          <dt>Underapplied overhead</dt><dd>Applied &lt; actual; added to cost of goods sold.</dd>
+          <dt>Overapplied overhead</dt><dd>Applied &gt; actual; subtracted from cost of goods sold.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="tb-next" aria-label="Next steps">
+      <a class="btn" href="learn.html">Try the animated lesson</a>
+      <a class="btn primary" href="quiz.html">Take the quiz →</a>
+    </nav>
+  </article>
+</div>
+
+<footer class="site-foot"><div class="wrap"><p>ACG 203 Study is independent study material. It is not affiliated with or endorsed by UNCW or McGraw-Hill. Companies and numbers in the examples are fictional.</p></div></footer>
+
+<script src="textbook.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

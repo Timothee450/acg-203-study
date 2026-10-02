@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 2 Learning · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/deck.css">
+<style>
+.s-blue{stroke:var(--blue)} .f-blue-soft{fill:var(--blue-soft)}
+.viz text{font-size:15px} .viz .sm{font-size:12.5px} .viz .b{font-weight:700}
+.receipt{display:flex;flex-direction:column;gap:2px;width:100%;font-family:var(--f-mono);font-size:15px}
+.receipt > div{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;border-bottom:1px dashed var(--line)}
+.receipt .tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:18px;color:var(--accent)}
+.pp-stage{display:grid;grid-template-columns:1fr minmax(0,1.4fr) 1fr;gap:12px;align-items:stretch}
+.pp-bin{border:2px dashed var(--line);border-radius:16px;padding:14px;text-align:center;display:flex;flex-direction:column;gap:6px;justify-content:center;font-size:14px;color:var(--ink-2);background:none;cursor:pointer}
+.pp-bin b{color:var(--ink);font-size:16px}
+.pp-bin .n{font:700 26px var(--f-mono);color:var(--accent)}
+.pp-card{background:var(--surface);border:1.5px solid var(--ink);border-radius:14px;padding:22px 16px;text-align:center;font-weight:700;font-size:19px;display:grid;place-items:center;min-height:110px}
+@media (max-width:640px){.pp-stage{grid-template-columns:1fr 1fr}.pp-card{grid-column:1 / -1;grid-row:1}}
+.docs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:48px}
+.doc-card{border:1.5px solid var(--ink);border-radius:10px;background:var(--surface);padding:8px 12px;font-size:13.5px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;touch-action:manipulation}
+.doc-card .k{font:600 10px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.doc-card.dm .k{color:var(--blue)} .doc-card.dl .k{color:var(--accent)}
+.doc-card.sel{outline:3px solid var(--amber);outline-offset:2px}
+.sheets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.sheets{grid-template-columns:1fr}}
+.sheet{border:2px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;font-size:14px;cursor:pointer;background:var(--bg);text-align:left;transition:border-color .2s,background .2s}
+.sheet.hot{border-color:var(--accent);background:var(--accent-soft)}
+.sheet .h{font-size:16px;font-weight:700}
+.sheet .ln{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:13.5px}
+.sheet .tot{border-top:1px solid var(--line);padding-top:6px;font-weight:700}
+.stack{display:flex;height:56px;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.stack > div{display:flex;align-items:center;justify-content:center;font:600 12.5px var(--f-mono);color:var(--on-accent);overflow:hidden;white-space:nowrap;min-width:0}
+.seg-dm{background:var(--blue)} .seg-dl{background:var(--accent)} .seg-oh{background:var(--amber)}
+.coins{display:flex;flex-wrap:wrap;gap:5px;min-height:30px}
+.coin{width:26px;height:26px;border-radius:50%;background:var(--amber);color:var(--on-accent);display:grid;place-items:center;font:700 9.5px var(--f-mono)}
+.coin.part{opacity:.6}
+.meter{display:grid;grid-template-columns:minmax(110px,190px) minmax(0,1fr) 110px;gap:12px;align-items:center;font-size:14.5px}
+.meter .bar-h{height:18px;border-radius:6px}
+.meter .bar-h > i{border-radius:6px;width:100%;transform-origin:0 50%}
+.meter .mono{text-align:right}
+.meter.amber .bar-h > i{background:var(--amber)} .meter.blue .bar-h > i{background:var(--blue)}
+@media (max-width:520px){.meter{grid-template-columns:1fr 100px}.meter .bar-h{grid-column:1 / -1;grid-row:2}}
+.signs{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;max-width:640px}
+@media (max-width:520px){.signs{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.sgn{aspect-ratio:3/2;border-radius:6px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font:700 11px var(--f-mono)}
+.ledger3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.ledger3{grid-template-columns:1fr}}
+.col{border-radius:14px;background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:8px;min-height:180px}
+.col h3{font-size:15px;display:flex;justify-content:space-between;gap:8px}
+.col h3 .mono{color:var(--accent)}
+.col .note{font-size:12px;color:var(--ink-2)}
+.jcard{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);padding:8px 10px;font-size:14px;cursor:pointer;width:100%}
+.jcard .act{font:600 11px var(--f-mono);color:var(--accent);white-space:nowrap}
+.dept{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:520px){.dept{grid-template-columns:1fr}}
+.dept .card{gap:4px}
+.vs2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.vs2{grid-template-columns:1fr}}
+.vs2 .card.on{border-color:var(--accent);background:var(--accent-soft)}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <a class="crumb" href="index.html">← Chapter 2</a>
+  <button type="button" class="brand" id="menu-btn" aria-expanded="false" aria-controls="menu">Contents <span class="caret">▾</span></button>
+  <div class="track" id="track"><div class="fill" id="fill"></div></div>
+  <span class="sec-label" id="sec-label">Intro</span>
+  <nav class="menu" id="menu" hidden aria-label="Jump to section"></nav>
+  <button type="button" class="theme-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+</header>
+
+<main class="stage" id="stage">
+
+<!-- TITLE -->
+<section class="slide" data-section="intro" data-title="Welcome" data-key="title">
+ <div class="slide-inner">
+  <div class="split">
+   <div style="display:flex;flex-direction:column;gap:22px">
+    <p class="eyebrow">ACG 203 · Chapter 2</p>
+    <h1>Cost the <em>job</em></h1>
+    <p class="lede">Harborlight Sign Works builds every order differently. Follow one job, 20 storefront signs, from the storeroom to the price tag.</p>
+    <div class="chips"><span class="chip">2.1 Jobs</span><span class="chip">2.2 Overhead rate</span><span class="chip">2.3 Applying</span><span class="chip">2.4 Job cost</span><span class="chip">2.5 Departments</span><span class="chip">2.6 Statements</span></div>
+    <div><button type="button" class="btn primary" id="start-btn">Start the walkthrough →</button></div>
+   </div>
+   <div class="cert">
+    <div class="cert-in">
+     <span class="k">Job cost sheet · Job 214</span>
+     <div class="receipt">
+      <div data-at="0"><span>Direct materials</span><span>$2,600</span></div>
+      <div data-at="0"><span>Direct labor (120 h × $20)</span><span>$2,400</span></div>
+      <div data-at="0"><span>Overhead applied (120 h × $8)</span><span>$960</span></div>
+      <div class="tot" data-at="0"><span>Total job cost</span><span data-count="5960">$5,960</span></div>
+     </div>
+     <div class="cert-row"><span>Harborlight Sign Works</span><span>20 signs · $298 each</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- JOBS VS PROCESS -->
+<section class="slide" data-section="intro" data-title="Every order is different" data-key="jobs">
+ <div class="slide-inner">
+  <h2>Every order is <em>different</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 230" style="max-width:760px" aria-label="A process line makes identical units; a job shop makes different orders, each with its own cost sheet">
+   <path d="M300 10 L300 220" class="s-line" stroke-width="1.5" stroke-dasharray="4 6"/>
+   <text x="150" y="22" text-anchor="middle" class="f-ink2 sm b">SAME PRODUCT, NONSTOP</text>
+   <text x="450" y="22" text-anchor="middle" class="f-accent sm b">EVERY ORDER UNIQUE</text>
+   <path d="M20 152 L280 152" class="s-ink2" stroke-width="4" stroke-linecap="round"/>
+   <rect x="30" y="118" width="30" height="30" rx="4" class="f-blue" data-at="1"/>
+   <rect x="80" y="118" width="30" height="30" rx="4" class="f-blue" data-at="1" data-d=".1"/>
+   <rect x="130" y="118" width="30" height="30" rx="4" class="f-blue" data-at="1" data-d=".2"/>
+   <rect x="180" y="118" width="30" height="30" rx="4" class="f-blue" data-at="1" data-d=".3"/>
+   <rect x="230" y="118" width="30" height="30" rx="4" class="f-blue" data-at="1" data-d=".4"/>
+   <text x="150" y="190" text-anchor="middle" class="f-ink2 sm" data-at="1">→ process costing (Chapter 4)</text>
+   <g data-at="2"><rect x="320" y="50" width="120" height="44" rx="6" class="f-accent"/><text x="380" y="77" text-anchor="middle" class="f-bg sm b">CAFÉ SIGN</text><text x="380" y="114" text-anchor="middle" class="f-ink2 sm">Job 214</text></g>
+   <g data-at="2" data-d=".15"><circle cx="490" cy="72" r="30" class="f-amber"/><text x="490" y="77" text-anchor="middle" class="f-bg sm b">DENTIST</text><text x="490" y="122" text-anchor="middle" class="f-ink2 sm">Job 215</text></g>
+   <g data-at="2" data-d=".3"><rect x="555" y="40" width="28" height="100" rx="4" class="f-blue"/><text x="569" y="158" text-anchor="middle" class="f-ink2 sm">Job 216</text></g>
+   <text x="450" y="190" text-anchor="middle" class="f-accent sm b" data-at="2">→ job-order costing: one cost sheet per job</text>
+  </svg></div>
+  <div class="cols" style="--n:2">
+   <div class="card" data-step="1"><span class="k">Process costing</span><b>Identical units: average the cost over everything made</b></div>
+   <div class="card" data-step="2"><span class="k">Job-order costing</span><b>Unique orders: track each job's costs on its own job cost sheet</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 2.1 -->
+<section class="slide" data-section="2.1" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">2.1</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Job-order costing</h2><div class="chips"><span class="chip">Job cost sheet</span><span class="chip">Requisitions</span><span class="chip">Time tickets</span></div></div></div>
+ </div>
+</section>
+
+<!-- TRACE -->
+<section class="slide" data-section="2.1" data-title="Feeding the job cost sheet" data-key="trace2">
+ <div class="slide-inner">
+  <h2>Two documents <em>feed</em> the job</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 260" style="max-width:760px" aria-label="A materials requisition and a time ticket post to Job 214's cost sheet; overhead can't be traced and is applied with a rate">
+   <rect x="380" y="16" width="200" height="228" rx="10" class="f-surface s-accent" stroke-width="2"/>
+   <text x="480" y="42" text-anchor="middle" class="f-accent sm b">JOB 214 COST SHEET</text>
+   <text x="394" y="92" class="f-ink sm">Direct materials</text><text x="566" y="92" text-anchor="end" class="f-blue b" data-at="1">$2,600</text>
+   <text x="394" y="142" class="f-ink sm">Direct labor</text><text x="566" y="142" text-anchor="end" class="f-accent b" data-at="2">$2,400</text>
+   <text x="394" y="192" class="f-ink sm">Overhead applied</text><text x="566" y="192" text-anchor="end" class="f-amber b" data-at="3">$960</text>
+   <rect x="20" y="52" width="140" height="70" rx="8" class="f-blue-soft s-blue" stroke-width="1.5"/>
+   <text x="90" y="76" text-anchor="middle" class="f-ink sm b">Materials</text><text x="90" y="93" text-anchor="middle" class="f-ink sm b">requisition</text><text x="90" y="111" text-anchor="middle" class="f-blue sm">Job 214 · $2,600</text>
+   <rect x="20" y="140" width="140" height="62" rx="8" class="f-accent-soft s-accent" stroke-width="1.5"/>
+   <text x="90" y="164" text-anchor="middle" class="f-ink sm b">Time ticket</text><text x="90" y="186" text-anchor="middle" class="f-accent sm">120 h × $20</text>
+   <path d="M160 87 C260 87 300 88 380 88" class="f-none s-blue draw" stroke-width="3" data-at="1"/>
+   <path d="M160 171 C260 171 300 140 380 138" class="f-none s-accent draw" stroke-width="3" data-at="2"/>
+   <g data-at="3"><ellipse cx="200" cy="232" rx="90" ry="22" class="f-amber-soft"/><text x="200" y="237" text-anchor="middle" class="f-amber sm b">rent · power · supervisors</text></g>
+   <path d="M290 230 C330 230 340 192 380 190" class="f-none s-amber" stroke-width="2" stroke-dasharray="5 5" data-at="3"/>
+   <text x="300" y="214" text-anchor="middle" class="f-amber sm b" data-at="3">rate</text>
+  </svg></div>
+  <div class="cols" style="--n:3">
+   <div class="card" data-step="1"><span class="k">Materials requisition</span><b>Names the job, so materials are charged straight to it</b></div>
+   <div class="card" data-step="2"><span class="k">Employee time ticket</span><b>Hours on the job × wage rate = direct labor</b></div>
+   <div class="card" data-step="3"><span class="k">Overhead</span><b>Can't be traced, so it's applied with a rate (2.2)</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- JOB OR PROCESS -->
+<section class="slide" data-section="2.1" data-title="Job-order or process?" data-sim="jobornot">
+ <div class="slide-inner">
+  <h2>Job-order or <em>process?</em></h2>
+  <div class="sim">
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag" id="jo-count">Business 1 of 10</span><button type="button" class="btn small" id="jo-reset">Start over</button></div>
+   <div class="pp-stage">
+    <button type="button" class="pp-bin" id="jo-job"><b>Job-order</b><span>Unique orders</span><span class="n" id="jo-jn">0</span></button>
+    <div class="pp-card" id="jo-card">Custom home builder</div>
+    <button type="button" class="pp-bin" id="jo-proc"><b>Process</b><span>Identical units, nonstop</span><span class="n" id="jo-pn">0</span></button>
+   </div>
+   <div class="feedback" id="jo-fb" aria-live="polite">Is every order different? Then it's job-order. Tap a side.</div>
+  </div>
+ </div>
+</section>
+
+<!-- POST DOCUMENTS -->
+<section class="slide" data-section="2.1" data-title="Post to the right job" data-sim="jobsheet">
+ <div class="slide-inner">
+  <h2>Post each document to its <em>job</em></h2>
+  <div class="sim">
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><span class="sim-tag">Tap a document, then its job cost sheet</span><button type="button" class="btn small" id="js-reset">Start over</button></div>
+   <div class="docs" id="js-docs"></div>
+   <div class="sheets" id="js-sheets"></div>
+   <div class="feedback" id="js-fb" aria-live="polite">Pick a document to start.</div>
+  </div>
+ </div>
+</section>
+
+<!-- OVERHEAD POOL -->
+<section class="slide" data-section="2.1" data-title="Overhead can't be traced" data-key="ohcloud">
+ <div class="slide-inner">
+  <h2>Who caused the <em>power bill?</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 240" style="max-width:760px" aria-label="Overhead is pooled and spread to jobs at $8 per labor-hour">
+   <rect x="215" y="14" width="170" height="54" rx="12" class="f-amber-soft s-amber" stroke-width="1.5"/>
+   <text x="300" y="38" text-anchor="middle" class="f-ink b">Overhead pool</text>
+   <text x="300" y="57" text-anchor="middle" class="f-amber sm">rent · power · supervisors</text>
+   <g data-at="1" data-out="2"><text x="150" y="122" text-anchor="middle" class="f-red b" style="font-size:30px">?</text><text x="300" y="122" text-anchor="middle" class="f-red b" style="font-size:30px">?</text><text x="450" y="122" text-anchor="middle" class="f-red b" style="font-size:30px">?</text></g>
+   <path d="M260 68 C200 100 120 120 110 160" class="f-none s-amber draw" stroke-width="3" data-at="2"/>
+   <path d="M300 68 L300 160" class="f-none s-amber draw" stroke-width="2" data-at="2"/>
+   <path d="M340 68 C400 100 480 120 490 160" class="f-none s-amber draw" stroke-width="5" data-at="2"/>
+   <text x="300" y="104" text-anchor="middle" class="f-amber sm b" data-at="2" style="paint-order:stroke;stroke:var(--bg);stroke-width:4px">$8 per labor-hour</text>
+   <rect x="50" y="160" width="120" height="44" rx="10" class="f-surface s-line"/><text x="110" y="187" text-anchor="middle" class="f-ink sm b">Job 214 · 120 h</text>
+   <rect x="240" y="160" width="120" height="44" rx="10" class="f-surface s-line"/><text x="300" y="187" text-anchor="middle" class="f-ink sm b">Job 215 · 45 h</text>
+   <rect x="430" y="160" width="120" height="44" rx="10" class="f-surface s-line"/><text x="490" y="187" text-anchor="middle" class="f-ink sm b">Job 216 · 300 h</text>
+   <text x="110" y="228" text-anchor="middle" class="f-amber b" data-at="2" data-count="960">$960</text>
+   <text x="300" y="228" text-anchor="middle" class="f-amber b" data-at="2" data-count="360">$360</text>
+   <text x="490" y="228" text-anchor="middle" class="f-amber b" data-at="2" data-count="2400">$2,400</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Rent, power and supervisors serve <b>every</b> job at once, so nobody can say which job caused which dollar</li>
+   <li data-step="2">So overhead is spread with a <b>rate</b>: jobs that use more of the base get more overhead</li>
+  </ul>
+ </div>
+</section>
+
+<!-- DIV 2.2 -->
+<section class="slide" data-section="2.2" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">2.2</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Predetermined overhead rate</h2><div class="chips"><span class="chip">Allocation base</span><span class="chip">Estimates</span><span class="chip">Four steps</span></div></div></div>
+ </div>
+</section>
+
+<!-- WHY PREDETERMINED -->
+<section class="slide" data-section="2.2" data-title="Why decide in advance?" data-key="why">
+ <div class="slide-inner">
+  <h2>Why set the rate <em>in advance?</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 240" style="max-width:760px" aria-label="Actual overhead swings month to month and is only known at year end; a predetermined rate stays flat all year">
+   <path d="M40 190 L580 190" class="s-ink2" stroke-width="1.5"/>
+   <g class="f-ink2 sm" text-anchor="middle">
+    <text x="60" y="208">J</text><text x="105" y="208">F</text><text x="150" y="208">M</text><text x="195" y="208">A</text><text x="240" y="208">M</text><text x="285" y="208">J</text><text x="330" y="208">J</text><text x="375" y="208">A</text><text x="420" y="208">S</text><text x="465" y="208">O</text><text x="510" y="208">N</text><text x="555" y="208">D</text>
+   </g>
+   <g data-at="1"><path d="M150 186 L150 70" class="s-accent" stroke-width="2" stroke-dasharray="4 4"/><rect x="100" y="40" width="100" height="28" rx="8" class="f-accent"/><text x="150" y="59" text-anchor="middle" class="f-bg sm b">Job 214 done</text></g>
+   <g data-at="1" data-d=".3"><text x="555" y="60" text-anchor="middle" class="f-red b" style="font-size:28px">?</text><text x="555" y="84" text-anchor="middle" class="f-red sm b">actual known</text><text x="555" y="100" text-anchor="middle" class="f-red sm b">here</text></g>
+   <g class="f-amber-soft">
+    <rect x="48" y="104" width="24" height="86" data-at="2"/><rect x="93" y="112" width="24" height="78" data-at="2" data-d=".05"/><rect x="138" y="130" width="24" height="60" data-at="2" data-d=".1"/><rect x="183" y="142" width="24" height="48" data-at="2" data-d=".15"/>
+    <rect x="228" y="150" width="24" height="40" data-at="2" data-d=".2"/><rect x="273" y="146" width="24" height="44" data-at="2" data-d=".25"/><rect x="318" y="136" width="24" height="54" data-at="2" data-d=".3"/><rect x="363" y="140" width="24" height="50" data-at="2" data-d=".35"/>
+    <rect x="408" y="142" width="24" height="48" data-at="2" data-d=".4"/><rect x="453" y="132" width="24" height="58" data-at="2" data-d=".45"/><rect x="498" y="116" width="24" height="74" data-at="2" data-d=".5"/><rect x="543" y="102" width="24" height="88" data-at="2" data-d=".55"/>
+   </g>
+   <text x="300" y="228" text-anchor="middle" class="f-amber sm b" data-at="2">actual overhead per month: heating, repairs, slow seasons</text>
+   <path d="M40 124 L580 124" class="f-none s-accent draw" stroke-width="4" data-at="3"/>
+   <text x="310" y="116" text-anchor="middle" class="f-accent sm b" data-at="3" style="paint-order:stroke;stroke:var(--bg);stroke-width:4px">predetermined: $8 per hour, all year</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Job 214 is finished in March and needs a cost <b>now</b>, for pricing and inventory. The year's actual overhead isn't known until December</li>
+   <li data-step="2">Actual overhead also swings month to month, so identical jobs would cost different amounts</li>
+   <li data-step="3">A rate set from <b>estimates</b> before the year gives every job the same fair rate</li>
+  </ul>
+ </div>
+</section>
+
+<!-- POHR BUILDER -->
+<section class="slide" data-section="2.2" data-title="Build the rate" data-sim="pohr">
+ <div class="slide-inner">
+  <h2>Build the rate in <em>four steps</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Try it · Harborlight's estimates</span>
+   <div class="cols" style="--n:3">
+    <div class="ctl"><label for="pr-base">1 · Estimated labor-hours <output id="pr-base-o">50,000</output></label><input type="range" id="pr-base" min="20000" max="80000" step="5000" value="50000"></div>
+    <div class="ctl"><label for="pr-fixed">2 · Estimated fixed overhead <output id="pr-fixed-o">$300,000</output></label><input type="range" id="pr-fixed" min="100000" max="600000" step="50000" value="300000"></div>
+    <div class="ctl"><label for="pr-var">3 · Variable overhead per hour <output id="pr-var-o">$2</output></label><input type="range" id="pr-var" min="0" max="6" step="0.5" value="2"></div>
+   </div>
+   <div class="stack" aria-hidden="true"><div class="seg-oh" id="pr-fs" style="width:75%">fixed</div><div class="seg-dm" id="pr-vs" style="width:25%">variable</div></div>
+   <div class="readout">
+    <div><div class="k">4 · Estimated total overhead</div><div class="v" id="pr-total">$400,000</div></div>
+    <div><div class="k">÷ estimated hours</div><div class="v" id="pr-hours">50,000</div></div>
+    <div><div class="k">Predetermined rate</div><div class="v pos" id="pr-rate">$8.00</div></div>
+   </div>
+   <div class="formula" id="pr-f" aria-live="polite">$300,000 + $2 × 50,000 = $400,000 · $400,000 ÷ 50,000 = <b>$8.00 per direct labor-hour</b></div>
+  </div>
+  <ul class="pts">
+   <li data-step="1">Rate = estimated total overhead ÷ estimated total base; total overhead = fixed + variable rate × base</li>
+   <li data-step="2">Harborlight: $400,000 ÷ 50,000 = <b>$8 per direct labor-hour</b>. More hours spread the <b>fixed</b> part thinner, so the rate falls</li>
+  </ul>
+ </div>
+</section>
+
+<!-- DIV 2.3 -->
+<section class="slide" data-section="2.3" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">2.3</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Applying overhead</h2><div class="chips"><span class="chip">Rate × actual hours</span><span class="chip">Applied overhead</span></div></div></div>
+ </div>
+</section>
+
+<!-- APPLY -->
+<section class="slide" data-section="2.3" data-title="Rate × actual hours" data-key="apply">
+ <div class="slide-inner">
+  <h2>Every hour drops <em>$8</em> into the job</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 220" style="max-width:760px" aria-label="Job 214's 120 labor-hours each carry $8 of overhead into the job, $960 in all">
+   <text x="40" y="28" class="f-ink sm b">Job 214: actual direct labor-hours</text>
+   <rect x="40" y="40" width="520" height="28" rx="8" class="f-surface2"/>
+   <rect x="40" y="40" width="520" height="28" rx="8" class="f-accent grow" data-at="1"/>
+   <text x="300" y="59" text-anchor="middle" class="f-bg sm b" data-at="1">120 hours</text>
+   <g>
+    <circle cx="62" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="238" data-dy="72" data-d="0"/>
+    <circle cx="105" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="195" data-dy="72" data-d=".06"/>
+    <circle cx="148" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="152" data-dy="72" data-d=".12"/>
+    <circle cx="191" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="109" data-dy="72" data-d=".18"/>
+    <circle cx="234" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="66" data-dy="72" data-d=".24"/>
+    <circle cx="277" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="23" data-dy="72" data-d=".3"/>
+    <circle cx="320" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="-20" data-dy="72" data-d=".36"/>
+    <circle cx="363" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="-63" data-dy="72" data-d=".42"/>
+    <circle cx="406" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="-106" data-dy="72" data-d=".48"/>
+    <circle cx="449" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="-149" data-dy="72" data-d=".54"/>
+    <circle cx="492" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="-192" data-dy="72" data-d=".6"/>
+    <circle cx="535" cy="96" r="13" class="f-amber" data-at="2" data-move="2" data-dx="-235" data-dy="72" data-d=".66"/>
+   </g>
+   <text x="560" y="128" text-anchor="end" class="f-amber sm b" data-at="2" data-out="3">each coin = 10 hours × $8 = $80</text>
+   <rect x="230" y="150" width="140" height="50" rx="10" class="f-surface s-amber" stroke-width="2"/>
+   <text x="300" y="172" text-anchor="middle" class="f-ink sm b">Overhead applied</text>
+   <text x="300" y="192" text-anchor="middle" class="f-amber b" data-at="3" data-count="960">$960</text>
+  </svg></div>
+  <div class="formula" data-step="3">Overhead applied = predetermined rate × <b>actual</b> hours = $8 × 120 = <b>$960</b></div>
+  <p class="tip" data-step="3"><b>Exam tip</b>Estimated rate, actual hours. Never actual overhead ÷ anything.</p>
+ </div>
+</section>
+
+<!-- APPLY SIM -->
+<section class="slide" data-section="2.3" data-title="Apply to three jobs" data-sim="applyoh">
+ <div class="slide-inner">
+  <h2>Same rate, different <em>jobs</em></h2>
+  <div class="sim">
+   <div class="seg" role="group" aria-label="Job" id="ap-btns">
+    <button type="button" data-h="120" aria-pressed="true">Job 214 · café signs</button>
+    <button type="button" data-h="45" aria-pressed="false">Job 215 · dentist sign</button>
+    <button type="button" data-h="300" aria-pressed="false">Job 216 · highway pylon</button>
+   </div>
+   <div class="meter"><span>Actual labor-hours</span><div class="bar-h"><i id="ap-bar" style="transform:scaleX(.4)"></i></div><span class="mono" id="ap-h">120 h</span></div>
+   <div class="coins" id="ap-coins" aria-hidden="true"></div>
+   <div class="readout">
+    <div><div class="k">Predetermined rate</div><div class="v">$8 / hour</div></div>
+    <div><div class="k">Overhead applied</div><div class="v pos" id="ap-oh">$960</div></div>
+   </div>
+   <div class="formula" id="ap-f" aria-live="polite">$8 × 120 hours = <b>$960</b> applied to Job 214</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 2.4 -->
+<section class="slide" data-section="2.4" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">2.4</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Total and unit job cost</h2><div class="chips"><span class="chip">DM + DL + applied MOH</span><span class="chip">÷ units</span><span class="chip">Cost driver</span></div></div></div>
+ </div>
+</section>
+
+<!-- JOB COST SIM -->
+<section class="slide" data-section="2.4" data-title="Add up the job" data-sim="jobcost">
+ <div class="slide-inner">
+  <h2>Stack up <em>Job 214</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Try it · $20 wage, $8 overhead rate</span>
+   <div class="stack" aria-hidden="true"><div class="seg-dm" id="jc-s1">DM</div><div class="seg-dl" id="jc-s2">DL</div><div class="seg-oh" id="jc-s3">MOH</div></div>
+   <div class="cols" style="--n:3">
+    <div class="ctl"><label for="jc-dm">Direct materials <output id="jc-dm-o">$2,600</output></label><input type="range" id="jc-dm" min="0" max="6000" step="100" value="2600"></div>
+    <div class="ctl"><label for="jc-h">Labor-hours <output id="jc-h-o">120</output></label><input type="range" id="jc-h" min="0" max="300" step="10" value="120"></div>
+    <div class="ctl"><label for="jc-u">Signs in the job <output id="jc-u-o">20</output></label><input type="range" id="jc-u" min="1" max="50" step="1" value="20"></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Total job cost</div><div class="v pos" id="jc-total">$5,960</div></div>
+    <div><div class="k">Unit product cost</div><div class="v" id="jc-unit">$298.00</div></div>
+   </div>
+   <div class="formula" id="jc-f" aria-live="polite">$2,600 + 120 × $20 + 120 × $8 = <b>$5,960</b> · ÷ 20 signs = <b>$298</b> each</div>
+  </div>
+ </div>
+</section>
+
+<!-- UNIT COST -->
+<section class="slide" data-section="2.4" data-title="Unit product cost" data-key="unitcost">
+ <div class="slide-inner">
+  <h2>$5,960 ÷ 20 signs = <em>$298</em> each</h2>
+  <div class="signs">
+   <span class="sgn" data-at="1">$298</span><span class="sgn" data-at="1" data-d=".04">$298</span><span class="sgn" data-at="1" data-d=".08">$298</span><span class="sgn" data-at="1" data-d=".12">$298</span><span class="sgn" data-at="1" data-d=".16">$298</span>
+   <span class="sgn" data-at="1" data-d=".2">$298</span><span class="sgn" data-at="1" data-d=".24">$298</span><span class="sgn" data-at="1" data-d=".28">$298</span><span class="sgn" data-at="1" data-d=".32">$298</span><span class="sgn" data-at="1" data-d=".36">$298</span>
+   <span class="sgn" data-at="1" data-d=".4">$298</span><span class="sgn" data-at="1" data-d=".44">$298</span><span class="sgn" data-at="1" data-d=".48">$298</span><span class="sgn" data-at="1" data-d=".52">$298</span><span class="sgn" data-at="1" data-d=".56">$298</span>
+   <span class="sgn" data-at="1" data-d=".6">$298</span><span class="sgn" data-at="1" data-d=".64">$298</span><span class="sgn" data-at="1" data-d=".68">$298</span><span class="sgn" data-at="1" data-d=".72">$298</span><span class="sgn" data-at="1" data-d=".76">$298</span>
+  </div>
+  <ul class="pts">
+   <li data-step="1"><b>Unit product cost</b> = total job cost ÷ units in the job</li>
+   <li data-step="2">Overhead is only as accurate as its base. Use a <b>cost driver</b>: something that actually causes the overhead</li>
+   <li data-step="3">A poor base overcosts some jobs and undercosts others, so prices and decisions go wrong</li>
+  </ul>
+ </div>
+</section>
+
+<!-- DIV 2.5 -->
+<section class="slide" data-section="2.5" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">2.5</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Multiple overhead rates</h2><div class="chips"><span class="chip">Plantwide</span><span class="chip">Departmental</span><span class="chip">Pricing</span></div></div></div>
+ </div>
+</section>
+
+<!-- DEPARTMENTS -->
+<section class="slide" data-section="2.5" data-title="One rate or two?" data-key="depts">
+ <div class="slide-inner">
+  <h2>One rate, or one per <em>department?</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 250" style="max-width:760px" aria-label="A single plantwide rate splits into a Cutting rate per machine-hour and a Finishing rate per labor-hour; Job 214's overhead falls from $960 to $825">
+   <g data-at="1" data-out="2"><rect x="40" y="14" width="520" height="34" rx="10" class="f-accent"/><text x="300" y="37" text-anchor="middle" class="f-bg b">Plantwide: $8 per labor-hour</text></g>
+   <g data-at="2"><rect x="40" y="14" width="250" height="34" rx="10" class="f-blue"/><text x="165" y="37" text-anchor="middle" class="f-bg sm b">$7.50 per machine-hour</text></g>
+   <g data-at="2" data-d=".15"><rect x="310" y="14" width="250" height="34" rx="10" class="f-amber"/><text x="435" y="37" text-anchor="middle" class="f-bg sm b">$2.50 per labor-hour</text></g>
+   <rect x="40" y="62" width="250" height="110" rx="12" class="f-surface s-line"/>
+   <text x="165" y="86" text-anchor="middle" class="f-ink b">Cutting</text>
+   <text x="165" y="106" text-anchor="middle" class="f-ink2 sm">machine-heavy · base: machine-hours</text>
+   <rect x="120" y="118" width="90" height="40" rx="6" class="f-surface2 s-ink2"/><circle cx="145" cy="138" r="10" class="f-none s-ink2" stroke-width="2"/><circle cx="185" cy="138" r="10" class="f-none s-ink2" stroke-width="2"/>
+   <rect x="310" y="62" width="250" height="110" rx="12" class="f-surface s-line"/>
+   <text x="435" y="86" text-anchor="middle" class="f-ink b">Finishing</text>
+   <text x="435" y="106" text-anchor="middle" class="f-ink2 sm">hand work · base: labor-hours</text>
+   <circle cx="420" cy="132" r="9" class="f-accent"/><rect x="411" y="142" width="18" height="22" rx="7" class="f-accent"/><circle cx="452" cy="132" r="9" class="f-accent"/><rect x="443" y="142" width="18" height="22" rx="7" class="f-accent"/>
+   <text x="165" y="200" text-anchor="middle" class="f-blue sm b" data-at="3">80 MH × $7.50 = $600</text>
+   <text x="435" y="200" text-anchor="middle" class="f-amber sm b" data-at="3" data-d=".2">90 DLH × $2.50 = $225</text>
+   <text x="300" y="238" text-anchor="middle" class="f-ink b" data-at="3" data-d=".4">Job 214 overhead: $825 instead of $960</text>
+  </svg></div>
+  <div class="cols" style="--n:3">
+   <div class="card" data-step="1"><span class="k">Plantwide</span><b>One base for the whole factory</b></div>
+   <div class="card" data-step="2"><span class="k">Departmental</span><b>Each department uses the base that drives its overhead</b></div>
+   <div class="card" data-step="3"><span class="k">Job 214</span><b>Light on machine time, so it gets less overhead: $5,825 total, $291.25 a sign</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- DEPARTMENTAL SIM -->
+<section class="slide" data-section="2.5" data-title="Compare the rates" data-sim="deptrates">
+ <div class="slide-inner">
+  <h2>Plantwide vs departmental: <em>who's off?</em></h2>
+  <div class="sim">
+   <div style="display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;align-items:center">
+    <div class="seg" role="group" aria-label="Job" id="dr-btns"><button type="button" data-j="214" aria-pressed="true">Job 214 · hand-finished</button><button type="button" data-j="220" aria-pressed="false">Job 220 · machine-cut</button></div>
+    <div class="ctl" style="flex:1;min-width:200px"><label for="dr-mk">Markup on cost <output id="dr-mk-o">50%</output></label><input type="range" id="dr-mk" min="10" max="100" step="5" value="50"></div>
+   </div>
+   <div class="dept">
+    <div class="card"><span class="k">Cutting</span><b id="dr-cut">80 machine-hours · 30 labor-hours</b></div>
+    <div class="card"><span class="k">Finishing</span><b id="dr-fin">90 labor-hours</b></div>
+   </div>
+   <div class="vs2">
+    <div class="card"><span class="k">Plantwide · $8 per labor-hour</span><b class="num" id="dr-p-oh">Overhead $960</b><p class="mono" id="dr-p-tot">Job cost $5,960</p><p class="mono" id="dr-p-price">Price $8,940</p></div>
+    <div class="card on"><span class="k">Departmental · $7.50 per MH + $2.50 per DLH</span><b class="num" id="dr-d-oh">Overhead $825</b><p class="mono" id="dr-d-tot">Job cost $5,825</p><p class="mono" id="dr-d-price">Price $8,737.50</p></div>
+   </div>
+   <div class="feedback" id="dr-fb" aria-live="polite">Job 214 needs little machine time, so the plantwide rate overcosts it by $135.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 2.6 -->
+<section class="slide" data-section="2.6" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">2.6</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Job cost sheets and the statements</h2><div class="chips"><span class="chip">WIP · FG · COGS</span><span class="chip">Under / overapplied</span><span class="chip">Services</span></div></div></div>
+ </div>
+</section>
+
+<!-- LEDGER SIM -->
+<section class="slide" data-section="2.6" data-title="Where each job sits" data-sim="ledger">
+ <div class="slide-inner">
+  <h2>Move the jobs, watch the <em>balances</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Tap a job to finish it or sell it</span>
+   <div class="ledger3">
+    <div class="col" data-s="0"><h3>Work in process <span class="mono" id="lg-t0">$4,000</span></h3><span class="note">Balance sheet · unfinished</span><div class="lg-list"></div></div>
+    <div class="col" data-s="1"><h3>Finished goods <span class="mono" id="lg-t1">$9,000</span></h3><span class="note">Balance sheet · done, unsold</span><div class="lg-list"></div></div>
+    <div class="col" data-s="2"><h3>Cost of goods sold <span class="mono" id="lg-t2">$20,000</span></h3><span class="note">Income statement · sold</span><div class="lg-list"></div></div>
+   </div>
+   <div class="feedback" id="lg-fb" aria-live="polite">The job cost sheets are the detail behind each balance. Tap Job 306 to finish it.</div>
+  </div>
+ </div>
+</section>
+
+<!-- UNDER/OVER SIM -->
+<section class="slide" data-section="2.6" data-title="Under- or overapplied?" data-sim="underover">
+ <div class="slide-inner">
+  <h2>Applied vs actual: <em>settle up</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Try it · 49,000 hours × $8 applied</span>
+   <div class="meter blue"><span>Applied ($8 × 49,000 h)</span><div class="bar-h"><i id="uo-a" style="transform:scaleX(.891)"></i></div><span class="mono">$392,000</span></div>
+   <div class="meter amber"><span>Actual overhead</span><div class="bar-h"><i id="uo-b" style="transform:scaleX(.936)"></i></div><span class="mono" id="uo-act">$412,000</span></div>
+   <div class="ctl"><label for="uo-x">Actual overhead bills for the year <output id="uo-x-o">$412,000</output></label><input type="range" id="uo-x" min="360000" max="440000" step="2000" value="412000"></div>
+   <div class="readout">
+    <div><div class="k">Result</div><div class="v neg" id="uo-res">$20,000 underapplied</div></div>
+    <div><div class="k">Cost of goods sold</div><div class="v" id="uo-cogs">↑ + $20,000</div></div>
+   </div>
+   <div class="feedback" id="uo-fb" aria-live="polite">Jobs were charged $20,000 too little, so cost of goods sold goes up by $20,000.</div>
+  </div>
+ </div>
+</section>
+
+<!-- SERVICE -->
+<section class="slide" data-section="2.6" data-title="Service firms" data-key="service">
+ <div class="slide-inner">
+  <h2>Law firms run on <em>jobs</em> too</h2>
+  <p class="lede">A law firm's "job" is a client's case. Same three lines, different names.</p>
+  <div style="display:flex;flex-direction:column;gap:14px;max-width:820px">
+   <div class="meter" data-step="1"><span><b>Lawyer hours</b> → direct labor</span><div class="bar-h"><i class="grow" data-at="1" style="width:70%"></i></div><span class="mono">40 h on Case 88</span></div>
+   <div class="meter blue" data-step="2"><span><b>Filing fees, experts</b> → direct costs</span><div class="bar-h"><i class="grow" data-at="2" style="width:35%"></i></div><span class="mono">traced</span></div>
+   <div class="meter amber" data-step="3"><span><b>Office rent, staff</b> → overhead</span><div class="bar-h"><i class="grow" data-at="3" style="width:55%"></i></div><span class="mono">rate per hour</span></div>
+  </div>
+  <p class="tip" data-step="3"><b>Also</b>Hospitals cost each patient stay, architects each project, movie studios each film.</p>
+ </div>
+</section>
+
+<!-- MUST REMEMBER -->
+<section class="slide" data-section="end" data-title="Must-remember sheet">
+ <div class="slide-inner">
+  <p class="eyebrow">Chapter 2 · Review</p>
+  <h2>The <em>must-remember</em> sheet</h2>
+  <div class="remember" id="remember">
+   <div class="card"><span class="k">2.1</span><b>Job-order costing: many unique orders, one job cost sheet each</b></div>
+   <div class="card"><span class="k">2.1</span><b>Requisitions → direct materials; time tickets → direct labor</b></div>
+   <div class="card"><span class="k">2.2</span><b>Rate = estimated total overhead ÷ estimated total base</b></div>
+   <div class="card"><span class="k">2.2</span><b>$300,000 + $2 × 50,000 = $400,000; $400,000 ÷ 50,000 = $8 per labor-hour</b></div>
+   <div class="card"><span class="k">2.3</span><b>Applied = rate × actual base used: 120 h × $8 = $960</b></div>
+   <div class="card"><span class="k">2.4</span><b>Job cost = DM + DL + applied MOH: $5,960 → $298 a sign</b></div>
+   <div class="card"><span class="k">2.4</span><b>Best base = a cost driver; a poor base mis-costs jobs</b></div>
+   <div class="card"><span class="k">2.5</span><b>Departmental: $7.50 per MH + $2.50 per DLH → Job 214 overhead $825</b></div>
+   <div class="card"><span class="k">2.5</span><b>Wrong cost → wrong price: lose good bids, win bad ones</b></div>
+   <div class="card"><span class="k">2.6</span><b>Unfinished → WIP; finished, unsold → FG; sold → COGS</b></div>
+   <div class="card"><span class="k">2.6</span><b>Underapplied (applied &lt; actual) → COGS up; overapplied → COGS down</b></div>
+   <div class="card"><span class="k">2.6</span><b>Services use jobs too: cases, campaigns, projects</b></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="quiz.html">Take the quiz →</a><a class="btn" href="textbook.html">Read the textbook</a></div>
+ </div>
+</section>
+
+</main>
+
+<footer class="bottom">
+  <button type="button" class="btn" id="prev">← Back</button>
+  <span class="mono" id="count" style="font-size:13px;color:var(--ink-2)">1 / 24</span>
+  <span class="spacer"></span>
+  <span class="hint">← → keys · tap to advance</span>
+  <button type="button" class="btn primary" id="next">Next →</button>
+</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../../assets/deck.js"></script>
+<script src="../../assets/steps.js"></script>
+<script src="learn.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
