@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 3 Textbook · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/textbook.css">
+<style>.je td:first-child{padding-left:14px}.je td.cr{padding-left:40px}.je td.num{text-align:right;white-space:nowrap}</style>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="../../index.html">ACG 203 <b>Study</b></a>
+  <a class="crumb" href="index.html">← Chapter 3</a>
+  <span class="spacer"></span>
+  <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme">☾</button>
+</div></header>
+
+<div class="wrap tb">
+  <nav class="tb-toc" aria-label="Chapter contents">
+    <details open id="toc-details"><summary>Contents</summary>
+      <ol>
+        <li><a href="#s3-1"><span class="num">3.1</span> How costs flow</a>
+          <ol>
+            <li><a href="#s3-1-accounts">The accounts</a></li>
+            <li><a href="#s3-1-flow">The big picture</a></li>
+          </ol></li>
+        <li><a href="#s3-2"><span class="num">3.2</span> Recording the flow</a>
+          <ol>
+            <li><a href="#s3-2-materials">Materials</a></li>
+            <li><a href="#s3-2-labor">Labor</a></li>
+            <li><a href="#s3-2-overhead">Overhead</a></li>
+            <li><a href="#s3-2-nonmfg">Selling and administrative</a></li>
+            <li><a href="#s3-2-complete">Finished and sold</a></li>
+          </ol></li>
+        <li><a href="#s3-3"><span class="num">3.3</span> The schedules</a>
+          <ol>
+            <li><a href="#s3-3-cogm">Cost of goods manufactured</a></li>
+            <li><a href="#s3-3-cogs">Cost of goods sold</a></li>
+            <li><a href="#s3-3-is">Income statement</a></li>
+          </ol></li>
+        <li><a href="#s3-4"><span class="num">3.4</span> Under- and overapplied overhead</a>
+          <ol>
+            <li><a href="#s3-4-compute">Finding the balance</a></li>
+            <li><a href="#s3-4-close">Closing to cost of goods sold</a></li>
+            <li><a href="#s3-4-allocate">Allocating among accounts</a></li>
+          </ol></li>
+      </ol>
+    </details>
+  </nav>
+
+  <article class="tb-body">
+    <header>
+      <span class="label">Chapter 3 · Textbook</span>
+      <h1>Job-Order Costing: Cost Flows and External Reporting</h1>
+      <p class="lede">Chapter 2 costed one job at a time. This chapter follows the dollars through the accounting records for a whole month: journal entries, T-accounts, the schedules of cost of goods manufactured and cost of goods sold, and what to do with leftover overhead. The example is March at <strong>Harborlight Sign Works</strong>, which applies overhead at <span class="num">$8</span> per direct labor-hour (from Chapter 2).</p>
+    </header>
+
+    <!-- ================= 3.1 ================= -->
+    <section id="s3-1" aria-labelledby="h3-1">
+      <h2 id="h3-1"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 3.1</span>How costs flow</h2>
+
+      <div class="sub" id="s3-1-accounts">
+        <h3>The accounts</h3>
+        <ul class="clean">
+          <li><span class="term">Raw Materials</span> (asset): materials bought but not yet put into production, both direct and indirect.</li>
+          <li><span class="term">Work in Process</span> (asset): jobs started but not finished. Its detail is the job cost sheets of unfinished jobs.</li>
+          <li><span class="term">Finished Goods</span> (asset): jobs completed but not yet sold.</li>
+          <li><span class="term">Cost of Goods Sold</span> (expense): the cost of jobs sold this period.</li>
+          <li><span class="term">Manufacturing Overhead</span>: a temporary clearing account. Actual overhead costs are <strong>debited</strong> to it; overhead applied to jobs is <strong>credited</strong> out of it.</li>
+        </ul>
+      </div>
+
+      <div class="sub" id="s3-1-flow">
+        <h3>The big picture</h3>
+        <p class="formula">Raw Materials → Work in Process → Finished Goods → Cost of Goods Sold</p>
+        <p>Direct materials and direct labor go straight into Work in Process. Indirect materials, indirect labor and all other factory costs go into Manufacturing Overhead first, then reach Work in Process through the predetermined rate. Selling and administrative costs never enter this chain; they're expensed right away.</p>
+        <p>Harborlight's balances for March:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Account</th><th>March 1</th><th>March 31</th></tr></thead>
+            <tbody>
+              <tr><td>Raw materials</td><td class="num">$8,000</td><td class="num">$12,000</td></tr>
+              <tr><td>Work in process</td><td class="num">$20,000</td><td class="num">$22,000</td></tr>
+              <tr><td>Finished goods</td><td class="num">$30,000</td><td class="num">$40,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Work in Process</dt><dd>Cost of jobs started but not finished.</dd>
+          <dt>Finished Goods</dt><dd>Cost of jobs completed but not sold.</dd>
+          <dt>Manufacturing Overhead account</dt><dd>Clearing account: actual overhead on the debit side, applied overhead on the credit side.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 3.2 ================= -->
+    <section id="s3-2" aria-labelledby="h3-2">
+      <h2 id="h3-2"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 3.2</span>Recording the flow</h2>
+      <p>Each March transaction below shows the journal entry. Debits are listed first; credits are indented.</p>
+
+      <div class="sub" id="s3-2-materials">
+        <h3>Materials</h3>
+        <p><strong>(1) Purchase.</strong> Harborlight bought $50,000 of raw materials on account.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Raw Materials</td><td class="num">50,000</td><td></td></tr>
+          <tr><td class="cr">Accounts Payable</td><td></td><td class="num">50,000</td></tr>
+        </tbody></table></div>
+        <p><strong>(2) Issue.</strong> Requisitions took $46,000 of materials out of the storeroom: $40,000 of direct materials for specific jobs and $6,000 of indirect materials (glue, fasteners). Direct materials are debited to Work in Process; indirect materials are debited to Manufacturing Overhead.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Work in Process</td><td class="num">40,000</td><td></td></tr>
+          <tr><td>Manufacturing Overhead</td><td class="num">6,000</td><td></td></tr>
+          <tr><td class="cr">Raw Materials</td><td></td><td class="num">46,000</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="sub" id="s3-2-labor">
+        <h3>Labor</h3>
+        <p><strong>(3)</strong> March factory payroll was $92,000. Time tickets show $80,000 of direct labor (4,000 hours × $20). The other $12,000 is indirect labor: supervisors and maintenance. Direct labor goes to Work in Process; indirect labor is charged to Manufacturing Overhead.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Work in Process</td><td class="num">80,000</td><td></td></tr>
+          <tr><td>Manufacturing Overhead</td><td class="num">12,000</td><td></td></tr>
+          <tr><td class="cr">Salaries and Wages Payable</td><td></td><td class="num">92,000</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="sub" id="s3-2-overhead">
+        <h3>Overhead: actual in, applied out</h3>
+        <p><strong>(4) Other actual overhead.</strong> Factory utilities $4,000, depreciation on factory equipment $10,000 and expired factory insurance $2,000, so $16,000 in all:</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Manufacturing Overhead</td><td class="num">16,000</td><td></td></tr>
+          <tr><td class="cr">Accounts Payable</td><td></td><td class="num">4,000</td></tr>
+          <tr><td class="cr">Accumulated Depreciation</td><td></td><td class="num">10,000</td></tr>
+          <tr><td class="cr">Prepaid Insurance</td><td></td><td class="num">2,000</td></tr>
+        </tbody></table></div>
+        <p>Actual overhead for March is now $6,000 + $12,000 + $16,000 = <span class="num">$34,000</span>, all on the debit side of Manufacturing Overhead.</p>
+        <p><strong>(5) Applied overhead.</strong> Jobs are charged at the predetermined rate, never with the actual bills: 4,000 hours × $8 = $32,000.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Work in Process</td><td class="num">32,000</td><td></td></tr>
+          <tr><td class="cr">Manufacturing Overhead</td><td></td><td class="num">32,000</td></tr>
+        </tbody></table></div>
+        <div class="tip"><span class="label">Exam tip</span><p>Actual overhead costs are <strong>never</strong> debited to Work in Process. They go to Manufacturing Overhead. Only <em>applied</em> overhead moves into Work in Process.</p></div>
+      </div>
+
+      <div class="sub" id="s3-2-nonmfg">
+        <h3>Selling and administrative costs</h3>
+        <p><strong>(6)</strong> Sales salaries $15,000, advertising $5,000 and depreciation on office equipment $2,000, so <span class="num">$22,000</span>. These are period costs: they're debited to expense accounts and never touch Work in Process or Manufacturing Overhead.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Salaries Expense</td><td class="num">15,000</td><td></td></tr>
+          <tr><td>Advertising Expense</td><td class="num">5,000</td><td></td></tr>
+          <tr><td>Depreciation Expense</td><td class="num">2,000</td><td></td></tr>
+          <tr><td class="cr">Salaries and Wages Payable</td><td></td><td class="num">15,000</td></tr>
+          <tr><td class="cr">Accounts Payable</td><td></td><td class="num">5,000</td></tr>
+          <tr><td class="cr">Accumulated Depreciation</td><td></td><td class="num">2,000</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="sub" id="s3-2-complete">
+        <h3>Finished and sold</h3>
+        <p><strong>(7)</strong> Jobs costing $150,000 were completed and moved to the finished goods warehouse:</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Finished Goods</td><td class="num">150,000</td><td></td></tr>
+          <tr><td class="cr">Work in Process</td><td></td><td class="num">150,000</td></tr>
+        </tbody></table></div>
+        <p><strong>(8)</strong> Jobs that cost $140,000 were sold on account for <span class="num">$210,000</span>. Two entries: one for the sale, one for the cost.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Accounts Receivable</td><td class="num">210,000</td><td></td></tr>
+          <tr><td class="cr">Sales</td><td></td><td class="num">210,000</td></tr>
+          <tr><td>Cost of Goods Sold</td><td class="num">140,000</td><td></td></tr>
+          <tr><td class="cr">Finished Goods</td><td></td><td class="num">140,000</td></tr>
+        </tbody></table></div>
+        <p>In T-account form, Work in Process starts at $20,000, takes in $40,000 + $80,000 + $32,000, and sends out $150,000, leaving <span class="num">$22,000</span>. Finished Goods: $30,000 + $150,000 − $140,000 = <span class="num">$40,000</span>.</p>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · T-account balance</span>
+          <div class="fields">
+            <div class="field"><label for="ta-beg">Beginning WIP ($)</label><input type="number" id="ta-beg" min="0" step="1000" value="20000"></div>
+            <div class="field"><label for="ta-dm">Direct materials ($)</label><input type="number" id="ta-dm" min="0" step="1000" value="40000"></div>
+            <div class="field"><label for="ta-dl">Direct labor ($)</label><input type="number" id="ta-dl" min="0" step="1000" value="80000"></div>
+            <div class="field"><label for="ta-oh">Overhead applied ($)</label><input type="number" id="ta-oh" min="0" step="1000" value="32000"></div>
+            <div class="field"><label for="ta-out">Completed (out) ($)</label><input type="number" id="ta-out" min="0" step="1000" value="150000"></div>
+          </div>
+          <div class="out">
+            <div class="stat"><span class="label">Total debits</span><span class="v" id="ta-in">$172,000</span></div>
+            <div class="stat hl"><span class="label">Ending WIP</span><span class="v" id="ta-end">$22,000</span></div>
+          </div>
+          <p class="note" id="ta-note"></p>
+        </div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Debit to Work in Process</dt><dd>Direct materials, direct labor and applied overhead.</dd>
+          <dt>Debit to Manufacturing Overhead</dt><dd>Indirect materials, indirect labor and other actual factory costs.</dd>
+          <dt>Cost of goods manufactured</dt><dd>The cost of jobs completed this period (Work in Process → Finished Goods).</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 3.3 ================= -->
+    <section id="s3-3" aria-labelledby="h3-3">
+      <h2 id="h3-3"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 3.3</span>The schedules</h2>
+
+      <div class="sub" id="s3-3-cogm">
+        <h3>Schedule of cost of goods manufactured</h3>
+        <p>This schedule summarizes everything that happened in Raw Materials and Work in Process. It ends with <span class="term">cost of goods manufactured</span>, the cost of the jobs completed this period.</p>
+        <div class="table-wrap stmt">
+          <table>
+            <tbody>
+              <tr><td>Raw materials, March 1</td><td class="num">$8,000</td></tr>
+              <tr><td>+ Purchases of raw materials</td><td class="num">50,000</td></tr>
+              <tr><td>= Raw materials available</td><td class="num">58,000</td></tr>
+              <tr><td>− Raw materials, March 31</td><td class="num">(12,000)</td></tr>
+              <tr><td>Raw materials used in production</td><td class="num">46,000</td></tr>
+              <tr><td>− Indirect materials (in overhead)</td><td class="num">(6,000)</td></tr>
+              <tr><td><strong>Direct materials</strong></td><td class="num">$40,000</td></tr>
+              <tr><td><strong>Direct labor</strong></td><td class="num">80,000</td></tr>
+              <tr><td><strong>Manufacturing overhead applied</strong></td><td class="num">32,000</td></tr>
+              <tr><td>Total manufacturing costs</td><td class="num">$152,000</td></tr>
+              <tr><td>+ Work in process, March 1</td><td class="num">20,000</td></tr>
+              <tr><td>− Work in process, March 31</td><td class="num">(22,000)</td></tr>
+              <tr><td><strong>Cost of goods manufactured</strong></td><td class="num"><strong>$150,000</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tip"><span class="label">Exam tip</span><p>The schedule uses overhead <strong>applied</strong> ($32,000), not actual ($34,000). And indirect materials are subtracted from materials used, because they reached Work in Process through the overhead rate instead.</p></div>
+      </div>
+
+      <div class="sub" id="s3-3-cogs">
+        <h3>Schedule of cost of goods sold</h3>
+        <div class="table-wrap stmt">
+          <table>
+            <tbody>
+              <tr><td>Finished goods, March 1</td><td class="num">$30,000</td></tr>
+              <tr><td>+ Cost of goods manufactured</td><td class="num">150,000</td></tr>
+              <tr><td>= Cost of goods available for sale</td><td class="num">180,000</td></tr>
+              <tr><td>− Finished goods, March 31</td><td class="num">(40,000)</td></tr>
+              <tr><td>Unadjusted cost of goods sold</td><td class="num">$140,000</td></tr>
+              <tr><td>+ Underapplied overhead</td><td class="num">2,000</td></tr>
+              <tr><td><strong>Adjusted cost of goods sold</strong></td><td class="num"><strong>$142,000</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub" id="s3-3-is">
+        <h3>Income statement</h3>
+        <div class="table-wrap stmt">
+          <table>
+            <tbody>
+              <tr><td>Sales</td><td class="num">$210,000</td></tr>
+              <tr><td>Cost of goods sold (adjusted)</td><td class="num">(142,000)</td></tr>
+              <tr><td><strong>Gross margin</strong></td><td class="num">$68,000</td></tr>
+              <tr><td>Selling and administrative expenses</td><td class="num">(22,000)</td></tr>
+              <tr><td><strong>Net operating income</strong></td><td class="num"><strong>$46,000</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · From materials to cost of goods sold</span>
+          <div class="fields">
+            <div class="field"><label for="sc-rmb">Raw materials, beginning</label><input type="number" id="sc-rmb" min="0" step="1000" value="8000"></div>
+            <div class="field"><label for="sc-pur">Purchases</label><input type="number" id="sc-pur" min="0" step="1000" value="50000"></div>
+            <div class="field"><label for="sc-rme">Raw materials, ending</label><input type="number" id="sc-rme" min="0" step="1000" value="12000"></div>
+            <div class="field"><label for="sc-ind">Indirect materials</label><input type="number" id="sc-ind" min="0" step="1000" value="6000"></div>
+            <div class="field"><label for="sc-dl">Direct labor</label><input type="number" id="sc-dl" min="0" step="1000" value="80000"></div>
+            <div class="field"><label for="sc-oh">Overhead applied</label><input type="number" id="sc-oh" min="0" step="1000" value="32000"></div>
+            <div class="field"><label for="sc-wb">WIP, beginning</label><input type="number" id="sc-wb" min="0" step="1000" value="20000"></div>
+            <div class="field"><label for="sc-we">WIP, ending</label><input type="number" id="sc-we" min="0" step="1000" value="22000"></div>
+            <div class="field"><label for="sc-fb">FG, beginning</label><input type="number" id="sc-fb" min="0" step="1000" value="30000"></div>
+            <div class="field"><label for="sc-fe">FG, ending</label><input type="number" id="sc-fe" min="0" step="1000" value="40000"></div>
+          </div>
+          <div class="out">
+            <div class="stat"><span class="label">Direct materials</span><span class="v" id="sc-dm">$40,000</span></div>
+            <div class="stat"><span class="label">Total manufacturing costs</span><span class="v" id="sc-tmc">$152,000</span></div>
+            <div class="stat hl"><span class="label">Cost of goods manufactured</span><span class="v" id="sc-cogm">$150,000</span></div>
+            <div class="stat"><span class="label">Unadjusted COGS</span><span class="v" id="sc-cogs">$140,000</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Raw materials used</dt><dd>Beginning RM + purchases − ending RM.</dd>
+          <dt>Total manufacturing costs</dt><dd>Direct materials + direct labor + overhead applied.</dd>
+          <dt>Cost of goods manufactured</dt><dd>Total manufacturing costs + beginning WIP − ending WIP.</dd>
+          <dt>Unadjusted cost of goods sold</dt><dd>Beginning FG + cost of goods manufactured − ending FG.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 3.4 ================= -->
+    <section id="s3-4" aria-labelledby="h3-4">
+      <h2 id="h3-4"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 3.4</span>Under- and overapplied overhead</h2>
+
+      <div class="sub" id="s3-4-compute">
+        <h3>Finding the balance</h3>
+        <p>At the end of the period, Manufacturing Overhead almost always has a balance left over:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Manufacturing Overhead</th><th>Debit (actual)</th><th>Credit (applied)</th></tr></thead>
+            <tbody>
+              <tr><td>Indirect materials</td><td class="num">6,000</td><td></td></tr>
+              <tr><td>Indirect labor</td><td class="num">12,000</td><td></td></tr>
+              <tr><td>Other factory costs</td><td class="num">16,000</td><td></td></tr>
+              <tr><td>Applied to jobs</td><td></td><td class="num">32,000</td></tr>
+              <tr><td><strong>Totals</strong></td><td class="num"><strong>$34,000</strong></td><td class="num"><strong>$32,000</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A debit balance means actual exceeded applied: overhead is underapplied (here by <span class="num">$2,000</span>). A credit balance means applied exceeded actual: overhead is overapplied. The applied figure came from 4,000 hours × $8 = $32,000.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>The balance is the gap between actual and applied, not between estimated and actual. Estimates only matter for setting the rate.</p></div>
+      </div>
+
+      <div class="sub" id="s3-4-close">
+        <h3>Method 1: close to cost of goods sold</h3>
+        <p>The simple method moves the whole balance into Cost of Goods Sold. Underapplied overhead increases cost of goods sold; overapplied overhead decreases it.</p>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Cost of Goods Sold</td><td class="num">2,000</td><td></td></tr>
+          <tr><td class="cr">Manufacturing Overhead</td><td></td><td class="num">2,000</td></tr>
+        </tbody></table></div>
+        <p>For an overapplied balance, the entry flips: debit Manufacturing Overhead, credit Cost of Goods Sold.</p>
+      </div>
+
+      <div class="sub" id="s3-4-allocate">
+        <h3>Method 2: allocate among the accounts</h3>
+        <p>The more accurate method spreads the balance over Work in Process, Finished Goods and Cost of Goods Sold, in proportion to the overhead applied that sits in each account's ending balance. Of March's $32,000 applied, 15% is still in ending Work in Process, 25% in ending Finished Goods and 60% went to jobs that were sold:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Account</th><th>Share of applied overhead</th><th>Share of $2,000</th></tr></thead>
+            <tbody>
+              <tr><td>Work in Process</td><td class="num">15%</td><td class="num">$300</td></tr>
+              <tr><td>Finished Goods</td><td class="num">25%</td><td class="num">$500</td></tr>
+              <tr><td>Cost of Goods Sold</td><td class="num">60%</td><td class="num">$1,200</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap je"><table><tbody>
+          <tr><td>Work in Process</td><td class="num">300</td><td></td></tr>
+          <tr><td>Finished Goods</td><td class="num">500</td><td></td></tr>
+          <tr><td>Cost of Goods Sold</td><td class="num">1,200</td><td></td></tr>
+          <tr><td class="cr">Manufacturing Overhead</td><td></td><td class="num">2,000</td></tr>
+        </tbody></table></div>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · Dispose of the balance</span>
+          <div class="fields">
+            <div class="field"><label for="dp-act">Actual overhead ($)</label><input type="number" id="dp-act" min="0" step="1000" value="34000"></div>
+            <div class="field"><label for="dp-app">Applied overhead ($)</label><input type="number" id="dp-app" min="0" step="1000" value="32000"></div>
+            <div class="field"><label for="dp-w">% in ending WIP</label><input type="number" id="dp-w" min="0" max="100" step="5" value="15"></div>
+            <div class="field"><label for="dp-f">% in ending FG</label><input type="number" id="dp-f" min="0" max="100" step="5" value="25"></div>
+          </div>
+          <div class="out">
+            <div class="stat hl"><span class="label">Balance</span><span class="v" id="dp-bal">$2,000 underapplied</span></div>
+            <div class="stat"><span class="label">To WIP</span><span class="v" id="dp-tw">$300</span></div>
+            <div class="stat"><span class="label">To FG</span><span class="v" id="dp-tf">$500</span></div>
+            <div class="stat"><span class="label">To COGS</span><span class="v" id="dp-tc">$1,200</span></div>
+          </div>
+          <p class="note" id="dp-note"></p>
+        </div>
+        <div class="tip"><span class="label">Exam tip</span><p>Most companies use method 1 when the balance is small. Allocating is more accurate when the balance is large, because inventory was also mis-costed.</p></div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Underapplied overhead</dt><dd>Debit balance in Manufacturing Overhead: actual &gt; applied.</dd>
+          <dt>Overapplied overhead</dt><dd>Credit balance in Manufacturing Overhead: applied &gt; actual.</dd>
+          <dt>Allocation method</dt><dd>Spreading the balance over WIP, FG and COGS in proportion to applied overhead in each.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="tb-next" aria-label="Next steps">
+      <a class="btn" href="learn.html">Try the animated lesson</a>
+      <a class="btn primary" href="quiz.html">Take the quiz →</a>
+    </nav>
+  </article>
+</div>
+
+<footer class="site-foot"><div class="wrap"><p>ACG 203 Study is independent study material. It is not affiliated with or endorsed by UNCW or McGraw-Hill. Companies and numbers in the examples are fictional.</p></div></footer>
+
+<script src="textbook.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

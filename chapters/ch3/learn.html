@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 3 Learning · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/deck.css">
+<style>
+.s-blue{stroke:var(--blue)} .f-blue-soft{fill:var(--blue-soft)} .s-red{stroke:var(--red)}
+.viz text{font-size:15px} .viz .sm{font-size:12.5px} .viz .b{font-weight:700} .viz .lg{font-size:22px}
+.sim-bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.receipt{display:flex;flex-direction:column;gap:2px;width:100%;font-family:var(--f-mono);font-size:15px}
+.receipt > div{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;border-bottom:1px dashed var(--line)}
+.receipt .tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:18px;color:var(--accent)}
+/* flow board */
+.board{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.board .outside{grid-column:1 / -1;border:1.5px dashed var(--line);border-radius:12px;padding:8px 12px;text-align:center;font-size:13px;color:var(--ink-2)}
+.acct{border:2px solid var(--line);border-radius:14px;background:var(--bg);padding:10px 12px;display:flex;flex-direction:column;gap:4px;transition:border-color .25s,background .25s}
+.acct .k{font:600 10.5px/1.25 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.acct .bal{font:700 20px/1.2 var(--f-mono);font-variant-numeric:tabular-nums}
+.acct .dc{font:500 11.5px var(--f-mono);color:var(--amber);min-height:1em}
+.acct.oh{grid-column:span 2;border-color:var(--amber-soft)} .acct.sa{grid-column:span 2}
+.acct.hot{border-color:var(--accent);background:var(--accent-soft)}
+.fly{position:absolute;left:0;top:0;z-index:5;pointer-events:none;background:var(--accent);color:var(--on-accent);font:700 13px var(--f-mono);padding:5px 10px;border-radius:999px;white-space:nowrap}
+@media (max-width:560px){.board{grid-template-columns:1fr 1fr}.acct.oh,.acct.sa{grid-column:span 1}.acct .bal{font-size:17px}}
+/* sorter */
+.pp-card{background:var(--surface);border:1.5px solid var(--ink);border-radius:14px;padding:18px 16px;text-align:center;font-weight:700;font-size:19px;display:grid;place-items:center;min-height:88px}
+.bins5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.bins5{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:420px){.bins5{grid-template-columns:1fr 1fr}}
+.pp-bin{border:2px dashed var(--line);border-radius:14px;padding:10px 8px;text-align:center;display:flex;flex-direction:column;gap:4px;justify-content:center;font-size:13px;color:var(--ink-2);background:none;cursor:pointer;touch-action:manipulation}
+.pp-bin b{color:var(--ink);font-size:14px;line-height:1.25}
+.pp-bin .n{font:700 20px var(--f-mono);color:var(--accent)}
+/* cards to post */
+.docs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:44px}
+.doc-card{border:1.5px solid var(--ink);border-radius:10px;background:var(--surface);padding:7px 12px;font-size:14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;touch-action:manipulation;color:var(--ink)}
+.doc-card.sel{outline:3px solid var(--amber);outline-offset:2px}
+/* T-accounts */
+.tacc{display:grid;grid-template-columns:1fr 1fr minmax(0,.8fr);gap:10px}
+.tacc .th{grid-column:1 / 3;grid-row:1;text-align:center;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.tacc [data-t="dr"]{grid-column:1;grid-row:2} .tacc [data-t="cr"]{grid-column:2;grid-row:2} .tacc .no{grid-column:3;grid-row:1 / 3}
+@media (max-width:640px){.tacc{grid-template-columns:1fr 1fr}.tacc .no{grid-column:1 / -1;grid-row:3}}
+.side{border:2px solid var(--line);border-radius:12px;background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:6px;min-height:130px;cursor:pointer;text-align:left;color:var(--ink);font-size:14px;transition:border-color .2s,background .2s}
+.side.hot{border-color:var(--accent);background:var(--accent-soft)}
+.side .k{font:600 10.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.side .lst{display:flex;flex-direction:column;gap:3px;flex:1}
+.side .pl{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.side .sum{border-top:1.5px solid var(--ink);padding-top:4px;font:700 15px var(--f-mono);text-align:right}
+.side.no{border-style:dashed}
+.t3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.t3{grid-template-columns:1fr}}
+.tbox{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.tbox .th{text-align:center;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:4px;margin-bottom:6px}
+.tbox .tg{display:grid;grid-template-columns:1fr 1fr}
+.tbox .tg > div{display:flex;flex-direction:column;gap:3px;padding:0 6px}
+.tbox .tg > div:first-child{border-right:2px solid var(--ink)}
+.tl{display:flex;justify-content:space-between;gap:6px}
+.tl.out .mono{color:var(--red)} .tl.in .mono{color:var(--accent)}
+.tbox .tb{display:flex;justify-content:space-between;border-top:1.5px solid var(--line);margin-top:6px;padding:6px 6px 0;font-weight:600}
+.tbox .tb b{font-family:var(--f-mono);color:var(--accent)}
+/* schedule cards */
+.sched3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.sched3{grid-template-columns:1fr}}
+.sch{gap:2px;padding:14px 16px}
+.sch .ln{display:flex;justify-content:space-between;gap:10px;font:500 13.5px/1.5 var(--f-mono);padding:3px 0;border-bottom:1px dashed var(--line)}
+.sch .ln.sub{color:var(--ink-2)}
+.sch .ln.tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:15px;color:var(--accent);padding-top:6px}
+/* stacks */
+.stack{display:flex;height:48px;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.stack > div{display:flex;align-items:center;justify-content:center;font:600 12.5px var(--f-mono);color:var(--on-accent);overflow:hidden;white-space:nowrap;min-width:0}
+.seg-sold{background:var(--red)} .seg-left{background:var(--blue)}
+/* income statement builder */
+.tray{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:44px}
+.isb{display:flex;flex-direction:column;max-width:560px;width:100%;margin:0 auto;font-size:15px}
+.isr{display:flex;justify-content:space-between;gap:12px;padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink-2)}
+.isr.on{color:var(--ink)}
+.isr.sub{font-weight:700;border-top:2px solid var(--ink)}
+.isr.sub.on .mono{color:var(--accent)}
+/* recap chain */
+.chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:8px;align-items:stretch}
+.chain .card{padding:12px 14px;gap:4px}
+.chain .card b{font:700 17px/1.3 var(--f-mono)}
+.chain .card span:last-child{font-size:12.5px;color:var(--ink-2)}
+.chain .arr{align-self:center;font:700 22px var(--f-mono);color:var(--accent)}
+@media (max-width:860px){.chain{grid-template-columns:1fr}.chain .arr{transform:rotate(90deg);justify-self:center;line-height:1}}
+.isline{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;align-items:baseline;background:var(--accent-soft);border-radius:14px;padding:12px 16px;font:500 15px var(--f-mono)}
+.isline b{color:var(--accent);font-size:18px}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <a class="crumb" href="index.html">← Chapter 3</a>
+  <button type="button" class="brand" id="menu-btn" aria-expanded="false" aria-controls="menu">Contents <span class="caret">▾</span></button>
+  <div class="track" id="track"><div class="fill" id="fill"></div></div>
+  <span class="sec-label" id="sec-label">Intro</span>
+  <nav class="menu" id="menu" hidden aria-label="Jump to section"></nav>
+  <button type="button" class="theme-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+</header>
+
+<main class="stage" id="stage">
+
+<!-- TITLE -->
+<section class="slide" data-section="intro" data-title="Welcome" data-key="title">
+ <div class="slide-inner">
+  <div class="split">
+   <div style="display:flex;flex-direction:column;gap:22px">
+    <p class="eyebrow">ACG 203 · Chapter 3</p>
+    <h1>Follow the <em>dollars</em></h1>
+    <p class="lede">One month at Harborlight Sign Works, entry by entry: from the storeroom, through the factory, onto the income statement.</p>
+    <div class="chips"><span class="chip">3.1 Cost flow</span><span class="chip">3.2 Journal entries</span><span class="chip">3.3 Schedules</span><span class="chip">3.4 Leftover overhead</span></div>
+    <div><button type="button" class="btn primary" id="start-btn">Start the walkthrough →</button></div>
+   </div>
+   <div class="cert">
+    <div class="cert-in">
+     <span class="k">March at a glance</span>
+     <div class="receipt">
+      <div data-at="0"><span>Total manufacturing costs</span><span>$152,000</span></div>
+      <div data-at="0"><span>Cost of goods manufactured</span><span>$150,000</span></div>
+      <div data-at="0"><span>Adjusted cost of goods sold</span><span>$142,000</span></div>
+      <div class="tot" data-at="0"><span>Net operating income</span><span data-count="46000">$46,000</span></div>
+     </div>
+     <div class="cert-row"><span>Harborlight Sign Works</span><span>Sales $210,000</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 3.1 -->
+<section class="slide" data-section="3.1" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">3.1</div><div style="display:flex;flex-direction:column;gap:16px"><h2>How costs flow</h2><div class="chips"><span class="chip">Five accounts</span><span class="chip">Direct vs indirect</span><span class="chip">The big picture</span></div></div></div>
+ </div>
+</section>
+
+<!-- ACCOUNTS -->
+<section class="slide" data-section="3.1" data-title="Five accounts" data-key="accounts">
+ <div class="slide-inner">
+  <h2>Five accounts carry the <em>cost</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 240" style="max-width:760px" aria-label="Raw Materials feeds Work in Process directly and through Manufacturing Overhead; finished jobs move to Finished Goods, then to Cost of Goods Sold">
+   <text x="141" y="26" text-anchor="middle" class="f-blue sm b" data-at="1">direct</text>
+   <text x="299" y="26" text-anchor="middle" class="f-accent sm b" data-at="3">completed</text>
+   <text x="457" y="26" text-anchor="middle" class="f-red sm b" data-at="3" data-d=".3">sold</text>
+   <g data-at="0"><rect x="10" y="40" width="105" height="56" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="62.5" y="64" text-anchor="middle" class="f-ink sm b">Raw</text><text x="62.5" y="82" text-anchor="middle" class="f-ink sm b">Materials</text></g>
+   <g data-at="0"><rect x="168" y="40" width="105" height="56" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="220.5" y="64" text-anchor="middle" class="f-ink sm b">Work in</text><text x="220.5" y="82" text-anchor="middle" class="f-ink sm b">Process</text></g>
+   <g data-at="0"><rect x="326" y="40" width="105" height="56" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="378.5" y="64" text-anchor="middle" class="f-ink sm b">Finished</text><text x="378.5" y="82" text-anchor="middle" class="f-ink sm b">Goods</text></g>
+   <g data-at="0"><rect x="484" y="40" width="105" height="56" rx="10" class="f-red-soft s-red" stroke-width="1.5"/><text x="536.5" y="64" text-anchor="middle" class="f-ink sm b">Cost of</text><text x="536.5" y="82" text-anchor="middle" class="f-ink sm b">Goods Sold</text></g>
+   <g data-at="0"><rect x="95" y="172" width="150" height="54" rx="10" class="f-amber-soft s-amber" stroke-width="1.5"/><text x="170" y="195" text-anchor="middle" class="f-ink sm b">Manufacturing</text><text x="170" y="213" text-anchor="middle" class="f-ink sm b">Overhead</text></g>
+   <path d="M115 68 L162 68" class="f-none s-blue draw" stroke-width="3" data-at="1"/>
+   <path d="M158 62 L167 68 L158 74z" class="f-blue" data-at="1" data-d=".7"/>
+   <path d="M105 96 L105 164" class="f-none s-amber draw" stroke-width="3" data-at="2"/>
+   <path d="M99 160 L105 169 L111 160z" class="f-amber" data-at="2" data-d=".7"/>
+   <text x="97" y="136" text-anchor="end" class="f-amber sm b" data-at="2">indirect</text>
+   <g data-at="2" data-d=".2"><rect x="330" y="180" width="200" height="38" rx="19" class="f-surface2"/><text x="430" y="204" text-anchor="middle" class="f-ink2 sm">actual factory bills</text></g>
+   <path d="M330 199 L253 199" class="f-none s-ink2 draw" stroke-width="2.5" data-at="2" data-d=".3"/>
+   <path d="M256 193 L247 199 L256 205z" class="f-ink2" data-at="2" data-d="1"/>
+   <path d="M232 172 L232 104" class="f-none s-amber draw" stroke-width="3" data-at="2" data-d=".5"/>
+   <path d="M226 108 L232 99 L238 108z" class="f-amber" data-at="2" data-d="1.2"/>
+   <text x="242" y="134" class="f-amber sm b" data-at="2" data-d=".8">applied</text>
+   <text x="242" y="150" class="f-ink2 sm" data-at="2" data-d=".8">$8 an hour</text>
+   <path d="M273 68 L320 68" class="f-none s-accent draw" stroke-width="3" data-at="3"/>
+   <path d="M316 62 L325 68 L316 74z" class="f-accent" data-at="3" data-d=".7"/>
+   <path d="M431 68 L478 68" class="f-none s-red draw" stroke-width="3" data-at="3" data-d=".3"/>
+   <path d="M474 62 L483 68 L474 74z" class="f-red" data-at="3" data-d="1"/>
+  </svg></div>
+  <div class="cols" style="--n:3">
+   <div class="card" data-step="1"><span class="k">Direct costs</span><b>Direct materials and direct labor go straight into Work in Process</b></div>
+   <div class="card" data-step="2"><span class="k">Indirect costs</span><b>Indirect materials, indirect labor and factory bills collect in Manufacturing Overhead, then reach jobs at the rate</b></div>
+   <div class="card" data-step="3"><span class="k">Out the door</span><b>Finished jobs move to Finished Goods; sold jobs become Cost of Goods Sold</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- FLOW MAP SIM -->
+<section class="slide" data-section="3.1" data-title="Run March" data-sim="flowmap">
+ <div class="slide-inner">
+  <h2>Run March, one <em>entry</em> at a time</h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="fm-count">Entry 0 of 9</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" id="fm-reset">Start over</button><button type="button" class="btn small primary" id="fm-next">Next entry →</button></div></div>
+   <div class="board" id="fm-board">
+    <div class="outside" data-a="out">Outside the factory: suppliers · employees · utilities · customers</div>
+    <div class="acct" data-a="rm"><span class="k">Raw Materials</span><b class="bal">$8,000</b></div>
+    <div class="acct" data-a="wip"><span class="k">Work in Process</span><b class="bal">$20,000</b></div>
+    <div class="acct" data-a="fg"><span class="k">Finished Goods</span><b class="bal">$30,000</b></div>
+    <div class="acct" data-a="cogs"><span class="k">Cost of Goods Sold</span><b class="bal">$0</b></div>
+    <div class="acct oh" data-a="moh"><span class="k">Manufacturing Overhead</span><b class="bal">$0</b><span class="dc"></span></div>
+    <div class="acct sa" data-a="sa"><span class="k">Selling &amp; admin expense</span><b class="bal">$0</b></div>
+   </div>
+   <div class="feedback" id="fm-fb" aria-live="polite">March 1 balances are shown. Press <b>Next entry</b> to post the first transaction.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 3.2 -->
+<section class="slide" data-section="3.2" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">3.2</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Recording the flow</h2><div class="chips"><span class="chip">Materials</span><span class="chip">Labor</span><span class="chip">Overhead</span><span class="chip">Finished and sold</span></div></div></div>
+ </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="slide" data-section="3.2" data-title="Materials" data-key="materials">
+ <div class="slide-inner">
+  <h2>$46,000 leaves the <em>storeroom</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 220" style="max-width:760px" aria-label="Raw Materials T-account: $8,000 plus $50,000 bought, $46,000 issued: $40,000 to Work in Process and $6,000 to Manufacturing Overhead, leaving $12,000">
+   <text x="140" y="24" text-anchor="middle" class="f-ink b">Raw Materials</text>
+   <path d="M20 36 L260 36 M140 36 L140 200" class="f-none s-ink" stroke-width="2"/>
+   <text x="26" y="62" class="f-ink2 sm">Mar 1</text><text x="132" y="62" text-anchor="end" class="f-ink sm b">8,000</text>
+   <g data-at="1"><text x="26" y="90" class="f-ink2 sm">(1) bought</text><text x="132" y="90" text-anchor="end" class="f-blue sm b">50,000</text></g>
+   <g data-at="2"><text x="148" y="62" class="f-ink2 sm">(2) issued</text><text x="254" y="62" text-anchor="end" class="f-red sm b">46,000</text></g>
+   <g data-at="3"><path d="M20 160 L140 160" class="f-none s-ink2" stroke-width="1.5"/><text x="26" y="184" class="f-ink2 sm">Mar 31</text><text x="132" y="184" text-anchor="end" class="f-accent b" data-count="12000">$12,000</text></g>
+   <g data-at="0"><rect x="420" y="26" width="168" height="62" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="504" y="50" text-anchor="middle" class="f-ink sm b">Work in Process</text></g>
+   <g data-at="0"><rect x="420" y="138" width="168" height="62" rx="10" class="f-amber-soft s-amber" stroke-width="1.5"/><text x="504" y="162" text-anchor="middle" class="f-ink sm b">Manufacturing Overhead</text></g>
+   <path d="M262 56 C320 56 360 56 412 56" class="f-none s-blue draw" stroke-width="3" data-at="2" data-d=".2"/>
+   <path d="M410 50 L419 56 L410 62z" class="f-blue" data-at="2" data-d=".9"/>
+   <text x="340" y="46" text-anchor="middle" class="f-blue sm b" data-at="2" data-d=".4">direct</text>
+   <path d="M262 66 C330 70 340 168 412 168" class="f-none s-amber draw" stroke-width="3" data-at="2" data-d=".35"/>
+   <path d="M410 162 L419 168 L410 174z" class="f-amber" data-at="2" data-d="1.05"/>
+   <text x="328" y="196" text-anchor="middle" class="f-amber sm b" data-at="2" data-d=".55">indirect</text>
+   <text x="504" y="76" text-anchor="middle" class="f-blue b" data-at="2" data-d=".9" data-count="40000">$40,000</text>
+   <text x="504" y="188" text-anchor="middle" class="f-amber b" data-at="2" data-d="1" data-count="6000">$6,000</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">(1) Harborlight buys <b>$50,000</b> of materials on account: debit Raw Materials, credit Accounts Payable</li>
+   <li data-step="2">(2) Requisitions issue <b>$46,000</b>: <b>$40,000</b> direct to Work in Process, <b>$6,000</b> indirect (glue, fasteners) to Manufacturing Overhead</li>
+   <li data-step="3">Still in the storeroom: $8,000 + $50,000 − $46,000 = <b>$12,000</b></li>
+  </ul>
+ </div>
+</section>
+
+<!-- LABOR -->
+<section class="slide" data-section="3.2" data-title="Labor" data-key="labor">
+ <div class="slide-inner">
+  <h2>Payroll splits <em>two ways</em> too</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 232" style="max-width:760px" aria-label="A $92,000 payroll bar splits into $80,000 of direct labor for Work in Process and $12,000 of indirect labor for Manufacturing Overhead">
+   <text x="40" y="22" class="f-ink sm b">(3) March factory payroll</text>
+   <rect x="40" y="32" width="520" height="34" rx="8" class="f-surface2"/>
+   <rect x="40" y="32" width="520" height="34" rx="8" class="f-ink2 grow" data-at="1"/>
+   <text x="300" y="55" text-anchor="middle" class="f-bg b" data-at="1" data-out="2" data-count="92000">$92,000</text>
+   <rect x="40" y="32" width="452" height="34" rx="8" class="f-blue" data-at="2"/>
+   <rect x="494" y="32" width="66" height="34" rx="8" class="f-amber" data-at="2" data-d=".15"/>
+   <text x="266" y="55" text-anchor="middle" class="f-bg sm b" data-at="2">direct: 4,000 h × $20</text>
+   <text x="527" y="55" text-anchor="middle" class="f-bg sm b" data-at="2" data-d=".15">indirect</text>
+   <text x="266" y="90" text-anchor="middle" class="f-blue b" data-at="2" data-d=".3">$80,000</text>
+   <text x="527" y="90" text-anchor="middle" class="f-amber b" data-at="2" data-d=".4">$12,000</text>
+   <path d="M266 98 C266 132 180 124 180 150" class="f-none s-blue draw" stroke-width="3" data-at="3"/>
+   <path d="M174 146 L180 155 L186 146z" class="f-blue" data-at="3" data-d=".7"/>
+   <path d="M527 98 C527 132 450 124 450 150" class="f-none s-amber draw" stroke-width="3" data-at="3" data-d=".15"/>
+   <path d="M444 146 L450 155 L456 146z" class="f-amber" data-at="3" data-d=".85"/>
+   <g data-at="0"><rect x="60" y="158" width="240" height="64" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="180" y="182" text-anchor="middle" class="f-ink sm b">Work in Process</text></g>
+   <g data-at="0"><rect x="340" y="158" width="220" height="64" rx="10" class="f-amber-soft s-amber" stroke-width="1.5"/><text x="450" y="182" text-anchor="middle" class="f-ink sm b">Manufacturing Overhead</text></g>
+   <text x="180" y="208" text-anchor="middle" class="f-blue b" data-at="3" data-d=".8" data-count="80000">$80,000</text>
+   <text x="450" y="208" text-anchor="middle" class="f-amber b" data-at="3" data-d=".9" data-count="12000">$12,000</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">(3) March factory payroll is <b>$92,000</b></li>
+   <li data-step="2">Time tickets trace <b>$80,000</b> to specific jobs (4,000 hours × $20): direct labor. The other <b>$12,000</b> (supervisors, maintenance) is indirect</li>
+   <li data-step="3">Debit Work in Process $80,000 and Manufacturing Overhead $12,000; credit Salaries and Wages Payable $92,000</li>
+  </ul>
+ </div>
+</section>
+
+<!-- OVERHEAD -->
+<section class="slide" data-section="3.2" data-title="Overhead in and out" data-key="overhead">
+ <div class="slide-inner">
+  <h2>Actual in, <em>applied</em> out</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 232" style="max-width:760px" aria-label="Manufacturing Overhead T-account: $34,000 of actual costs debited, $32,000 applied to Work in Process credited, leaving a $2,000 debit balance">
+   <text x="220" y="22" text-anchor="middle" class="f-ink b">Manufacturing Overhead</text>
+   <path d="M30 34 L410 34 M220 34 L220 222" class="f-none s-ink" stroke-width="2"/>
+   <text x="36" y="54" class="f-ink2 sm b">DEBIT · ACTUAL</text>
+   <text x="404" y="54" text-anchor="end" class="f-ink2 sm b">CREDIT · APPLIED</text>
+   <g data-at="1"><text x="36" y="80" class="f-ink sm">Indirect materials</text><text x="212" y="80" text-anchor="end" class="f-ink sm b">6,000</text></g>
+   <g data-at="1" data-d=".15"><text x="36" y="104" class="f-ink sm">Indirect labor</text><text x="212" y="104" text-anchor="end" class="f-ink sm b">12,000</text></g>
+   <g data-at="1" data-d=".3"><text x="36" y="128" class="f-ink sm">Other factory costs</text><text x="212" y="128" text-anchor="end" class="f-ink sm b">16,000</text></g>
+   <g data-at="1" data-d=".5"><path d="M30 142 L220 142" class="f-none s-ink2" stroke-width="1.5"/><text x="36" y="166" class="f-amber sm b">Actual</text><text x="212" y="166" text-anchor="end" class="f-amber b" data-count="34000">$34,000</text></g>
+   <g data-at="2"><text x="228" y="80" class="f-ink sm">Applied to jobs</text><text x="404" y="80" text-anchor="end" class="f-blue sm b">32,000</text></g>
+   <g data-at="2" data-d=".3"><path d="M220 142 L410 142" class="f-none s-ink2" stroke-width="1.5"/><text x="228" y="166" class="f-blue sm b">Applied</text><text x="404" y="166" text-anchor="end" class="f-blue b" data-count="32000">$32,000</text></g>
+   <g data-at="0"><rect x="462" y="48" width="126" height="58" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="525" y="72" text-anchor="middle" class="f-ink sm b">Work in</text><text x="525" y="90" text-anchor="middle" class="f-ink sm b">Process</text></g>
+   <path d="M412 76 L454 76" class="f-none s-blue draw" stroke-width="3" data-at="2" data-d=".2"/>
+   <path d="M452 70 L461 76 L452 82z" class="f-blue" data-at="2" data-d=".8"/>
+   <text x="525" y="128" text-anchor="middle" class="f-blue sm b" data-at="2" data-d=".5">4,000 h × $8</text>
+   <g data-at="3"><rect x="30" y="182" width="190" height="34" rx="8" class="f-red-soft"/><text x="125" y="204" text-anchor="middle" class="f-red sm b">Debit balance $2,000</text></g>
+   <text x="232" y="204" class="f-red sm b" data-at="3" data-d=".3">→ underapplied</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Every actual factory cost is a debit: $6,000 + $12,000 + $16,000 = <b>$34,000</b></li>
+   <li data-step="2">(5) Jobs get overhead at the rate, never from the bills: 4,000 hours × $8 = <b>$32,000</b>. Debit Work in Process, credit Manufacturing Overhead</li>
+   <li data-step="3">What's left is a <b>$2,000</b> debit balance: actual beat applied, so overhead is underapplied (section 3.4)</li>
+  </ul>
+ </div>
+</section>
+
+<!-- JE SORT SIM -->
+<section class="slide" data-section="3.2" data-title="Which account is debited?" data-sim="jesort">
+ <div class="slide-inner">
+  <h2>Which account gets the <em>debit?</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag" id="jd-count">Event 1 of 10</span><button type="button" class="btn small" id="jd-reset">Start over</button></div>
+   <div class="pp-card" id="jd-card">Steel for Job 305 is requisitioned</div>
+   <div class="bins5" id="jd-bins">
+    <button type="button" class="pp-bin" data-b="wip"><b>Work in Process</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="moh"><b>Manufacturing Overhead</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="fg"><b>Finished Goods</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="cogs"><b>Cost of Goods Sold</b><span class="n">0</span></button>
+    <button type="button" class="pp-bin" data-b="exp"><b>Period expense</b><span class="n">0</span></button>
+   </div>
+   <div class="feedback" id="jd-fb" aria-live="polite">Read the event, then tap the account that's debited.</div>
+  </div>
+ </div>
+</section>
+
+<!-- MOH T-ACCOUNT SIM -->
+<section class="slide" data-section="3.2" data-title="Post to overhead" data-sim="mohacct">
+ <div class="slide-inner">
+  <h2>Post to the overhead <em>T-account</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag">Tap a cost, then where it goes</span><button type="button" class="btn small" id="mo-reset">Start over</button></div>
+   <div class="docs" id="mo-docs"></div>
+   <div class="tacc">
+    <div class="th">Manufacturing Overhead</div>
+    <button type="button" class="side" data-t="dr"><span class="k">Debit · actual</span><span class="lst"></span><span class="sum" id="mo-dr">$0</span></button>
+    <button type="button" class="side" data-t="cr"><span class="k">Credit · applied</span><span class="lst"></span><span class="sum" id="mo-cr">$0</span></button>
+    <button type="button" class="side no" data-t="no"><span class="k">Not overhead</span><span class="lst"></span></button>
+   </div>
+   <div class="feedback" id="mo-fb" aria-live="polite">Pick a cost to start.</div>
+  </div>
+ </div>
+</section>
+
+<!-- NONMANUFACTURING -->
+<section class="slide" data-section="3.2" data-title="Selling and admin" data-key="nonmfg">
+ <div class="slide-inner">
+  <h2>Selling and admin <em>skip the factory</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 252" style="max-width:760px" aria-label="Sales salaries, advertising and office depreciation bypass the inventory accounts and go straight to March's expenses, $22,000 in all">
+   <g class="f-ink2 sm">
+    <rect x="20" y="14" width="125" height="36" rx="8" class="f-surface2"/><text x="82.5" y="37" text-anchor="middle">Raw Materials</text>
+    <rect x="165" y="14" width="125" height="36" rx="8" class="f-surface2"/><text x="227.5" y="37" text-anchor="middle">Work in Process</text>
+    <rect x="310" y="14" width="125" height="36" rx="8" class="f-surface2"/><text x="372.5" y="37" text-anchor="middle">Finished Goods</text>
+    <rect x="455" y="14" width="125" height="36" rx="8" class="f-surface2"/><text x="517.5" y="37" text-anchor="middle">Cost of Goods Sold</text>
+   </g>
+   <text x="20" y="72" class="f-ink2 sm">↑ inventory: product costs wait here</text>
+   <g data-at="1" data-move="2" data-dx="380" data-dy="0"><rect x="20" y="96" width="190" height="32" rx="16" class="f-red-soft"/><text x="115" y="117" text-anchor="middle" class="f-ink sm b">Sales salaries $15,000</text></g>
+   <g data-at="1" data-d=".12" data-move="2" data-dx="380" data-dy="0"><rect x="20" y="140" width="190" height="32" rx="16" class="f-red-soft"/><text x="115" y="161" text-anchor="middle" class="f-ink sm b">Advertising $5,000</text></g>
+   <g data-at="1" data-d=".24" data-move="2" data-dx="380" data-dy="0"><rect x="20" y="184" width="190" height="32" rx="16" class="f-red-soft"/><text x="115" y="205" text-anchor="middle" class="f-ink sm b">Office depreciation $2,000</text></g>
+   <path d="M212 104 C250 96 290 84 318 54" class="f-none s-red" stroke-width="2" stroke-dasharray="4 4" data-at="1" data-d=".5"/>
+   <text x="222" y="128" class="f-red sm b" data-at="1" data-d=".6">✕ never inventory</text>
+   <rect x="390" y="88" width="208" height="136" rx="14" class="f-none s-red" stroke-width="2" stroke-dasharray="6 5"/>
+   <text x="494" y="82" text-anchor="middle" class="f-red sm b">Expensed in March</text>
+   <text x="494" y="246" text-anchor="middle" class="f-red b" data-at="3" data-count="22000">$22,000</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">(6) March selling and administrative costs: sales salaries, advertising and depreciation on office equipment</li>
+   <li data-step="2">Period costs skip the factory: debit expense accounts, never Work in Process or Manufacturing Overhead</li>
+   <li data-step="3">All <b>$22,000</b> is expensed in March, whether or not a single sign sold</li>
+  </ul>
+ </div>
+</section>
+
+<!-- COMPLETED AND SOLD -->
+<section class="slide" data-section="3.2" data-title="Finished, then sold" data-key="complete">
+ <div class="slide-inner">
+  <h2>Finished, then <em>sold</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 214" style="max-width:760px" aria-label="$150,000 of finished jobs move from Work in Process to Finished Goods, leaving $22,000; $140,000 of sold jobs move to Cost of Goods Sold, leaving $40,000 in Finished Goods">
+   <g data-at="1" data-out="2" data-move="1" data-dx="210" data-dy="0"><rect x="25" y="10" width="130" height="30" rx="15" class="f-accent"/><text x="90" y="30" text-anchor="middle" class="f-bg sm b">$150,000 done</text></g>
+   <g data-at="2" data-move="2" data-dx="210" data-dy="0"><rect x="235" y="10" width="130" height="30" rx="15" class="f-red"/><text x="300" y="30" text-anchor="middle" class="f-bg sm b">$140,000 sold</text></g>
+   <rect x="10" y="56" width="160" height="96" rx="12" class="f-blue-soft s-blue" stroke-width="1.5"/>
+   <rect x="220" y="56" width="160" height="96" rx="12" class="f-blue-soft s-blue" stroke-width="1.5"/>
+   <rect x="430" y="56" width="160" height="96" rx="12" class="f-red-soft s-red" stroke-width="1.5"/>
+   <text x="90" y="80" text-anchor="middle" class="f-ink sm b">Work in Process</text>
+   <text x="300" y="80" text-anchor="middle" class="f-ink sm b">Finished Goods</text>
+   <text x="510" y="80" text-anchor="middle" class="f-ink sm b">Cost of Goods Sold</text>
+   <text x="90" y="120" text-anchor="middle" class="f-ink b lg" data-at="0" data-out="1">$172,000</text>
+   <text x="90" y="120" text-anchor="middle" class="f-accent b lg" data-at="1" data-d=".9" data-count="22000">$22,000</text>
+   <text x="300" y="120" text-anchor="middle" class="f-ink b lg" data-at="0" data-out="1">$30,000</text>
+   <text x="300" y="120" text-anchor="middle" class="f-ink b lg" data-at="1" data-d=".9" data-out="2" data-count="180000">$180,000</text>
+   <text x="300" y="120" text-anchor="middle" class="f-accent b lg" data-at="2" data-d=".9" data-count="40000">$40,000</text>
+   <text x="510" y="120" text-anchor="middle" class="f-ink b lg" data-at="0" data-out="2">$0</text>
+   <text x="510" y="120" text-anchor="middle" class="f-red b lg" data-at="2" data-d=".9" data-count="140000">$140,000</text>
+   <text x="90" y="142" text-anchor="middle" class="f-ink2 sm">unfinished jobs</text>
+   <text x="300" y="142" text-anchor="middle" class="f-ink2 sm">done, unsold</text>
+   <text x="510" y="142" text-anchor="middle" class="f-ink2 sm">sold this month</text>
+   <path d="M170 104 L212 104" class="f-none s-accent draw" stroke-width="3" data-at="1"/>
+   <path d="M210 98 L219 104 L210 110z" class="f-accent" data-at="1" data-d=".6"/>
+   <path d="M380 104 L422 104" class="f-none s-red draw" stroke-width="3" data-at="2"/>
+   <path d="M420 98 L429 104 L420 110z" class="f-red" data-at="2" data-d=".6"/>
+   <text x="300" y="180" text-anchor="middle" class="f-ink sm b" data-at="1" data-d="1" data-out="2">Work in Process: $172,000 − $150,000 = $22,000 still in process</text>
+   <text x="300" y="180" text-anchor="middle" class="f-ink sm b" data-at="2" data-d="1">Finished Goods: $30,000 + $150,000 − $140,000 = $40,000 on the shelves</text>
+   <text x="300" y="202" text-anchor="middle" class="f-ink2 sm" data-at="2" data-d="1.2">The same signs bring in sales of $210,000</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">(7) Jobs costing <b>$150,000</b> are finished: debit Finished Goods, credit Work in Process. That's cost of goods manufactured</li>
+   <li data-step="2">(8) Jobs costing <b>$140,000</b> are sold for <b>$210,000</b>: debit Cost of Goods Sold, credit Finished Goods (and debit Accounts Receivable, credit Sales)</li>
+  </ul>
+ </div>
+</section>
+
+<!-- T-ACCOUNT SIM -->
+<section class="slide" data-section="3.2" data-title="Balance the accounts" data-sim="tacct">
+ <div class="slide-inner">
+  <h2>What's left in <em>inventory?</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Try it · move March's completed and sold jobs</span>
+   <div class="cols" style="--n:2">
+    <div class="ctl"><label for="tk-c">Jobs completed, at cost <output id="tk-c-o">$150,000</output></label><input type="range" id="tk-c" min="100000" max="172000" step="2000" value="150000"></div>
+    <div class="ctl"><label for="tk-s">Jobs sold, at cost <output id="tk-s-o">$140,000</output></label><input type="range" id="tk-s" min="0" max="180000" step="2000" value="140000"></div>
+   </div>
+   <div class="t3">
+    <div class="tbox"><div class="th">Work in Process</div><div class="tg"><div id="tk-wd"></div><div id="tk-wc"></div></div><div class="tb"><span>Ending balance</span><b id="tk-w">$22,000</b></div></div>
+    <div class="tbox"><div class="th">Finished Goods</div><div class="tg"><div id="tk-fd"></div><div id="tk-fc"></div></div><div class="tb"><span>Ending balance</span><b id="tk-f">$40,000</b></div></div>
+    <div class="tbox"><div class="th">Cost of Goods Sold</div><div class="tg"><div id="tk-gd"></div><div></div></div><div class="tb"><span>Unadjusted</span><b id="tk-g">$140,000</b></div></div>
+   </div>
+   <div class="feedback" id="tk-fb" aria-live="polite">These are March's numbers.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 3.3 -->
+<section class="slide" data-section="3.3" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">3.3</div><div style="display:flex;flex-direction:column;gap:16px"><h2>The schedules</h2><div class="chips"><span class="chip">Cost of goods manufactured</span><span class="chip">Cost of goods sold</span><span class="chip">Income statement</span></div></div></div>
+ </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="slide" data-section="3.3" data-title="Cost of goods manufactured" data-key="schedule">
+ <div class="slide-inner">
+  <h2>Cost of goods manufactured, <em>line by line</em></h2>
+  <div class="sched3">
+   <div class="card sch" data-step="1"><span class="k">1 · Direct materials</span>
+    <div class="ln" data-at="1"><span>Raw materials, Mar 1</span><span>$8,000</span></div>
+    <div class="ln" data-at="1" data-d=".1"><span>+ Purchases</span><span>50,000</span></div>
+    <div class="ln" data-at="1" data-d=".2"><span>− Raw materials, Mar 31</span><span>(12,000)</span></div>
+    <div class="ln sub" data-at="1" data-d=".3"><span>= Used in production</span><span>46,000</span></div>
+    <div class="ln" data-at="1" data-d=".4"><span>− Indirect materials</span><span>(6,000)</span></div>
+    <div class="ln tot" data-at="1" data-d=".5"><span>Direct materials</span><span data-count="40000">$40,000</span></div>
+   </div>
+   <div class="card sch" data-step="2"><span class="k">2 · Total manufacturing costs</span>
+    <div class="ln" data-at="2"><span>Direct materials</span><span>$40,000</span></div>
+    <div class="ln" data-at="2" data-d=".1"><span>+ Direct labor</span><span>80,000</span></div>
+    <div class="ln" data-at="2" data-d=".2"><span>+ Overhead applied</span><span>32,000</span></div>
+    <div class="ln tot" data-at="2" data-d=".3"><span>Total</span><span data-count="152000">$152,000</span></div>
+   </div>
+   <div class="card sch" data-step="3"><span class="k">3 · Finished this month</span>
+    <div class="ln" data-at="3"><span>Total mfg. costs</span><span>$152,000</span></div>
+    <div class="ln" data-at="3" data-d=".1"><span>+ WIP, Mar 1</span><span>20,000</span></div>
+    <div class="ln" data-at="3" data-d=".2"><span>− WIP, Mar 31</span><span>(22,000)</span></div>
+    <div class="ln tot" data-at="3" data-d=".3"><span>Cost of goods mfd.</span><span data-count="150000">$150,000</span></div>
+   </div>
+  </div>
+  <p class="tip" data-step="3"><b>Exam tip</b>The schedule uses overhead <b>applied</b> ($32,000), never actual ($34,000). Indirect materials come out because they reached jobs through the rate.</p>
+ </div>
+</section>
+
+<!-- COGM SIM -->
+<section class="slide" data-section="3.3" data-title="Build the schedule" data-sim="cogm">
+ <div class="slide-inner">
+  <h2>Build cost of goods <em>manufactured</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Try it · change March, $20 wage, $8 overhead rate</span>
+   <div class="cols" style="--n:4">
+    <div class="ctl"><label for="cm-p">Purchases <output id="cm-p-o">$50,000</output></label><input type="range" id="cm-p" min="30000" max="70000" step="2000" value="50000"></div>
+    <div class="ctl"><label for="cm-e">Raw materials, Mar 31 <output id="cm-e-o">$12,000</output></label><input type="range" id="cm-e" min="4000" max="20000" step="1000" value="12000"></div>
+    <div class="ctl"><label for="cm-h">Direct labor-hours <output id="cm-h-o">4,000</output></label><input type="range" id="cm-h" min="3000" max="5000" step="100" value="4000"></div>
+    <div class="ctl"><label for="cm-w">WIP, Mar 31 <output id="cm-w-o">$22,000</output></label><input type="range" id="cm-w" min="10000" max="40000" step="1000" value="22000"></div>
+   </div>
+   <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 232" style="max-width:660px" aria-label="Waterfall from direct materials, labor and applied overhead to total manufacturing costs, then adjusted for work in process to cost of goods manufactured">
+    <g class="f-ink sm">
+     <text x="0" y="24">Direct materials</text><text x="0" y="56">+ Direct labor</text><text x="0" y="88">+ Overhead applied</text>
+     <text x="0" y="120" class="b">= Total mfg. costs</text><text x="0" y="152">+ WIP, Mar 1</text><text x="0" y="184">− WIP, Mar 31</text>
+     <text x="0" y="216" class="b">= Cost of goods mfd.</text>
+    </g>
+    <rect id="cm-r0" x="170" y="8" width="60" height="22" rx="4" class="f-blue"/>
+    <rect id="cm-r1" x="230" y="40" width="120" height="22" rx="4" class="f-accent"/>
+    <rect id="cm-r2" x="350" y="72" width="48" height="22" rx="4" class="f-amber"/>
+    <rect id="cm-r3" x="170" y="104" width="228" height="22" rx="4" class="f-accent-soft s-accent" stroke-width="1.5"/>
+    <rect id="cm-r4" x="398" y="136" width="30" height="22" rx="4" class="f-blue"/>
+    <rect id="cm-r5" x="395" y="168" width="33" height="22" rx="4" class="f-red"/>
+    <rect id="cm-r6" x="170" y="200" width="225" height="22" rx="4" class="f-accent"/>
+    <g class="f-ink sm b" text-anchor="end">
+     <text id="cm-v0" x="598" y="24">$40,000</text><text id="cm-v1" x="598" y="56">$80,000</text><text id="cm-v2" x="598" y="88">$32,000</text>
+     <text id="cm-v3" x="598" y="120">$152,000</text><text id="cm-v4" x="598" y="152">$20,000</text><text id="cm-v5" x="598" y="184">−$22,000</text>
+     <text id="cm-v6" x="598" y="216" class="f-accent">$150,000</text>
+    </g>
+   </svg></div>
+   <div class="formula" id="cm-f" aria-live="polite">($8,000 + $50,000 − $12,000 − $6,000) + 4,000 h × ($20 + $8) = $152,000 · + $20,000 − $22,000 = <b>$150,000 cost of goods manufactured</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- COGS SIM -->
+<section class="slide" data-section="3.3" data-title="Cost of goods sold" data-sim="cogs">
+ <div class="slide-inner">
+  <h2>From manufactured to <em>sold</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag">Try it · $30,000 on hand + $150,000 manufactured</span>
+    <div class="seg" role="group" aria-label="Overhead result" id="cg-btns"><button type="button" data-a="2000" aria-pressed="true">Underapplied $2,000</button><button type="button" data-a="-2000" aria-pressed="false">Overapplied $2,000</button><button type="button" data-a="0" aria-pressed="false">Exact</button></div>
+   </div>
+   <div class="ctl"><label for="cg-e">Finished goods left on March 31 <output id="cg-e-o">$40,000</output></label><input type="range" id="cg-e" min="0" max="80000" step="2000" value="40000"></div>
+   <div class="stack" aria-hidden="true"><div class="seg-sold" id="cg-sold" style="width:77.8%">sold $140,000</div><div class="seg-left" id="cg-left" style="width:22.2%">on shelves $40,000</div></div>
+   <div class="readout">
+    <div><div class="k">Available for sale</div><div class="v">$180,000</div></div>
+    <div><div class="k">Unadjusted COGS</div><div class="v" id="cg-un">$140,000</div></div>
+    <div><div class="k">Overhead adjustment</div><div class="v neg" id="cg-adj">+ $2,000</div></div>
+    <div><div class="k">Adjusted COGS</div><div class="v pos" id="cg-fin">$142,000</div></div>
+   </div>
+   <div class="formula" id="cg-f" aria-live="polite">$30,000 + $150,000 − $40,000 = $140,000 unadjusted + $2,000 = <b>$142,000 adjusted cost of goods sold</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- INCOME STATEMENT SIM -->
+<section class="slide" data-section="3.3" data-title="Income statement" data-sim="isbuild">
+ <div class="slide-inner">
+  <h2>Build the <em>income statement</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag">Tap the lines in order, top to bottom</span><button type="button" class="btn small" id="ib-reset">Start over</button></div>
+   <div class="tray" id="ib-tray"></div>
+   <div class="isb" id="ib-stmt"></div>
+   <div class="feedback" id="ib-fb" aria-live="polite">Which line comes first on the income statement?</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 3.4 -->
+<section class="slide" data-section="3.4" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">3.4</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Under- and overapplied overhead</h2><div class="chips"><span class="chip">Debit or credit balance</span><span class="chip">Close to COGS</span><span class="chip">Allocate</span></div></div></div>
+ </div>
+</section>
+
+<!-- BALANCE -->
+<section class="slide" data-section="3.4" data-title="Finding the balance" data-key="balance">
+ <div class="slide-inner">
+  <h2>Debit balance or <em>credit</em> balance?</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 176" style="max-width:760px" aria-label="Actual overhead of $34,000 against applied overhead of $32,000 leaves a $2,000 gap: a debit balance, so overhead is underapplied">
+   <text x="140" y="36" text-anchor="end" class="f-ink sm b">Actual · debits</text>
+   <text x="140" y="86" text-anchor="end" class="f-ink sm b">Applied · credits</text>
+   <rect x="150" y="16" width="397" height="34" rx="6" class="f-amber grow" data-at="1"/>
+   <text x="538" y="38" text-anchor="end" class="f-bg b" data-at="1" data-d=".5" data-count="34000">$34,000</text>
+   <rect x="150" y="66" width="373" height="34" rx="6" class="f-blue grow" data-at="2"/>
+   <text x="514" y="88" text-anchor="end" class="f-bg b" data-at="2" data-d=".5" data-count="32000">$32,000</text>
+   <g data-at="3"><path d="M523 10 L523 120 M547 10 L547 120" class="f-none s-red" stroke-width="2" stroke-dasharray="4 4"/><text x="535" y="140" text-anchor="middle" class="f-red b">$2,000</text></g>
+   <text x="300" y="168" text-anchor="middle" class="f-red b" data-at="3" data-d=".3">debit balance → underapplied</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Actual overhead piles up as debits: <b>$34,000</b></li>
+   <li data-step="2">Applied overhead leaves as credits: <b>$32,000</b></li>
+  </ul>
+  <div class="cols" style="--n:2">
+   <div class="card" data-step="3"><span class="k">Debit balance · actual &gt; applied</span><b>Underapplied: jobs were undercosted, so cost must be added</b></div>
+   <div class="card" data-step="3"><span class="k">Credit balance · applied &gt; actual</span><b>Overapplied: jobs were overcosted, so cost must be taken out</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- DISPOSE -->
+<section class="slide" data-section="3.4" data-title="Two ways to close" data-key="dispose">
+ <div class="slide-inner">
+  <h2>Two ways to clear <em>$2,000</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 252" style="max-width:760px" aria-label="Method 1 closes the whole $2,000 to Cost of Goods Sold; method 2 splits it $300 to Work in Process, $500 to Finished Goods and $1,200 to Cost of Goods Sold">
+   <text x="10" y="16" class="f-accent sm b" data-at="1">METHOD 1 · CLOSE TO COST OF GOODS SOLD</text>
+   <g data-at="0"><rect x="10" y="28" width="130" height="52" rx="10" class="f-amber-soft s-amber" stroke-width="1.5"/><text x="75" y="49" text-anchor="middle" class="f-ink sm b">Overhead</text><text x="75" y="70" text-anchor="middle" class="f-amber b">$2,000</text></g>
+   <path d="M140 54 L412 54" class="f-none s-red draw" stroke-width="3" data-at="1"/>
+   <path d="M410 48 L419 54 L410 60z" class="f-red" data-at="1" data-d=".8"/>
+   <text x="276" y="46" text-anchor="middle" class="f-red sm b" data-at="1" data-d=".4">all $2,000</text>
+   <g data-at="0"><rect x="420" y="28" width="170" height="52" rx="10" class="f-red-soft s-red" stroke-width="1.5"/><text x="505" y="49" text-anchor="middle" class="f-ink sm b">Cost of Goods Sold</text></g>
+   <text x="505" y="70" text-anchor="middle" class="f-ink sm" data-at="0" data-out="1">$140,000</text>
+   <text x="505" y="70" text-anchor="middle" class="f-red sm b" data-at="1" data-d=".9">$140,000 → $142,000</text>
+   <text x="10" y="126" class="f-accent sm b" data-at="2">METHOD 2 · ALLOCATE BY APPLIED OVERHEAD</text>
+   <g data-at="2"><rect x="10" y="140" width="130" height="52" rx="10" class="f-amber-soft s-amber" stroke-width="1.5"/><text x="75" y="161" text-anchor="middle" class="f-ink sm b">Overhead</text><text x="75" y="182" text-anchor="middle" class="f-amber b">$2,000</text></g>
+   <path d="M140 166 L220 166" class="f-none s-blue draw" stroke-width="3" data-at="2" data-d=".2"/>
+   <path d="M219 160 L228 166 L219 172z" class="f-blue" data-at="2" data-d=".9"/>
+   <path d="M140 182 C200 232 330 236 410 202" class="f-none s-blue draw" stroke-width="3" data-at="2" data-d=".35"/>
+   <path d="M403 205 L411 194 L417 207z" class="f-blue" data-at="2" data-d="1.1"/>
+   <path d="M140 188 C230 252 450 252 535 202" class="f-none s-red draw" stroke-width="3" data-at="2" data-d=".5"/>
+   <path d="M528 205 L536 194 L542 207z" class="f-red" data-at="2" data-d="1.25"/>
+   <g data-at="2" data-d=".9"><rect x="228" y="140" width="110" height="52" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="283" y="161" text-anchor="middle" class="f-ink sm b">WIP · 15%</text><text x="283" y="182" text-anchor="middle" class="f-blue b" data-count="300">$300</text></g>
+   <g data-at="2" data-d="1"><rect x="355" y="140" width="110" height="52" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="410" y="161" text-anchor="middle" class="f-ink sm b">FG · 25%</text><text x="410" y="182" text-anchor="middle" class="f-blue b" data-count="500">$500</text></g>
+   <g data-at="2" data-d="1.1"><rect x="480" y="140" width="110" height="52" rx="10" class="f-red-soft s-red" stroke-width="1.5"/><text x="535" y="161" text-anchor="middle" class="f-ink sm b">COGS · 60%</text><text x="535" y="182" text-anchor="middle" class="f-red b" data-count="1200">$1,200</text></g>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Method 1, the usual choice: close the whole <b>$2,000</b> to Cost of Goods Sold, which rises from $140,000 to <b>$142,000</b></li>
+   <li data-step="2">Method 2 splits it in proportion to the overhead applied that sits in each account at month end: 15% / 25% / 60% → <b>$300 / $500 / $1,200</b></li>
+  </ul>
+ </div>
+</section>
+
+<!-- CLOSE SIM -->
+<section class="slide" data-section="3.4" data-title="Close it your way" data-sim="close">
+ <div class="slide-inner">
+  <h2>Close the balance <em>your way</em></h2>
+  <div class="sim">
+   <div class="sim-bar">
+    <div class="seg" role="group" aria-label="Method" id="cl-btns"><button type="button" data-m="cogs" aria-pressed="true">Close to COGS</button><button type="button" data-m="alloc" aria-pressed="false">Allocate</button></div>
+    <div class="ctl" style="flex:1;min-width:200px"><label for="cl-x">Actual overhead (applied stays $32,000) <output id="cl-x-o">$34,000</output></label><input type="range" id="cl-x" min="28000" max="38000" step="500" value="34000"></div>
+   </div>
+   <div class="cols" style="--n:3">
+    <div class="card"><span class="k">Work in Process</span><b class="mono" id="cl-wip">$22,000</b><span class="mono" id="cl-wipa">no change</span></div>
+    <div class="card"><span class="k">Finished Goods</span><b class="mono" id="cl-fg">$40,000</b><span class="mono" id="cl-fga">no change</span></div>
+    <div class="card"><span class="k">Cost of Goods Sold</span><b class="mono" id="cl-cogs">$142,000</b><span class="mono" id="cl-cogsa">+ $2,000</span></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Balance</div><div class="v neg" id="cl-bal">$2,000 underapplied</div></div>
+    <div><div class="k">Net operating income</div><div class="v pos" id="cl-noi">$46,000</div></div>
+   </div>
+   <div class="formula" id="cl-je">Dr Cost of Goods Sold $2,000 · Cr Manufacturing Overhead $2,000</div>
+   <div class="feedback" id="cl-fb" aria-live="polite">Underapplied: jobs were undercosted, so cost of goods sold goes up and income goes down. The whole $2,000 hits this month's cost of goods sold.</div>
+  </div>
+ </div>
+</section>
+
+<!-- RECAP -->
+<section class="slide" data-section="end" data-title="March in one picture" data-key="recap">
+ <div class="slide-inner">
+  <h2>March in <em>one picture</em></h2>
+  <div class="chain">
+   <div class="card" data-at="1"><span class="k">Raw Materials</span><b>$8,000 → $12,000</b><span>bought $50,000 · issued $46,000</span></div>
+   <span class="arr" data-at="1" data-d=".2" aria-hidden="true">→</span>
+   <div class="card" data-at="1" data-d=".3"><span class="k">Work in Process</span><b>+ $152,000</b><span>DM $40,000 · DL $80,000 · MOH $32,000</span></div>
+   <span class="arr" data-at="2" aria-hidden="true">→</span>
+   <div class="card" data-at="2" data-d=".15"><span class="k">Finished Goods</span><b>+ $150,000</b><span>cost of goods manufactured · ends at $40,000</span></div>
+   <span class="arr" data-at="2" data-d=".3" aria-hidden="true">→</span>
+   <div class="card" data-at="2" data-d=".45"><span class="k">Cost of Goods Sold</span><b>$142,000</b><span>$140,000 + $2,000 underapplied</span></div>
+  </div>
+  <div class="isline" data-at="3"><span>Sales $210,000</span><span>− COGS $142,000</span><span>= gross margin $68,000</span><span>− selling &amp; admin $22,000</span><span>= <b data-count="46000">$46,000</b></span></div>
+  <ul class="pts">
+   <li data-step="1">Materials and labor flow into jobs; overhead arrives at the rate</li>
+   <li data-step="2">Finished jobs move on, sold jobs become expense, and the leftover overhead is closed</li>
+   <li data-step="3">The income statement: $210,000 − $142,000 − $22,000 = <b>$46,000</b> net operating income</li>
+  </ul>
+ </div>
+</section>
+
+<!-- MUST REMEMBER -->
+<section class="slide" data-section="end" data-title="Must-remember sheet">
+ <div class="slide-inner">
+  <p class="eyebrow">Chapter 3 · Review</p>
+  <h2>The <em>must-remember</em> sheet</h2>
+  <div class="remember" id="remember">
+   <div class="card"><span class="k">3.1</span><b>Raw Materials → Work in Process → Finished Goods → Cost of Goods Sold</b></div>
+   <div class="card"><span class="k">3.1</span><b>Manufacturing Overhead: actual costs are debits, applied overhead is credits</b></div>
+   <div class="card"><span class="k">3.2</span><b>Direct materials and direct labor → debit Work in Process</b></div>
+   <div class="card"><span class="k">3.2</span><b>Indirect materials, indirect labor, factory bills → debit Manufacturing Overhead</b></div>
+   <div class="card"><span class="k">3.2</span><b>Apply: debit Work in Process, credit Manufacturing Overhead (4,000 h × $8 = $32,000)</b></div>
+   <div class="card"><span class="k">3.2</span><b>Selling and admin costs → expense right away, never inventory</b></div>
+   <div class="card"><span class="k">3.3</span><b>Total manufacturing costs = DM + DL + overhead applied: $152,000</b></div>
+   <div class="card"><span class="k">3.3</span><b>COGM = total manufacturing costs + beginning WIP − ending WIP: $150,000</b></div>
+   <div class="card"><span class="k">3.3</span><b>Unadjusted COGS = beginning FG + COGM − ending FG: $140,000</b></div>
+   <div class="card"><span class="k">3.4</span><b>Debit balance = underapplied; credit balance = overapplied</b></div>
+   <div class="card"><span class="k">3.4</span><b>Close to COGS: underapplied adds, overapplied subtracts ($142,000)</b></div>
+   <div class="card"><span class="k">3.4</span><b>Allocate by applied overhead in WIP, FG and COGS: $300 / $500 / $1,200</b></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="quiz.html">Take the quiz →</a><a class="btn" href="textbook.html">Read the textbook</a></div>
+ </div>
+</section>
+
+</main>
+
+<footer class="bottom">
+  <button type="button" class="btn" id="prev">← Back</button>
+  <span class="mono" id="count" style="font-size:13px;color:var(--ink-2)">1 / 24</span>
+  <span class="spacer"></span>
+  <span class="hint">← → keys · tap to advance</span>
+  <button type="button" class="btn primary" id="next">Next →</button>
+</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../../assets/deck.js"></script>
+<script src="../../assets/steps.js"></script>
+<script src="learn.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
