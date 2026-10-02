@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 5 Learning · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/deck.css">
+<style>
+.s-blue{stroke:var(--blue)} .f-blue-soft{fill:var(--blue-soft)} .s-red{stroke:var(--red)}
+.viz text{font-size:15px} .viz .sm{font-size:12.5px} .viz .b{font-weight:700} .viz .lg{font-size:24px}
+.sim-bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.receipt{display:flex;flex-direction:column;gap:2px;width:100%;font-family:var(--f-mono);font-size:15px}
+.receipt > div{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;border-bottom:1px dashed var(--line)}
+.receipt .tot{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:18px;color:var(--accent)}
+.tbl td.num,.tbl th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.tbl tr.sub td{font-weight:700;border-top:2px solid var(--ink)}
+.tbl tr.noi td{color:var(--accent)}
+.tbl td{padding:6px 12px} .tbl th{padding:6px 12px}
+.gr-wrap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px;align-items:center}
+.gr-wrap > div{display:flex;flex-direction:column;gap:14px}
+@media (max-width:860px){.gr-wrap{grid-template-columns:1fr}}
+.split.g2{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+@media (max-width:860px){.split.g2{grid-template-columns:1fr}}
+.vs2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.vs2{grid-template-columns:1fr}}
+.vs2 .card{gap:6px}
+.vs2 .card b.big{font:700 24px/1.1 var(--f-mono)}
+.meter{display:grid;grid-template-columns:minmax(110px,180px) minmax(0,1fr) 110px;gap:12px;align-items:center;font-size:14.5px}
+.meter .bar-h{height:20px;border-radius:6px;overflow:hidden;background:var(--surface-2);position:relative}
+.meter .bar-h > i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;display:block}
+.meter .mono{text-align:right}
+@media (max-width:520px){.meter{grid-template-columns:1fr 100px}.meter .bar-h{grid-column:1 / -1;grid-row:2}}
+.i-blue{background:var(--blue)} .i-acc{background:var(--accent)} .i-amb{background:var(--amber)} .i-red{background:var(--red)}
+.stack{display:flex;height:44px;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.stack > div{display:flex;align-items:center;justify-content:center;font:600 12.5px var(--f-mono);color:var(--on-accent);overflow:hidden;white-space:nowrap;min-width:0}
+.seg-a{background:var(--blue)} .seg-b{background:var(--amber)}
+.presets{display:flex;gap:8px;flex-wrap:wrap}
+.chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:8px;align-items:stretch}
+.chain .card{padding:12px 14px;gap:4px}
+.chain .card b{font:700 17px/1.3 var(--f-mono)}
+.chain .card span:last-child{font-size:12.5px;color:var(--ink-2)}
+.chain .arr{align-self:center;font:700 22px var(--f-mono);color:var(--accent)}
+@media (max-width:860px){.chain{grid-template-columns:1fr}.chain .arr{transform:rotate(90deg);justify-self:center;line-height:1}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <a class="crumb" href="index.html">← Chapter 5</a>
+  <button type="button" class="brand" id="menu-btn" aria-expanded="false" aria-controls="menu">Contents <span class="caret">▾</span></button>
+  <div class="track" id="track"><div class="fill" id="fill"></div></div>
+  <span class="sec-label" id="sec-label">Intro</span>
+  <nav class="menu" id="menu" hidden aria-label="Jump to section"></nav>
+  <button type="button" class="theme-btn" data-theme-toggle aria-label="Switch theme">☾</button>
+</header>
+
+<main class="stage" id="stage">
+
+<!-- TITLE -->
+<section class="slide" data-section="intro" data-title="Welcome" data-key="title">
+ <div class="slide-inner">
+  <div class="split">
+   <div style="display:flex;flex-direction:column;gap:22px">
+    <p class="eyebrow">ACG 203 · Chapter 5</p>
+    <h1>Every candle <em>counts</em></h1>
+    <p class="lede">Brightwick Candle Co. has $40,000 of bills before it sells a single candle. How many candles until it stops losing money, and what happens when it changes the price?</p>
+    <div class="chips"><span class="chip">5.1 CM</span><span class="chip">5.2 Leverage</span><span class="chip">5.3 Break-even</span><span class="chip">5.4 Target</span><span class="chip">5.5 What-ifs</span><span class="chip">5.6 Graph</span><span class="chip">5.7 Mix</span></div>
+    <div><button type="button" class="btn primary" id="start-btn">Start the walkthrough →</button></div>
+   </div>
+   <div class="cert">
+    <div class="cert-in">
+     <span class="k">Brightwick · one month · 5,000 candles</span>
+     <div class="receipt">
+      <div data-at="0"><span>Sales ($25 each)</span><span>$125,000</span></div>
+      <div data-at="0"><span>Variable expenses ($15 each)</span><span>−$75,000</span></div>
+      <div data-at="0"><span>Contribution margin</span><span>$50,000</span></div>
+      <div data-at="0"><span>Fixed expenses</span><span>−$40,000</span></div>
+      <div class="tot" data-at="0"><span>Net operating income</span><span data-count="10000">$10,000</span></div>
+     </div>
+     <div class="cert-row"><span>Brightwick Candle Co.</span><span>Contribution format</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 5.1 -->
+<section class="slide" data-section="5.1" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">5.1</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Contribution margin</h2><div class="chips"><span class="chip">Unit CM</span><span class="chip">CM ratio</span><span class="chip">Profit equation</span></div></div></div>
+ </div>
+</section>
+
+<!-- UNIT CM -->
+<section class="slide" data-section="5.1" data-title="Unit contribution margin" data-key="unitcm">
+ <div class="slide-inner">
+  <h2>Where does the <em>$25</em> go?</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 200" style="max-width:760px" aria-label="A $25 price splits into $15 of variable cost and a $10 contribution margin that covers fixed costs, then profit">
+   <rect x="40" y="40" width="520" height="44" rx="8" class="f-surface2"/>
+   <rect x="40" y="40" width="520" height="44" rx="8" class="f-ink2 grow" data-at="1" data-out="2"/>
+   <text x="300" y="68" text-anchor="middle" class="f-bg b" data-at="1" data-d=".5" data-out="2">$25 selling price</text>
+   <rect x="40" y="40" width="312" height="44" rx="8" class="f-amber" data-at="2"/>
+   <text x="196" y="68" text-anchor="middle" class="f-bg b" data-at="2" data-d=".2">$15 variable</text>
+   <text x="196" y="30" text-anchor="middle" class="f-amber sm b" data-at="2" data-d=".3">60%: wax, wick, jar, base commission</text>
+   <g data-at="2" data-d=".15" data-move="3" data-dx="0" data-dy="78"><rect x="354" y="40" width="206" height="44" rx="8" class="f-blue"/><text x="457" y="68" text-anchor="middle" class="f-bg b">$10 contribution margin</text></g>
+   <text x="457" y="30" text-anchor="middle" class="f-blue sm b" data-at="2" data-d=".4">40%</text>
+   <text x="457" y="186" text-anchor="middle" class="f-blue sm b" data-at="3" data-d=".9">covers fixed costs first, then profit</text>
+   <text x="196" y="150" text-anchor="middle" class="f-ink2 sm" data-at="3" data-d=".9">spent on every candle sold</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Each candle sells for <b>$25</b></li>
+   <li data-step="2"><b>$15</b> goes to variable costs. The other <b>$10</b> is the <b>contribution margin</b>: $25 − $15</li>
+   <li data-step="3">That $10 first covers the <b>$40,000</b> of monthly fixed expenses, then becomes profit</li>
+  </ul>
+ </div>
+</section>
+
+<!-- BUCKET -->
+<section class="slide" data-section="5.1" data-title="Filling the fixed costs" data-key="bucket">
+ <div class="slide-inner">
+  <h2>Fill the <em>$40,000</em> first</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 196" style="max-width:760px" aria-label="Each candle adds $10; 2,000 candles cover half the fixed costs, 4,000 cover all of them, and 5,000 leave $10,000 of profit">
+   <text x="240" y="40" text-anchor="middle" class="f-ink sm b">Fixed expenses: $40,000</text>
+   <rect x="40" y="50" width="400" height="50" rx="10" class="f-none s-ink2" stroke-width="2"/>
+   <rect x="42" y="52" width="198" height="46" rx="8" class="f-blue grow" data-at="1"/>
+   <rect x="240" y="52" width="198" height="46" rx="8" class="f-blue grow" data-at="2"/>
+   <rect x="444" y="52" width="100" height="46" rx="8" class="f-accent grow" data-at="3"/>
+   <text x="494" y="81" text-anchor="middle" class="f-bg sm b" data-at="3" data-d=".6">profit</text>
+   <path d="M440 42 L440 112" class="f-none s-red" stroke-width="2" stroke-dasharray="4 4" data-at="2" data-d=".6"/>
+   <text x="440" y="126" text-anchor="middle" class="f-red sm b" data-at="2" data-d=".7">break-even</text>
+   <g class="f-ink2 sm" text-anchor="middle"><text x="40" y="126">0</text><text x="140" y="126">1,000</text><text x="240" y="126">2,000</text><text x="340" y="126">3,000</text><text x="544" y="126">5,000</text></g>
+   <text x="300" y="164" text-anchor="middle" class="f-ink b" data-at="1" data-out="2">2,000 candles × $10 = $20,000 covered · still a $20,000 loss</text>
+   <text x="300" y="164" text-anchor="middle" class="f-ink b" data-at="2" data-out="3">4,000 candles × $10 = $40,000 covered · profit $0</text>
+   <text x="300" y="164" text-anchor="middle" class="f-accent b" data-at="3">5,000 candles × $10 = $50,000 · profit $10,000</text>
+   <text x="300" y="188" text-anchor="middle" class="f-ink2 sm" data-at="3" data-d=".3">every candle past 4,000 adds its full $10 to profit</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Each candle pours $10 into the fixed-cost tank</li>
+   <li data-step="2">At 4,000 candles the tank is full: that's break-even</li>
+   <li data-step="3">After that, each candle adds $10 straight to profit</li>
+  </ul>
+ </div>
+</section>
+
+<!-- CM STATEMENT SIM -->
+<section class="slide" data-section="5.1" data-title="Contribution income statement" data-sim="cmstmt">
+ <div class="slide-inner">
+  <h2>Sell more, watch <em>profit</em></h2>
+  <div class="sim">
+   <div class="ctl"><label for="cs-q">Candles sold this month <output id="cs-q-o">5,000</output></label><input type="range" id="cs-q" min="0" max="8000" step="100" value="5000"></div>
+   <div style="overflow-x:auto"><table class="tbl" aria-describedby="cs-fb">
+    <thead><tr><th>Contribution format</th><th class="num">Total</th><th class="num">Per candle</th></tr></thead>
+    <tbody>
+     <tr><td>Sales</td><td class="num" id="cs-s">$125,000</td><td class="num">$25</td></tr>
+     <tr><td>Variable expenses</td><td class="num" id="cs-v">(75,000)</td><td class="num">(15)</td></tr>
+     <tr class="sub"><td>Contribution margin</td><td class="num" id="cs-cm">$50,000</td><td class="num">$10</td></tr>
+     <tr><td>Fixed expenses</td><td class="num">(40,000)</td><td class="num">—</td></tr>
+     <tr class="sub noi"><td>Net operating income</td><td class="num" id="cs-noi">$10,000</td><td class="num">—</td></tr>
+    </tbody>
+   </table></div>
+   <div class="feedback" id="cs-fb" aria-live="polite">Profit = $10 × 5,000 − $40,000 = $10,000.</div>
+  </div>
+ </div>
+</section>
+
+<!-- CM RATIO -->
+<section class="slide" data-section="5.1" data-title="CM ratio" data-key="ratio">
+ <div class="slide-inner">
+  <h2>40¢ of every <em>sales dollar</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 206" style="max-width:760px" aria-label="Each $1 of sales leaves 40 cents of contribution margin; $20,000 more sales leaves $8,000 more">
+   <text x="20" y="24" class="f-ink sm b" data-at="1">Each $1.00 of sales</text>
+   <rect x="20" y="32" width="336" height="36" rx="6" class="f-amber grow" data-at="1"/>
+   <rect x="356" y="32" width="224" height="36" rx="6" class="f-blue grow" data-at="1" data-d=".3"/>
+   <text x="188" y="56" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".5">60¢ variable expense ratio 60%</text>
+   <text x="468" y="56" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".7">40¢ CM ratio 40%</text>
+   <text x="20" y="104" class="f-ink sm b" data-at="2">Sales rise $20,000</text>
+   <rect x="20" y="112" width="336" height="36" rx="6" class="f-amber grow" data-at="2"/>
+   <rect x="356" y="112" width="224" height="36" rx="6" class="f-blue grow" data-at="2" data-d=".3"/>
+   <text x="188" y="136" text-anchor="middle" class="f-bg sm b" data-at="2" data-d=".5">$12,000 variable</text>
+   <text x="468" y="136" text-anchor="middle" class="f-bg sm b" data-at="2" data-d=".7">$8,000 CM</text>
+   <text x="468" y="190" text-anchor="middle" class="f-accent b" data-at="3">net operating income +$8,000</text>
+   <path d="M468 150 L468 170" class="f-none s-accent draw" stroke-width="3" data-at="3"/>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">CM ratio = $10 ÷ $25 = <b>40%</b>; variable expense ratio = $15 ÷ $25 = <b>60%</b></li>
+   <li data-step="2">$20,000 more sales × 40% = <b>$8,000</b> more contribution margin</li>
+   <li data-step="3">Fixed expenses don't move, so net operating income rises the full $8,000. Profit = CM ratio × sales − fixed expenses</li>
+  </ul>
+ </div>
+</section>
+
+<!-- DIV 5.2 -->
+<section class="slide" data-section="5.2" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">5.2</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Operating leverage</h2><div class="chips"><span class="chip">CM ÷ NOI</span><span class="chip">Small push, big swing</span></div></div></div>
+ </div>
+</section>
+
+<!-- LEVER -->
+<section class="slide" data-section="5.2" data-title="Operating leverage" data-key="lever">
+ <div class="slide-inner">
+  <h2>+10% sales, <em>+50%</em> profit</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 200" style="max-width:760px" aria-label="Sales grow 10% from $125,000 while net operating income grows 50% from $10,000 to $15,000">
+   <text x="140" y="56" text-anchor="end" class="f-ink sm b">Sales</text>
+   <text x="140" y="136" text-anchor="end" class="f-ink sm b">Net operating income</text>
+   <rect x="150" y="36" width="400" height="32" rx="5" class="f-blue grow" data-at="1"/>
+   <text x="350" y="57" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".4">$125,000</text>
+   <rect x="550" y="36" width="40" height="32" rx="5" class="f-accent grow" data-at="2"/>
+   <text x="590" y="28" text-anchor="end" class="f-accent sm b" data-at="2" data-d=".4">+10%</text>
+   <rect x="150" y="116" width="80" height="32" rx="5" class="f-blue grow" data-at="1" data-d=".2"/>
+   <text x="190" y="137" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".6">$10,000</text>
+   <rect x="230" y="116" width="40" height="32" rx="5" class="f-accent grow" data-at="2" data-d=".2"/>
+   <text x="280" y="137" class="f-accent b" data-at="2" data-d=".6">+50% → $15,000</text>
+   <text x="300" y="190" text-anchor="middle" class="f-ink b" data-at="3">DOL = $50,000 ÷ $10,000 = 5 · 5 × 10% = 50%</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">At 5,000 candles: contribution margin <b>$50,000</b>, net operating income <b>$10,000</b></li>
+   <li data-step="2">Sell 10% more (5,500 candles) and profit jumps <b>50%</b>, to <b>$15,000</b></li>
+   <li data-step="3"><b>Degree of operating leverage</b> = CM ÷ NOI = 5: profit moves five times as fast as sales</li>
+  </ul>
+ </div>
+</section>
+
+<!-- LEVERAGE SIM -->
+<section class="slide" data-section="5.2" data-title="Two cost structures" data-sim="leverage">
+ <div class="slide-inner">
+  <h2>Same profit today, different <em>risk</em></h2>
+  <div class="sim">
+   <span class="sim-tag">Both earn $10,000 at 5,000 candles</span>
+   <div class="ctl"><label for="lv-x">Change in sales <output id="lv-x-o">+10%</output></label><input type="range" id="lv-x" min="-40" max="40" step="5" value="10"></div>
+   <div class="vs2">
+    <div class="card"><span class="k">Brightwick · fixed $40,000, variable $15</span><b class="big" id="lv-a">$15,000</b><span class="mono" id="lv-ap">+50% · DOL 5</span></div>
+    <div class="card"><span class="k">Rival · fixed $15,000, variable $20</span><b class="big" id="lv-b">$12,500</b><span class="mono" id="lv-bp">+25% · DOL 2.5</span></div>
+   </div>
+   <div class="feedback" id="lv-fb" aria-live="polite">Brightwick's high fixed costs give it more leverage: profit rises faster on the way up, and falls faster on the way down.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 5.3 -->
+<section class="slide" data-section="5.3" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">5.3</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Break-even and margin of safety</h2><div class="chips"><span class="chip">Units</span><span class="chip">Sales dollars</span><span class="chip">The cushion</span></div></div></div>
+ </div>
+</section>
+
+<!-- BE FORMULA -->
+<section class="slide" data-section="5.3" data-title="Break-even point" data-key="beformula">
+ <div class="slide-inner">
+  <h2>Two ways to <em>break even</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 196" style="max-width:760px" aria-label="$40,000 divided by $10 is 4,000 candles; $40,000 divided by 40% is $100,000">
+   <g data-at="1"><rect x="20" y="20" width="130" height="48" rx="10" class="f-amber-soft s-amber" stroke-width="1.5"/><text x="85" y="51" text-anchor="middle" class="f-ink lg b">$40,000</text></g>
+   <text x="175" y="53" text-anchor="middle" class="f-ink2 lg" data-at="1" data-d=".2">÷</text>
+   <g data-at="1" data-d=".3"><rect x="200" y="20" width="110" height="48" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="255" y="51" text-anchor="middle" class="f-ink lg b">$10</text></g>
+   <text x="335" y="53" text-anchor="middle" class="f-ink2 lg" data-at="1" data-d=".4">=</text>
+   <text x="360" y="53" class="f-accent lg b" data-at="1" data-d=".6"><tspan data-count="4000" data-fmt="num">4,000</tspan> candles</text>
+   <text x="85" y="86" text-anchor="middle" class="f-ink2 sm" data-at="1" data-d=".1">fixed expenses</text>
+   <text x="255" y="86" text-anchor="middle" class="f-ink2 sm" data-at="1" data-d=".3">unit CM</text>
+   <g data-at="2"><rect x="20" y="104" width="130" height="48" rx="10" class="f-amber-soft s-amber" stroke-width="1.5"/><text x="85" y="135" text-anchor="middle" class="f-ink lg b">$40,000</text></g>
+   <text x="175" y="137" text-anchor="middle" class="f-ink2 lg" data-at="2" data-d=".2">÷</text>
+   <g data-at="2" data-d=".3"><rect x="200" y="104" width="110" height="48" rx="10" class="f-blue-soft s-blue" stroke-width="1.5"/><text x="255" y="135" text-anchor="middle" class="f-ink lg b">40%</text></g>
+   <text x="335" y="137" text-anchor="middle" class="f-ink2 lg" data-at="2" data-d=".4">=</text>
+   <text x="360" y="137" class="f-accent lg b" data-at="2" data-d=".6" data-count="100000">$100,000</text>
+   <text x="255" y="170" text-anchor="middle" class="f-ink2 sm" data-at="2" data-d=".3">CM ratio</text>
+   <text x="300" y="192" text-anchor="middle" class="f-ink sm b" data-at="3">check: 4,000 candles × $25 = $100,000 of sales</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Break-even units = fixed expenses ÷ unit CM</li>
+   <li data-step="2">Break-even sales = fixed expenses ÷ CM ratio</li>
+   <li data-step="3">Same point, two ways. At break-even, contribution margin exactly equals fixed expenses</li>
+  </ul>
+ </div>
+</section>
+
+<!-- BREAK-EVEN SIM -->
+<section class="slide" data-section="5.3" data-title="Move the break-even" data-sim="breakeven">
+ <div class="slide-inner">
+  <h2>Push the break-even <em>around</em></h2>
+  <div class="sim">
+   <div class="cols" style="--n:3">
+    <div class="ctl"><label for="be-p">Selling price <output id="be-p-o">$25</output></label><input type="range" id="be-p" min="16" max="40" step="1" value="25"></div>
+    <div class="ctl"><label for="be-v">Variable expense per candle <output id="be-v-o">$15</output></label><input type="range" id="be-v" min="5" max="30" step="1" value="15"></div>
+    <div class="ctl"><label for="be-f">Fixed expenses <output id="be-f-o">$40,000</output></label><input type="range" id="be-f" min="20000" max="80000" step="2000" value="40000"></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Unit CM · CM ratio</div><div class="v" id="be-cm">$10 · 40%</div></div>
+    <div><div class="k">Break-even units</div><div class="v pos" id="be-u">4,000</div></div>
+    <div><div class="k">Break-even sales</div><div class="v" id="be-s">$100,000</div></div>
+   </div>
+   <div class="meter"><span>Break-even as a share of 5,000 sold</span><div class="bar-h"><i class="i-acc" id="be-bar" style="width:50%"></i></div><span class="mono" id="be-mos">MOS 1,000</span></div>
+   <div class="feedback" id="be-fb" aria-live="polite">$40,000 ÷ $10 = 4,000 candles. Brightwick sells 5,000, so it's 1,000 candles above break-even.</div>
+  </div>
+ </div>
+</section>
+
+<!-- MARGIN OF SAFETY -->
+<section class="slide" data-section="5.3" data-title="Margin of safety" data-key="mos">
+ <div class="slide-inner">
+  <h2>The <em>cushion</em> above break-even</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 180" style="max-width:760px" aria-label="Sales of $125,000 against break-even sales of $100,000 leave a $25,000 margin of safety, 20% of sales">
+   <rect x="50" y="50" width="500" height="40" rx="6" class="f-blue grow" data-at="1"/>
+   <text x="300" y="76" text-anchor="middle" class="f-bg b" data-at="1" data-d=".5" data-out="3">current sales $125,000</text>
+   <path d="M450 36 L450 104" class="f-none s-red" stroke-width="3" data-at="2"/>
+   <text x="450" y="28" text-anchor="middle" class="f-red sm b" data-at="2" data-d=".2">break-even $100,000</text>
+   <rect x="450" y="50" width="100" height="40" rx="6" class="f-accent" data-at="3"/>
+   <text x="250" y="76" text-anchor="middle" class="f-bg sm b" data-at="3" data-d=".2">sales needed just to break even</text>
+   <text x="500" y="76" text-anchor="middle" class="f-bg sm b" data-at="3" data-d=".3">$25,000</text>
+   <text x="500" y="122" text-anchor="middle" class="f-accent b" data-at="3" data-d=".5">margin of safety</text>
+   <text x="300" y="166" text-anchor="middle" class="f-ink sm b" data-at="3" data-d=".7">$25,000 ÷ $125,000 = 20% · or 5,000 − 4,000 = 1,000 candles</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Brightwick sells <b>$125,000</b> a month</li>
+   <li data-step="2">Break-even is <b>$100,000</b></li>
+   <li data-step="3">Margin of safety = $125,000 − $100,000 = <b>$25,000</b>: sales could fall <b>20%</b> before it starts losing money</li>
+  </ul>
+ </div>
+</section>
+
+<!-- DIV 5.4 -->
+<section class="slide" data-section="5.4" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">5.4</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Target profit</h2><div class="chips"><span class="chip">Fixed + target</span><span class="chip">÷ unit CM or CM ratio</span></div></div></div>
+ </div>
+</section>
+
+<!-- TARGET KEY -->
+<section class="slide" data-section="5.4" data-title="Target profit" data-key="targetkey">
+ <div class="slide-inner">
+  <h2>Treat the target like <em>one more bill</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 190" style="max-width:760px" aria-label="The tank grows by a $20,000 target; filling $60,000 at $10 a candle takes 6,000 candles, or $150,000 of sales">
+   <rect x="40" y="40" width="320" height="50" rx="10" class="f-none s-ink2" stroke-width="2"/>
+   <text x="200" y="30" text-anchor="middle" class="f-ink sm b">fixed expenses $40,000</text>
+   <g data-at="1"><rect x="360" y="40" width="160" height="50" rx="10" class="f-none s-accent" stroke-width="2" stroke-dasharray="6 4"/><text x="440" y="30" text-anchor="middle" class="f-accent sm b">target profit $20,000</text></g>
+   <rect x="42" y="42" width="476" height="46" rx="8" class="f-blue grow" data-at="2"/>
+   <text x="280" y="71" text-anchor="middle" class="f-bg b" data-at="2" data-d=".6">6,000 candles × $10 = $60,000</text>
+   <text x="300" y="132" text-anchor="middle" class="f-ink b" data-at="3">($40,000 + $20,000) ÷ $10 = 6,000 candles</text>
+   <text x="300" y="160" text-anchor="middle" class="f-ink b" data-at="3" data-d=".2">($40,000 + $20,000) ÷ 40% = $150,000 of sales</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Brightwick wants <b>$20,000</b> of profit a month: add it to the fixed expenses</li>
+   <li data-step="2">Contribution margin has to fill $60,000 now, at $10 a candle</li>
+   <li data-step="3">That's <b>6,000</b> candles, or <b>$150,000</b> of sales</li>
+  </ul>
+ </div>
+</section>
+
+<!-- TARGET SIM -->
+<section class="slide" data-section="5.4" data-title="Set a target" data-sim="target">
+ <div class="slide-inner">
+  <h2>Pick a profit, get the <em>sales goal</em></h2>
+  <div class="sim">
+   <div class="ctl"><label for="tg-t">Target profit per month <output id="tg-t-o">$20,000</output></label><input type="range" id="tg-t" min="0" max="50000" step="1000" value="20000"></div>
+   <div class="stack" aria-hidden="true"><div class="seg-b" id="tg-sf" style="width:66.7%">fixed $40,000</div><div class="seg-a" id="tg-st" style="width:33.3%">target $20,000</div></div>
+   <div class="readout">
+    <div><div class="k">Candles needed</div><div class="v pos" id="tg-u">6,000</div></div>
+    <div><div class="k">Sales needed</div><div class="v" id="tg-s">$150,000</div></div>
+    <div><div class="k">vs today (5,000)</div><div class="v" id="tg-d">+1,000</div></div>
+   </div>
+   <div class="formula" id="tg-f" aria-live="polite">($40,000 + $20,000) ÷ $10 = <b>6,000 candles</b> · ÷ 40% = <b>$150,000</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 5.5 -->
+<section class="slide" data-section="5.5" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">5.5</div><div style="display:flex;flex-direction:column;gap:16px"><h2>What-if changes</h2><div class="chips"><span class="chip">Incremental analysis</span><span class="chip">Price, cost, volume</span><span class="chip">Commissions</span></div></div></div>
+ </div>
+</section>
+
+<!-- INCREMENTAL -->
+<section class="slide" data-section="5.5" data-title="Test a change" data-key="incremental">
+ <div class="slide-inner">
+  <h2>Only count what <em>changes</em></h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 220" style="max-width:760px" aria-label="Three proposals: advertising adds $2,000, a price cut adds $2,000, swapping salary for commission adds $4,500">
+   <path d="M420 10 L420 214" class="f-none s-ink2" stroke-width="1.5"/>
+   <text x="420" y="13" text-anchor="middle" class="f-ink2 sm">$0</text>
+   <g data-at="1"><text x="10" y="40" class="f-ink sm b">(a) $6,000 more ads → sales +$20,000</text><text x="10" y="60" class="f-ink2 sm">CM +$8,000 − fixed +$6,000</text></g>
+   <rect x="420" y="30" width="40" height="28" rx="4" class="f-accent grow" data-at="1" data-d=".3"/>
+   <text x="468" y="50" class="f-accent sm b" data-at="1" data-d=".6">+$2,000</text>
+   <g data-at="2"><text x="10" y="110" class="f-ink sm b">(b) price $23 → 6,500 candles</text><text x="10" y="130" class="f-ink2 sm">6,500 × $8 = $52,000 CM → NOI $12,000</text></g>
+   <rect x="420" y="100" width="40" height="28" rx="4" class="f-accent grow" data-at="2" data-d=".3"/>
+   <text x="468" y="120" class="f-accent sm b" data-at="2" data-d=".6">+$2,000</text>
+   <g data-at="3"><text x="10" y="180" class="f-ink sm b">(c) $5,000 salary → extra $1 commission, 5,500 candles</text><text x="10" y="200" class="f-ink2 sm">5,500 × $9 = $49,500 − $35,000 → NOI $14,500</text></g>
+   <rect x="420" y="170" width="90" height="28" rx="4" class="f-accent grow" data-at="3" data-d=".3"/>
+   <text x="518" y="190" class="f-accent sm b" data-at="3" data-d=".6">+$4,500</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Change in NOI = change in contribution margin − change in fixed expenses</li>
+   <li data-step="2">A price cut lowers unit CM, so volume must rise enough to make up for it</li>
+   <li data-step="3">Turning a fixed cost into a variable one lowers risk: less to cover before break-even</li>
+  </ul>
+ </div>
+</section>
+
+<!-- WHAT-IF SIM -->
+<section class="slide" data-section="5.5" data-title="Try your own change" data-sim="whatif">
+ <div class="slide-inner">
+  <h2>Run your own <em>what-if</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag">Start: 5,000 candles · $25 · $15 · $40,000</span>
+    <div class="presets"><button type="button" class="btn small" data-p="a">(a) Ads</button><button type="button" class="btn small" data-p="b">(b) Price cut</button><button type="button" class="btn small" data-p="c">(c) Commission</button><button type="button" class="btn small" data-p="0">Reset</button></div>
+   </div>
+   <div class="cols" style="--n:4">
+    <div class="ctl"><label for="wi-p">Price change <output id="wi-p-o">$0</output></label><input type="range" id="wi-p" min="-5" max="5" step="0.5" value="0"></div>
+    <div class="ctl"><label for="wi-v">Variable cost change <output id="wi-v-o">$0</output></label><input type="range" id="wi-v" min="-3" max="3" step="0.5" value="0"></div>
+    <div class="ctl"><label for="wi-f">Fixed cost change <output id="wi-f-o">$0</output></label><input type="range" id="wi-f" min="-10000" max="10000" step="1000" value="0"></div>
+    <div class="ctl"><label for="wi-q">Volume change <output id="wi-q-o">0%</output></label><input type="range" id="wi-q" min="-30" max="50" step="2" value="0"></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Unit CM</div><div class="v" id="wi-cm">$10.00</div></div>
+    <div><div class="k">Candles</div><div class="v" id="wi-u">5,000</div></div>
+    <div><div class="k">Net operating income</div><div class="v" id="wi-noi">$10,000</div></div>
+    <div><div class="k">Change</div><div class="v" id="wi-d">$0</div></div>
+   </div>
+   <div class="feedback" id="wi-fb" aria-live="polite">Move a slider or load a proposal.</div>
+  </div>
+ </div>
+</section>
+
+<!-- COMMISSION SIM -->
+<section class="slide" data-section="5.5" data-title="Sales commissions" data-sim="commission">
+ <div class="slide-inner">
+  <h2>What should the commission <em>reward?</em></h2>
+  <div class="sim">
+   <div class="sim-bar"><span class="sim-tag">200 sales a month · CM before commission</span>
+    <div class="seg" role="group" aria-label="Commission plan" id="cm-btns"><button type="button" data-m="s" aria-pressed="true">10% of sales</button><button type="button" data-m="c" aria-pressed="false">30% of CM</button></div>
+   </div>
+   <div class="vs2">
+    <div class="card" id="cm-g"><span class="k">Gift set · $60 price · $12 CM</span><b class="big" id="cm-gc">$6.00</b><span class="mono">commission per sale</span></div>
+    <div class="card" id="cm-j"><span class="k">Large jar · $40 price · $18 CM</span><b class="big" id="cm-jc">$4.00</b><span class="mono">commission per sale</span></div>
+   </div>
+   <div class="feedback" id="cm-fb" aria-live="polite">Paid on sales, the salesperson pushes the pricier gift set, even though the jar earns the company more.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 5.6 -->
+<section class="slide" data-section="5.6" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">5.6</div><div style="display:flex;flex-direction:column;gap:16px"><h2>The CVP graph</h2><div class="chips"><span class="chip">Four lines</span><span class="chip">Break-even point</span><span class="chip">Profit graph</span></div></div></div>
+ </div>
+</section>
+
+<!-- GRAPH STEPS -->
+<section class="slide" data-section="5.6" data-title="Draw the graph" data-key="graphsteps">
+ <div class="slide-inner">
+  <h2>Draw it in <em>four steps</em></h2>
+  <div class="split g2">
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 262" style="max-width:620px" aria-label="CVP graph: a flat $40,000 fixed expense line, a total expense line rising $15 a candle, a sales line rising $25 a candle, crossing at 4,000 candles and $100,000">
+   <path d="M60 30 L60 230 L570 230" class="f-none s-ink2" stroke-width="1.5"/>
+   <g class="f-ink2 sm" text-anchor="middle"><text x="60" y="248">0</text><text x="185" y="248">2,000</text><text x="310" y="248">4,000</text><text x="435" y="248">6,000</text><text x="560" y="248">8,000</text></g>
+   <g class="f-ink2 sm" text-anchor="end"><text x="54" y="234">$0</text><text x="54" y="134">$100k</text><text x="54" y="34">$200k</text></g>
+   <text x="580" y="262" text-anchor="end" class="f-ink2 sm">candles sold</text>
+   <path d="M60 190 L560 190" class="f-none s-amber draw" stroke-width="3" data-at="1"/>
+   <text x="565" y="186" text-anchor="end" class="f-amber sm b" data-at="1" data-d=".6">fixed $40,000</text>
+   <path d="M60 190 L560 70" class="f-none s-red draw" stroke-width="3" data-at="2"/>
+   <text x="565" y="94" text-anchor="end" class="f-red sm b" data-at="2" data-d=".6">total expenses</text>
+   <path d="M60 230 L560 30" class="f-none s-blue draw" stroke-width="3" data-at="3"/>
+   <text x="520" y="34" text-anchor="end" class="f-blue sm b" data-at="3" data-d=".6">sales</text>
+   <path d="M60 190 L310 130 L60 230 Z" class="f-red-soft" data-at="4"/>
+   <path d="M310 130 L560 30 L560 70 Z" class="f-blue-soft" data-at="4"/>
+   <circle cx="310" cy="130" r="7" class="f-accent" data-at="4" data-d=".3"/>
+   <text x="300" y="112" text-anchor="end" class="f-accent sm b" data-at="4" data-d=".4">break-even: 4,000 · $100,000</text>
+   <text x="110" y="186" text-anchor="middle" class="f-red sm b" data-at="4" data-d=".5">loss</text>
+   <text x="545" y="58" text-anchor="end" class="f-ink sm b" data-at="4" data-d=".6">profit</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Fixed expenses: a flat line at <b>$40,000</b></li>
+   <li data-step="2">Total expenses: start at $40,000 and rise <b>$15</b> per candle</li>
+   <li data-step="3">Sales: start at $0 and rise <b>$25</b> per candle</li>
+   <li data-step="4">Where they cross is break-even. Left of it is loss; right of it is profit</li>
+  </ul>
+  </div>
+ </div>
+</section>
+
+<!-- CVP GRAPH SIM -->
+<section class="slide" data-section="5.6" data-title="Read the graph" data-sim="cvpgraph">
+ <div class="slide-inner">
+  <h2>Slide along the <em>graph</em></h2>
+  <div class="sim">
+   <div class="gr-wrap">
+   <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 250" style="max-width:640px" aria-label="Interactive CVP graph: amber fixed expense line, red total expense line, blue sales line, dot at break-even">
+    <path d="M60 20 L60 220 L570 220" class="f-none s-ink2" stroke-width="1.5"/>
+    <g class="f-ink2 sm" text-anchor="middle"><text x="60" y="238">0</text><text x="185" y="238">2,000</text><text x="310" y="238">4,000</text><text x="435" y="238">6,000</text><text x="560" y="238">8,000</text></g>
+    <g class="f-ink2 sm" text-anchor="end"><text x="54" y="224">$0</text><text x="54" y="124">$120k</text><text x="54" y="24">$240k</text></g>
+    <path d="M60 186.7 L560 186.7" class="f-none s-amber" stroke-width="2"/>
+    <text x="565" y="182" text-anchor="end" class="f-amber sm b">fixed</text><text x="565" y="104" text-anchor="end" class="f-red sm b">total expenses</text><text x="420" y="32" class="f-blue sm b">sales</text>
+    <path id="gr-te" d="M60 186.7 L560 86.7" class="f-none s-red" stroke-width="3"/>
+    <path id="gr-sl" d="M60 220 L560 53.3" class="f-none s-blue" stroke-width="3"/>
+    <line id="gr-mk" x1="372.5" y1="20" x2="372.5" y2="220" class="s-accent" stroke-width="2" stroke-dasharray="5 4"/>
+    <line id="gr-gap" x1="372.5" y1="116.2" x2="372.5" y2="124.2" class="s-accent" stroke-width="8"/>
+    <circle id="gr-be" cx="310" cy="136.7" r="7" class="f-accent"/>
+   </svg></div>
+    <div>
+   <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="ctl"><label for="gr-q">Candles sold <output id="gr-q-o">5,000</output></label><input type="range" id="gr-q" min="0" max="8000" step="100" value="5000"></div>
+    <div class="ctl"><label for="gr-p">Selling price <output id="gr-p-o">$25</output></label><input type="range" id="gr-p" min="20" max="30" step="1" value="25"></div>
+   </div>
+   <div class="readout">
+    <div><div class="k">Sales</div><div class="v" id="gr-s">$125,000</div></div>
+    <div><div class="k">Total expenses</div><div class="v" id="gr-e">$115,000</div></div>
+    <div><div class="k">Profit or loss</div><div class="v pos" id="gr-noi">$10,000</div></div>
+   </div>
+   <div class="feedback" id="gr-fb" aria-live="polite">At 5,000 candles the sales line is $10,000 above the total expense line: profit.</div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- DIV 5.7 -->
+<section class="slide" data-section="5.7" data-title="Section intro" data-key="div">
+ <div class="slide-inner">
+  <div class="divider"><div class="n">5.7</div><div style="display:flex;flex-direction:column;gap:16px"><h2>Sales mix</h2><div class="chips"><span class="chip">Overall CM ratio</span><span class="chip">Mix shifts</span></div></div></div>
+ </div>
+</section>
+
+<!-- MIX SHIFT -->
+<section class="slide" data-section="5.7" data-title="When the mix shifts" data-key="mixshift">
+ <div class="slide-inner">
+  <h2>Same sales, <em>higher</em> break-even</h2>
+  <div class="viz-wrap"><svg class="viz" viewBox="0 0 600 214" style="max-width:760px" aria-label="With 60% candles the overall CM ratio is 48% and break-even is $150,000; with 75% candles it falls to 45% and break-even rises to $160,000">
+   <text x="20" y="26" class="f-ink sm b" data-at="1">Mix A: $200,000 of sales</text>
+   <rect x="20" y="34" width="336" height="38" rx="6" class="f-blue grow" data-at="1"/>
+   <rect x="356" y="34" width="224" height="38" rx="6" class="f-amber grow" data-at="1" data-d=".3"/>
+   <text x="188" y="58" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".5">candles $120,000 · 40% CM</text>
+   <text x="468" y="58" text-anchor="middle" class="f-bg sm b" data-at="1" data-d=".6">diffusers $80,000 · 60% CM</text>
+   <text x="20" y="94" class="f-ink sm" data-at="1" data-d=".8">CM $48,000 + $48,000 = $96,000 → 48% → break-even $72,000 ÷ 48% = $150,000</text>
+   <text x="20" y="130" class="f-ink sm b" data-at="2">Mix B: still $200,000, more candles</text>
+   <rect x="20" y="138" width="420" height="38" rx="6" class="f-blue grow" data-at="2"/>
+   <rect x="440" y="138" width="140" height="38" rx="6" class="f-amber grow" data-at="2" data-d=".3"/>
+   <text x="230" y="162" text-anchor="middle" class="f-bg sm b" data-at="2" data-d=".5">candles $150,000</text>
+   <text x="510" y="162" text-anchor="middle" class="f-bg sm b" data-at="2" data-d=".6">diffusers $50,000</text>
+   <text x="20" y="198" class="f-red sm b" data-at="3">CM $60,000 + $30,000 = $90,000 → 45% → break-even $72,000 ÷ 45% = $160,000</text>
+  </svg></div>
+  <ul class="pts">
+   <li data-step="1">Brightwick adds reed diffusers. Fixed expenses for both lines: <b>$72,000</b></li>
+   <li data-step="2">Customers shift toward candles, the lower-CM-ratio product</li>
+   <li data-step="3">The overall CM ratio falls from <b>48%</b> to <b>45%</b>, so break-even rises from $150,000 to <b>$160,000</b></li>
+  </ul>
+ </div>
+</section>
+
+<!-- SALES MIX SIM -->
+<section class="slide" data-section="5.7" data-title="Change the mix" data-sim="salesmix">
+ <div class="slide-inner">
+  <h2>Shift the <em>mix</em></h2>
+  <div class="sim">
+   <span class="sim-tag">$200,000 of sales · fixed $72,000</span>
+   <div class="ctl"><label for="mx-a">Candles' share of sales <output id="mx-a-o">60%</output></label><input type="range" id="mx-a" min="0" max="100" step="5" value="60"></div>
+   <div class="stack" aria-hidden="true"><div class="seg-a" id="mx-sa" style="width:60%">candles $120,000</div><div class="seg-b" id="mx-sb" style="width:40%">diffusers $80,000</div></div>
+   <div class="readout">
+    <div><div class="k">Overall CM ratio</div><div class="v" id="mx-r">48%</div></div>
+    <div><div class="k">Break-even sales</div><div class="v pos" id="mx-be">$150,000</div></div>
+    <div><div class="k">Net operating income</div><div class="v" id="mx-noi">$24,000</div></div>
+   </div>
+   <div class="formula" id="mx-f" aria-live="polite">$120,000 × 40% + $80,000 × 60% = $96,000 · $96,000 ÷ $200,000 = 48% · $72,000 ÷ 48% = <b>$150,000</b></div>
+  </div>
+ </div>
+</section>
+
+<!-- RECAP -->
+<section class="slide" data-section="end" data-title="The month in four numbers" data-key="recap">
+ <div class="slide-inner">
+  <h2>Brightwick in <em>four numbers</em></h2>
+  <div class="chain">
+   <div class="card" data-at="1"><span class="k">Unit CM</span><b>$10 · 40%</b><span>$25 − $15 per candle</span></div>
+   <span class="arr" data-at="1" data-d=".2" aria-hidden="true">→</span>
+   <div class="card" data-at="1" data-d=".3"><span class="k">Break-even</span><b>4,000 · $100,000</b><span>$40,000 ÷ $10, or ÷ 40%</span></div>
+   <span class="arr" data-at="2" aria-hidden="true">→</span>
+   <div class="card" data-at="2" data-d=".15"><span class="k">Margin of safety</span><b>$25,000 · 20%</b><span>selling 5,000; DOL 5</span></div>
+   <span class="arr" data-at="3" aria-hidden="true">→</span>
+   <div class="card" data-at="3" data-d=".15"><span class="k">Target $20,000</span><b>6,000 · $150,000</b><span>($40,000 + $20,000) ÷ $10</span></div>
+  </div>
+  <ul class="pts">
+   <li data-step="1">Contribution margin drives everything: it covers fixed costs, then builds profit</li>
+   <li data-step="2">Break-even and the margin of safety show how much room there is</li>
+   <li data-step="3">Add a target to the fixed costs to get a sales goal</li>
+  </ul>
+ </div>
+</section>
+
+<!-- MUST REMEMBER -->
+<section class="slide" data-section="end" data-title="Must-remember sheet">
+ <div class="slide-inner">
+  <p class="eyebrow">Chapter 5 · Review</p>
+  <h2>The <em>must-remember</em> sheet</h2>
+  <div class="remember" id="remember">
+   <div class="card"><span class="k">5.1</span><b>Unit CM = price − variable cost per unit: $25 − $15 = $10</b></div>
+   <div class="card"><span class="k">5.1</span><b>CM ratio = CM ÷ sales = 40%; variable expense ratio = 60%</b></div>
+   <div class="card"><span class="k">5.1</span><b>Change in NOI = change in sales × CM ratio (fixed costs unchanged)</b></div>
+   <div class="card"><span class="k">5.2</span><b>DOL = CM ÷ NOI = 5; % change in NOI = DOL × % change in sales</b></div>
+   <div class="card"><span class="k">5.3</span><b>Break-even units = fixed ÷ unit CM: 4,000</b></div>
+   <div class="card"><span class="k">5.3</span><b>Break-even sales = fixed ÷ CM ratio: $100,000</b></div>
+   <div class="card"><span class="k">5.3</span><b>Margin of safety = sales − break-even sales: $25,000 (20%)</b></div>
+   <div class="card"><span class="k">5.4</span><b>Target units = (fixed + target) ÷ unit CM: 6,000</b></div>
+   <div class="card"><span class="k">5.5</span><b>What-if: change in CM − change in fixed costs = change in NOI</b></div>
+   <div class="card"><span class="k">5.5</span><b>Pay commissions on contribution margin, not on sales</b></div>
+   <div class="card"><span class="k">5.6</span><b>CVP graph: sales line crosses total expense line at break-even</b></div>
+   <div class="card"><span class="k">5.7</span><b>Mix shifts to lower-CM-ratio products → overall CM ratio falls → break-even rises</b></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="quiz.html">Take the quiz →</a><a class="btn" href="textbook.html">Read the textbook</a></div>
+ </div>
+</section>
+
+</main>
+
+<footer class="bottom">
+  <button type="button" class="btn" id="prev">← Back</button>
+  <span class="mono" id="count" style="font-size:13px;color:var(--ink-2)">1 / 28</span>
+  <span class="spacer"></span>
+  <span class="hint">← → keys · tap to advance</span>
+  <button type="button" class="btn primary" id="next">Next →</button>
+</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../../assets/deck.js"></script>
+<script src="../../assets/steps.js"></script>
+<script src="learn.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

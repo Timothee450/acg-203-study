@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chapter 5 Textbook · ACG 203 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="../../assets/theme.js"></script>
+<link rel="stylesheet" href="../../assets/textbook.css">
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="../../index.html">ACG 203 <b>Study</b></a>
+  <a class="crumb" href="index.html">← Chapter 5</a>
+  <span class="spacer"></span>
+  <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme">☾</button>
+</div></header>
+
+<div class="wrap tb">
+  <nav class="tb-toc" aria-label="Chapter contents">
+    <details open id="toc-details"><summary>Contents</summary>
+      <ol>
+        <li><a href="#s5-1"><span class="num">5.1</span> Contribution margin</a>
+          <ol>
+            <li><a href="#s5-1-assume">The assumptions</a></li>
+            <li><a href="#s5-1-cm">Contribution margin per unit</a></li>
+            <li><a href="#s5-1-ratio">CM ratio</a></li>
+            <li><a href="#s5-1-equation">The profit equation</a></li>
+          </ol></li>
+        <li><a href="#s5-2"><span class="num">5.2</span> Operating leverage</a></li>
+        <li><a href="#s5-3"><span class="num">5.3</span> Break-even and margin of safety</a>
+          <ol>
+            <li><a href="#s5-3-be">Break-even point</a></li>
+            <li><a href="#s5-3-mos">Margin of safety</a></li>
+          </ol></li>
+        <li><a href="#s5-4"><span class="num">5.4</span> Target profit</a></li>
+        <li><a href="#s5-5"><span class="num">5.5</span> What-if changes</a>
+          <ol>
+            <li><a href="#s5-5-changes">Testing a change</a></li>
+            <li><a href="#s5-5-commission">Sales commissions</a></li>
+          </ol></li>
+        <li><a href="#s5-6"><span class="num">5.6</span> The CVP graph</a></li>
+        <li><a href="#s5-7"><span class="num">5.7</span> Sales mix</a></li>
+      </ol>
+    </details>
+  </nav>
+
+  <article class="tb-body">
+    <header>
+      <span class="label">Chapter 5 · Textbook</span>
+      <h1>Cost-Volume-Profit Relationships</h1>
+      <p class="lede">Cost-volume-profit (CVP) analysis shows how profit moves when prices, costs and sales volume change. It answers questions like "how many do we have to sell to stop losing money?" The example is a month at <strong>Brightwick Candle Co.</strong>, a small maker of hand-poured candles.</p>
+    </header>
+
+    <!-- ================= 5.1 ================= -->
+    <section id="s5-1" aria-labelledby="h5-1">
+      <h2 id="h5-1"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 5.1</span>Contribution margin</h2>
+
+      <div class="sub" id="s5-1-assume">
+        <h3>The assumptions</h3>
+        <p>CVP keeps the math simple by assuming a few things hold within the relevant range:</p>
+        <ul class="clean">
+          <li>The selling price per unit stays constant.</li>
+          <li>Costs are linear: variable cost is the same per unit, and fixed cost is the same in total.</li>
+          <li>In a company with several products, the sales mix stays constant.</li>
+          <li>In a manufacturing company, inventories don't change: everything made is sold.</li>
+        </ul>
+      </div>
+
+      <div class="sub" id="s5-1-cm">
+        <h3>Contribution margin per unit</h3>
+        <p>Brightwick sells each candle for <span class="num">$25</span>. Wax, wick, jar and a base sales commission cost <span class="num">$15</span> per candle. Rent, salaries and equipment cost <span class="num">$40,000</span> a month no matter how many candles sell.</p>
+        <p class="formula">Unit contribution margin = selling price − variable expense per unit = $25 − $15 = $10</p>
+        <p>Each candle sold <em>contributes</em> $10, first toward covering the fixed expenses and then, once those are covered, to profit. In a month when Brightwick sells 5,000 candles, sales are $125,000 and variable expenses are $75,000:</p>
+        <div class="table-wrap stmt">
+          <table>
+            <thead><tr><th>Contribution format</th><th>Total</th><th>Per candle</th></tr></thead>
+            <tbody>
+              <tr><td>Sales (5,000 candles)</td><td class="num">$125,000</td><td class="num">$25</td></tr>
+              <tr><td>Variable expenses</td><td class="num">(75,000)</td><td class="num">(15)</td></tr>
+              <tr><td><strong>Contribution margin</strong></td><td class="num">$50,000</td><td class="num">$10</td></tr>
+              <tr><td>Fixed expenses</td><td class="num">(40,000)</td><td></td></tr>
+              <tr><td><strong>Net operating income</strong></td><td class="num"><strong>$10,000</strong></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Sell one more candle and net operating income rises by exactly $10, because fixed expenses don't move.</p>
+      </div>
+
+      <div class="sub" id="s5-1-ratio">
+        <h3>CM ratio and variable expense ratio</h3>
+        <p>The <span class="term">contribution margin ratio</span> is the share of each sales dollar left after variable expenses: $10 ÷ $25 = 40%. The <span class="term">variable expense ratio</span> is the rest: $15 ÷ $25 = 60%. Together they always add to 100%.</p>
+        <p>The CM ratio turns a change in sales dollars into a change in profit. If Brightwick's sales rise by $20,000, contribution margin rises by $20,000 × 40% = $8,000, and with fixed expenses unchanged, so does net operating income.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>Use unit CM when the question is in units, and the CM ratio when it's in sales dollars.</p></div>
+      </div>
+
+      <div class="sub" id="s5-1-equation">
+        <h3>The profit equation</h3>
+        <p class="formula">Profit = (Sales − Variable expenses) − Fixed expenses</p>
+        <p>Written with units (Q) or with sales dollars:</p>
+        <p class="formula">Profit = Unit CM × Q − Fixed expenses = $10 × 5,000 − $40,000 = $10,000</p>
+        <p class="formula">Profit = CM ratio × Sales − Fixed expenses = 40% × $125,000 − $40,000 = $10,000</p>
+        <div class="panel tool">
+          <span class="label tool-tag">Try it · CVP calculator</span>
+          <div class="fields">
+            <div class="field"><label for="cv-p">Selling price ($)</label><input type="number" id="cv-p" min="0" step="1" value="25"></div>
+            <div class="field"><label for="cv-v">Variable expense per unit ($)</label><input type="number" id="cv-v" min="0" step="1" value="15"></div>
+            <div class="field"><label for="cv-f">Fixed expenses ($)</label><input type="number" id="cv-f" min="0" step="1000" value="40000"></div>
+            <div class="field"><label for="cv-q">Units sold</label><input type="number" id="cv-q" min="0" step="100" value="5000"></div>
+          </div>
+          <div class="out">
+            <div class="stat"><span class="label">Unit CM · CM ratio</span><span class="v" id="cv-cm">$10 · 40%</span></div>
+            <div class="stat hl"><span class="label">Net operating income</span><span class="v" id="cv-noi">$10,000</span></div>
+            <div class="stat"><span class="label">Break-even</span><span class="v" id="cv-be">4,000 units</span></div>
+            <div class="stat"><span class="label">Operating leverage</span><span class="v" id="cv-dol">5</span></div>
+          </div>
+          <p class="note" id="cv-note"></p>
+        </div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Contribution margin</dt><dd>Sales − variable expenses; what's left to cover fixed expenses and then provide profit.</dd>
+          <dt>CM ratio</dt><dd>Contribution margin ÷ sales (or unit CM ÷ price).</dd>
+          <dt>Variable expense ratio</dt><dd>Variable expenses ÷ sales; 1 − CM ratio.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 5.2 ================= -->
+    <section id="s5-2" aria-labelledby="h5-2">
+      <h2 id="h5-2"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 5.2</span>Operating leverage</h2>
+      <p><span class="term">Operating leverage</span> measures how sensitive net operating income is to a change in sales. A company with high fixed costs and low variable costs has high operating leverage: small changes in sales cause big swings in profit.</p>
+      <p class="formula">Degree of operating leverage = contribution margin ÷ net operating income</p>
+      <p>At 5,000 candles, Brightwick's degree of operating leverage is $50,000 ÷ $10,000 = 5. So a 10% rise in sales lifts net operating income by 5 × 10% = 50%, from $10,000 to $15,000.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>5,000 candles</th><th>5,500 candles (+10%)</th></tr></thead>
+          <tbody>
+            <tr><td>Contribution margin ($10 each)</td><td class="num">$50,000</td><td class="num">$55,000</td></tr>
+            <tr><td>Fixed expenses</td><td class="num">(40,000)</td><td class="num">(40,000)</td></tr>
+            <tr><td>Net operating income</td><td class="num">$10,000</td><td class="num">$15,000 (+50%)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip"><span class="label">Exam tip</span><p>The degree of operating leverage is not constant. It's highest just above the break-even point and falls as sales grow, because net operating income grows faster than contribution margin.</p></div>
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Degree of operating leverage</dt><dd>CM ÷ NOI at a given sales level; % change in NOI = DOL × % change in sales.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 5.3 ================= -->
+    <section id="s5-3" aria-labelledby="h5-3">
+      <h2 id="h5-3"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 5.3</span>Break-even and margin of safety</h2>
+
+      <div class="sub" id="s5-3-be">
+        <h3>Break-even point</h3>
+        <p>The <span class="term">break-even point</span> is the sales level where profit is exactly zero: total contribution margin equals fixed expenses.</p>
+        <p><strong>Equation method.</strong> Set profit to zero and solve: $0 = $10 × Q − $40,000, so Q = 4,000 candles.</p>
+        <p><strong>Formula method.</strong></p>
+        <p class="formula">Break-even units = fixed expenses ÷ unit CM = $40,000 ÷ $10 = 4,000 candles</p>
+        <p class="formula">Break-even sales = fixed expenses ÷ CM ratio = $40,000 ÷ 40% = $100,000</p>
+        <p>Check: 4,000 candles × $25 = $100,000.</p>
+      </div>
+
+      <div class="sub" id="s5-3-mos">
+        <h3>Margin of safety</h3>
+        <p>The <span class="term">margin of safety</span> is how far sales can fall before the company starts losing money.</p>
+        <p class="formula">Margin of safety = current sales − break-even sales = $125,000 − $100,000 = $25,000</p>
+        <p>As a percentage of sales: $25,000 ÷ $125,000 = 20%. In units: 5,000 − 4,000 = 1,000 candles.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>The margin of safety percentage is divided by <em>current</em> sales, not by break-even sales. Here it's also the reciprocal of operating leverage: 1 ÷ 5 = 20%.</p></div>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Break-even point</dt><dd>Sales where NOI = 0: fixed expenses ÷ unit CM (units) or ÷ CM ratio (dollars).</dd>
+          <dt>Margin of safety</dt><dd>Current sales − break-even sales; as a % of current sales.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 5.4 ================= -->
+    <section id="s5-4" aria-labelledby="h5-4">
+      <h2 id="h5-4"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 5.4</span>Target profit</h2>
+      <p>Target profit analysis finds the sales needed to earn a chosen profit. Treat the target like one more fixed cost that contribution margin must cover:</p>
+      <p class="formula">Units to reach target = (fixed expenses + target profit) ÷ unit CM</p>
+      <p class="formula">Sales to reach target = (fixed expenses + target profit) ÷ CM ratio</p>
+      <p>To earn $20,000 a month, Brightwick needs ($40,000 + $20,000) ÷ $10 = 6,000 candles, or ($40,000 + $20,000) ÷ 40% = $150,000 of sales.</p>
+      <div class="panel tool">
+        <span class="label tool-tag">Try it · Target profit</span>
+        <div class="fields">
+          <div class="field"><label for="tp-t">Target profit ($)</label><input type="number" id="tp-t" min="0" step="1000" value="20000"></div>
+          <div class="field"><label for="tp-f">Fixed expenses ($)</label><input type="number" id="tp-f" min="0" step="1000" value="40000"></div>
+          <div class="field"><label for="tp-cm">Unit CM ($)</label><input type="number" id="tp-cm" min="0" step="1" value="10"></div>
+          <div class="field"><label for="tp-p">Selling price ($)</label><input type="number" id="tp-p" min="0" step="1" value="25"></div>
+        </div>
+        <div class="out">
+          <div class="stat hl"><span class="label">Units needed</span><span class="v" id="tp-u">6,000</span></div>
+          <div class="stat"><span class="label">Sales needed</span><span class="v" id="tp-s">$150,000</span></div>
+        </div>
+      </div>
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Target profit analysis</dt><dd>(Fixed expenses + target profit) ÷ unit CM or ÷ CM ratio.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 5.5 ================= -->
+    <section id="s5-5" aria-labelledby="h5-5">
+      <h2 id="h5-5"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 5.5</span>What-if changes</h2>
+
+      <div class="sub" id="s5-5-changes">
+        <h3>Testing a change</h3>
+        <p>Managers use CVP to test a decision before making it. The shortcut is <strong>incremental analysis</strong>: look only at what changes. Start from 5,000 candles and $10,000 of profit.</p>
+        <p><strong>(a) Advertise.</strong> Spending $6,000 more on ads is expected to raise sales by $20,000. Contribution margin rises $20,000 × 40% = $8,000; fixed expenses rise $6,000. Net operating income goes up $2,000, so the ads pay off.</p>
+        <p><strong>(b) Cut the price.</strong> Dropping the price $2 to $23 is expected to raise volume 30%, to 6,500 candles. The new unit CM is $8, so contribution margin is 6,500 × $8 = $52,000 and net operating income is $52,000 − $40,000 = $12,000: up $2,000.</p>
+        <p><strong>(c) Pay commissions instead of salary.</strong> Replacing $5,000 of fixed sales salaries with an extra $1-per-candle commission is expected to raise volume 10%, to 5,500 candles. Unit CM falls to $9; contribution margin is 5,500 × $9 = $49,500; fixed expenses fall to $35,000. Net operating income is $14,500: up $4,500.</p>
+        <div class="tip"><span class="label">Exam tip</span><p>Only list what changes: the change in contribution margin minus the change in fixed costs equals the change in net operating income.</p></div>
+      </div>
+
+      <div class="sub" id="s5-5-commission">
+        <h3>Sales commissions</h3>
+        <p>Paying salespeople a percentage of <em>sales</em> can backfire: they push whatever has the highest price, even when it earns the least. Paying commissions on <em>contribution margin</em> lines up what the salesperson wants with what the company wants.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Product</th><th>Price</th><th>Variable expense (before commission)</th><th>Unit CM</th></tr></thead>
+            <tbody>
+              <tr><td>Gift set</td><td class="num">$60</td><td class="num">$48</td><td class="num">$12</td></tr>
+              <tr><td>Large jar candle</td><td class="num">$40</td><td class="num">$22</td><td class="num">$18</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A commission on sales rewards the $60 gift set, yet the $40 jar adds $6 more to profit per sale.</p>
+      </div>
+
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Incremental analysis</dt><dd>Comparing only the revenues and costs that change.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 5.6 ================= -->
+    <section id="s5-6" aria-labelledby="h5-6">
+      <h2 id="h5-6"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 5.6</span>The CVP graph</h2>
+      <p>A CVP graph puts units sold on the horizontal axis and dollars on the vertical axis. It's built in four steps:</p>
+      <ol>
+        <li>Draw a flat <strong>fixed expense</strong> line at $40,000.</li>
+        <li>Draw the <strong>total expense</strong> line: it starts at $40,000 with zero units and rises $15 for each candle.</li>
+        <li>Draw the <strong>sales</strong> line: it starts at $0 and rises $25 for each candle.</li>
+        <li>Where sales cross total expenses is the <strong>break-even point</strong>: 4,000 candles and $100,000.</li>
+      </ol>
+      <p>Left of the crossing, the gap between the lines is the loss; to the right, it's the profit. At 5,000 candles the gap is $125,000 − $115,000 = $10,000.</p>
+      <p>A simpler <span class="term">profit graph</span> plots profit directly: a single line starting at −$40,000 with zero sales and rising $10 per candle, crossing zero at 4,000.</p>
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>CVP graph</dt><dd>Sales and total expense lines; they cross at the break-even point.</dd>
+          <dt>Profit graph</dt><dd>Profit vs units: starts at −fixed expenses, slope = unit CM.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 5.7 ================= -->
+    <section id="s5-7" aria-labelledby="h5-7">
+      <h2 id="h5-7"><span class="label sec-label" style="display:block;margin-bottom:8px">Section 5.7</span>Sales mix</h2>
+      <p><span class="term">Sales mix</span> is the relative share of each product in total sales. When products have different CM ratios, break-even depends on the mix.</p>
+      <p>Suppose Brightwick also sells reed diffusers, with fixed expenses for both lines of $72,000 a month:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>Candles</th><th>Diffusers</th><th>Total</th></tr></thead>
+          <tbody>
+            <tr><td>Sales</td><td class="num">$120,000 (60%)</td><td class="num">$80,000 (40%)</td><td class="num">$200,000</td></tr>
+            <tr><td>CM ratio</td><td class="num">40%</td><td class="num">60%</td><td></td></tr>
+            <tr><td>Contribution margin</td><td class="num">$48,000</td><td class="num">$48,000</td><td class="num">$96,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The overall CM ratio is $96,000 ÷ $200,000 = 48%, so break-even sales are $72,000 ÷ 48% = $150,000.</p>
+      <p>Now suppose the mix shifts toward candles: $150,000 of candles and $50,000 of diffusers. Contribution margin falls to $60,000 + $30,000 = $90,000, the overall CM ratio to 45%, and break-even rises to $72,000 ÷ 45% = $160,000, even though total sales didn't change.</p>
+      <div class="tip"><span class="label">Exam tip</span><p>A shift toward the lower-CM-ratio product raises the break-even point and lowers profit. A shift toward the higher-CM-ratio product does the opposite.</p></div>
+      <div class="panel tool">
+        <span class="label tool-tag">Try it · Sales mix</span>
+        <div class="fields">
+          <div class="field"><label for="sm-a">Candle sales ($, 40% CM)</label><input type="number" id="sm-a" min="0" step="10000" value="120000"></div>
+          <div class="field"><label for="sm-b">Diffuser sales ($, 60% CM)</label><input type="number" id="sm-b" min="0" step="10000" value="80000"></div>
+          <div class="field"><label for="sm-f">Fixed expenses ($)</label><input type="number" id="sm-f" min="0" step="1000" value="72000"></div>
+        </div>
+        <div class="out">
+          <div class="stat"><span class="label">Overall CM ratio</span><span class="v" id="sm-r">48%</span></div>
+          <div class="stat hl"><span class="label">Break-even sales</span><span class="v" id="sm-be">$150,000</span></div>
+          <div class="stat"><span class="label">Net operating income</span><span class="v" id="sm-noi">$24,000</span></div>
+        </div>
+      </div>
+      <div class="keyterms">
+        <span class="label">Key terms</span>
+        <dl>
+          <dt>Sales mix</dt><dd>Each product's share of total sales.</dd>
+          <dt>Overall CM ratio</dt><dd>Total CM ÷ total sales; it changes when the mix changes.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="tb-next" aria-label="Next steps">
+      <a class="btn" href="learn.html">Try the animated lesson</a>
+      <a class="btn primary" href="quiz.html">Take the quiz →</a>
+    </nav>
+  </article>
+</div>
+
+<footer class="site-foot"><div class="wrap"><p>ACG 203 Study is independent study material. It is not affiliated with or endorsed by UNCW or McGraw-Hill. Companies and numbers in the examples are fictional.</p></div></footer>
+
+<script src="textbook.js"></script>
+<script data-goatcounter="https://timotheepellegrino.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
