@@ -12,5 +12,11 @@ window.CHAPTERS = [
     href: "chapters/ch3/index.html" },
   { id: "ch4", num: 4, title: "Process Costing",
     summary: "Costing identical units made nonstop: processing departments and transfers between them, conversion cost, equivalent units with the weighted-average method, cost per equivalent unit, the cost reconciliation, and operation costing.",
-    href: "chapters/ch4/index.html" }
+    href: "chapters/ch4/index.html" },
+  { id: "ch5", num: 5, title: "Cost-Volume-Profit Relationships",
+    summary: "How profit responds to price, cost and volume: contribution margin and the CM ratio, operating leverage, break-even and margin of safety, target profit, what-if decisions, the CVP graph and sales mix.",
+    href: "chapters/ch5/index.html" },
+  { id: "ch6", num: 6, title: "Variable Costing and Segment Reporting",
+    summary: "Absorption vs variable costing and why their profits differ, reconciling the two, segmented income statements with traceable and common fixed costs, segment margin and break-even, and the traps in allocating common costs.",
+    href: "chapters/ch6/index.html" }
 ];
