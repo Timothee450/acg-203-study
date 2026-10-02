@@ -45,7 +45,7 @@ button,input{font:inherit;color:inherit}
 .slide-inner{margin:auto;width:100%;max-width:1120px;padding-block:28px 36px;display:flex;flex-direction:column;gap:22px}
 .eyebrow{margin:0;font:600 12px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 h1,h2,h3{font-family:var(--f-display);font-stretch:125%;margin:0;text-wrap:balance;letter-spacing:-.01em}
-h1{font-size:clamp(46px,8vw,108px);line-height:.92;font-weight:850}
+h1{font-size:clamp(44px,6.5vw,92px);line-height:.92;font-weight:850}
 h2{font-size:clamp(28px,4.2vw,52px);line-height:1.02;font-weight:800}
 h3{font-size:clamp(18px,1.7vw,22px);line-height:1.15;font-weight:750;font-stretch:112%}
 h2 em,h1 em{font-style:normal;color:var(--accent)}
